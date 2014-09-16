@@ -1,2 +1,1 @@
-docker-ruby
-===========
+# quay.io/voxxit/ruby
