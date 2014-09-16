@@ -25,4 +25,4 @@ EXPOSE 11211
 
 WORKDIR /
 
-ENTRYPOINT ["sh", "/src/run.sh"]
+CMD ["/src/run.sh"]
