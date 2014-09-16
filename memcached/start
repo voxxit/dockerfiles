@@ -1,0 +1,14 @@
+#!/bin/bash
+
+sasldblistusers2 /etc/sasldb2 | grep "admin"
+
+if [ $? -ne 0 ]; then
+  PASSWORD=${PASSWORD:-`pwgen -s 20 1`}
+
+  echo ${PASSWORD} | saslpasswd2 -a memcached -c admin
+
+  echo "USERNAME=admin"
+  echo "PASSWORD=${PASSWORD}"
+fi
+
+exec memcached -S -u nobody -l 0.0.0.0 $@

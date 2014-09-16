@@ -1,20 +1,20 @@
-#!/bin/sh
-set -e
+#!/bin/bash
 
-if [ ! "$(ls -A ${PGDATA})" ]; then
-  PWFILE=${PGDATA}/../pwfile
+PWFILE=${PGDATA}/../pwfile
+
+if [ ! -f PWFILE ]; then
 
   # create actual datadir
   mkdir -p ${PGDATA}
-  chown -Rf postgres:postgres ${PGDATA}
+  chown -Rf postgres:postgres /var/lib/postgresql
   chmod 0700 ${PGDATA}
 
   # generate the password & add it to the pwfile
   install -m 0600 -g postgres -o postgres /dev/null ${PWFILE}
-  echo "${PASSWORD:-`pwgen -s 20 1`}" >> ${PWFILE}
+  echo "${PASSWORD:-`pwgen -s 20 1`}" > ${PWFILE}
 
   # build initial db cluster
-  su -c "/usr/bin/initdb \
+  su -c "/usr/lib/postgresql/9.3/bin/initdb \
     --pwfile=${PWFILE} \
     --username=postgres \
     --encoding=unicode \
@@ -24,23 +24,16 @@ if [ ! "$(ls -A ${PGDATA})" ]; then
   sed "s/ssl = true/#ssl = true/" -i ${PGDATA}/postgresql.conf
 
   # listen on all addresses
-  sed "s/#listen_addresses = 'localhost'/listen_addresses='*'\t/" -i ${PGDATA}/postgresql.conf
+  sed -ri "s/^#(listen_addresses\s*=\s*)\S+/\1'*'/" ${PGDATA}/postgresql.conf
 
   # add the pg_hba.conf entries
   echo -e "local\tall\tpostgres\t\ttrust" > ${PGDATA}/pg_hba.conf
-  echo -e "host\tall\tall\tall\tmd5" >> ${PGDATA}/pg_hba.conf
+  echo -e "host\tall\tall\t\tall\tmd5" >> ${PGDATA}/pg_hba.conf
 
-  # inform them of the postgres user password
-  echo "NOTE: This will NOT be shown on subsequent starts of this container!"
-  echo
+  # log the postgres user/password
   echo "PGUSER=postgres"
   echo "PGPASSWORD=`cat ${PWFILE}`"
-  echo "--------------------------------------------------------------------"
-
-  # don't need that anymore!
-  rm -rf ${PWFILE}
-  apk del pwgen --purge
 fi
 
-echo "Starting `/usr/bin/postgres -V`..."
-exec su -c "/usr/bin/postgres -D $PGDATA -c config_file=$PGDATA/postgresql.conf" postgres
+echo "Starting `/usr/lib/postgresql/9.3/bin/postgres -V`..."
+exec su -c "/usr/lib/postgresql/9.3/bin/postgres -D $PGDATA -c config_file=$PGDATA/postgresql.conf" postgres

@@ -1,24 +1,19 @@
-FROM uggedal/alpine-3.0
+FROM phusion/baseimage:latest
 
-MAINTAINER Joshua Delsman <j@voxxit.com>
+MAINTAINER @voxxit
+
+ENV HOME /root
+ENV PGDATA /var/lib/postgresql/9.3/main
 
 EXPOSE 5432
 
-ENV PGDATA /var/lib/postgresql/9.3/main
+ADD start /start
 
-ADD ./start /start
-
-# Use an Alpine repo local to me for my builds. More listed here:
-# http://git.alpinelinux.org/cgit/aports/plain/main/alpine-mirrors/mirrors.yaml
-RUN echo "http://repos.lax-noc.com/alpine/v3.0/main" > /etc/apk/repositories && \
-    apk update && \
-# install postgresql
-    apk add postgresql postgresql-client postgresql-contrib pwgen && \
-# make the postgresql data directory & assign it to the 'postgres' user for future volume sanity
-    mkdir -p "${PGDATA}" && \
-	  chown -Rf postgres:postgres "${PGDATA}" && \
-	  chmod 0700 "${PGDATA}" && \
-# setup the run script
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends postgresql-9.3 postgresql-client-9.3 postgresql-contrib-9.3 pwgen && \
+    apt-get autoremove && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/lib/postgresql/* && \
     chmod +x /start
 
 VOLUME ["/var/lib/postgresql"]
