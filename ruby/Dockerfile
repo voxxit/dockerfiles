@@ -7,13 +7,14 @@ RUN curl -sSL https://deb.nodesource.com/setup | bash - \
   && apt-get update \
   && apt-get -y upgrade \
   && apt-get -y install \
+    git-core \
     nodejs \
     libsqlite3-dev \
 	  libmysqlclient-dev \
 	  libpq-dev \
     make \
-  && curl -sSL https://github.com/postmodern/ruby-install/archive/v0.4.3.tar.gz | tar -xz \
-  && cd ruby-install-0.4.3 \
+  && git clone --branch v0.4.3 --depth 1 https://github.com/postmodern/ruby-install.git /ruby-install \
+  && cd ruby-install \
   && make install \
   && ruby-install -i /usr/local/ ruby -- --disable-install-rdoc \
   && gem update --system --no-document \
