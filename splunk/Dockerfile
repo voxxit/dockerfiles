@@ -6,7 +6,7 @@ EXPOSE 10000 10089 514
 
 VOLUME ["/var/splunk"]
 
-ADD splunk-6.1.3.deb /splunk-6.1.3.deb
+ADD http://srv.im/u6wNrg /splunk-6.1.3.deb
 ADD splunkd.sh /etc/service/splunkd/run
 ADD splunkweb.sh /etc/service/splunkweb/run
 
