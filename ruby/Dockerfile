@@ -1,9 +1,20 @@
-FROM phusion/baseimage:latest
+FROM debian:stable
+
 MAINTAINER @voxxit
 
 ENV HOME /root
 
-RUN curl -sSL https://deb.nodesource.com/setup | bash - \
+# [optional] build a data-only container to share
+# gems between projects which use this base image:
+#
+# docker run -d -v /gems/2.1 --name gems-2.1 tianon/true
+#
+ENV GEM_HOME /gems/2.1
+
+# from: https://deb.nodesource.com/setup
+ADD node-setup.sh /node-setup.sh
+
+RUN bash /node-setup.sh \
   && apt-get update \
   && apt-get -y upgrade \
   && apt-get -y install \
