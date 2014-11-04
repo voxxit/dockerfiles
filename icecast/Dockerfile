@@ -11,7 +11,7 @@ RUN apt-get update \
   && apt-get -y autoclean \
   && rm -rf /var/lib/apt/lists/* /var/tmp/* /tmp/*
 
-COPY ./bin/* /usr/local/bin/
+COPY ./bin/run.sh /usr/local/bin/
 COPY ./icecast.xml /etc/icecast2/
 
 CMD [ "/usr/local/bin/run.sh" ]
