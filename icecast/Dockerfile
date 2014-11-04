@@ -1,4 +1,5 @@
-FROM voxxit/cached-base:debian
+#FROM voxxit/cached-base:debian
+FROM voxxit/base:debian
 
 MAINTAINER j@srv.im
 
