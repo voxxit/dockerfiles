@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM ubuntu:latest
 
 RUN echo 'Acquire::http::Proxy "http://172.17.42.1:3142";' | tee /etc/apt/apt.conf.d/02proxy \
   && apt-get update \
