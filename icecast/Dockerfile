@@ -1,14 +1,16 @@
-FROM alpinelinux/base:latest
+FROM voxxit/cached-base:debian
 
 MAINTAINER j@srv.im
 
-EXPOSE 80
+EXPOSE 8000
 
-RUN apk add -U icecast \
-  && rm -rf /var/cache/apk/* \
-  && mkdir -p /usr/share/icecast/log \
-  && chown -R icecast: /usr/share/icecast
+RUN apt-get update \
+  && DEBIAN_FRONTEND=noninteractive apt-get -y install icecast2 pwgen \
+  && apt-get -y autoremove \
+  && apt-get -y autoclean \
+  && rm -rf /var/lib/apt/lists/* /var/tmp/* /tmp/*
 
-ADD ./icecast.xml /etc/
+COPY ./bin/* /usr/local/bin/
+COPY ./icecast.xml /etc/icecast2/
 
-CMD [ "icecast", "-c", "/etc/icecast.xml" ]
+CMD [ "/usr/local/bin/run.sh" ]
