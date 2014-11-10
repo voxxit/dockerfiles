@@ -13,12 +13,11 @@ RUN apt-get update \
   && apt-get -y autoremove \
   && rm -rf /var/lib/apt/lists/* /usr/local/src/*
 
-VOLUME [ "/var/lib/znc" ]
+# NOTE: some web browsers like chrome block port 6667,
+# so I don't even bother exposing it. if you need to
+# use the webadmin module, use -p flag at runtime to
+# publish another desired port.
 
-# some web browsers like chrome block port 6667,
-# so don't listen to that port...
-EXPOSE 16667
+COPY entrypoint.sh /entrypoint.sh
 
-WORKDIR "/var/lib/znc"
-
-ENTRYPOINT [ "/usr/local/bin/gosu", "znc", "znc", "-d /var/lib/znc" ]
+ENTRYPOINT [ "/entrypoint.sh" ]
