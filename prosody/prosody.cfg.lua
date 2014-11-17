@@ -87,10 +87,10 @@ allow_registration = false;
 
 -- These are the SSL/TLS-related settings. If you don't want
 -- to use SSL/TLS, you may comment or remove this
-ssl = {
-	key = "/data/certs/localhost.key";
-	certificate = "/data/certs/localhost.crt";
-}
+--ssl = {
+--	key = "/data/certs/localhost.key";
+--	certificate = "/data/certs/localhost.crt";
+--}
 
 -- Force clients to use encrypted connections? This option will
 -- prevent clients from authenticating unless they are using encryption.
