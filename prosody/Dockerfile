@@ -12,14 +12,13 @@ RUN echo "deb http://packages.prosody.im/debian trusty main" | tee /etc/apt/sour
   && DEBIAN_FRONTEND=noninteractive apt-get install -y \
     prosody \
     lua-event \
+    lua-zlib \
     lua-dbi-postgresql \
-    lua-dbi-mysql \
-    lua-dbi-sqlite3 \
   && rm -rf /var/lib/apt/lists/* /var/tmp/* /tmp/*
 
 COPY prosody.cfg.lua /etc/prosody/prosody.cfg.lua
 COPY run.sh /run.sh
 
-EXPOSE 5222 5269 5280 5281
+EXPOSE 5222 5269 5280
 
 CMD [ "/run.sh" ]

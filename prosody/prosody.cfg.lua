@@ -10,7 +10,6 @@
 --
 -- Good luck, and happy Jabbering!
 
-
 ---------- Server-wide settings ----------
 -- Settings in this section apply to the whole server and are the default
 -- settings for any virtual hosts
@@ -36,16 +35,15 @@ modules_enabled = {
 		"saslauth";       -- Auth for clients/servers.
 		"tls";            -- Add support for secure TLS on c2s/s2s connections
 		"dialback";       -- s2s dialback support
-		"disco";          -- Service discovery
-		"posix";
+		"disco";          -- Service disco!
 
 	-- Not essential, but recommended
 		--"private";      -- Private XML storage (for room bookmarks, etc.)
-	  --"vcard";        -- Allow users to set vCards
+	  	--"vcard";        -- Allow users to set vCards
 
 	-- These are commented by default as they have a performance impact
 		--"privacy";      -- Support privacy lists
-		--"compression";  -- Stream compression (requires the lua-zlib package)
+		"compression";    -- Stream compression (requires the lua-zlib package)
 
 	-- Nice to have
 		--"version";      -- Replies to server version requests
@@ -60,8 +58,9 @@ modules_enabled = {
 		--"admin_telnet"; -- Opens telnet console interface on localhost:5582
 
 	-- HTTP modules
-		"bosh";						-- Enable BOSH clients, aka "Jabber over HTTP"
-		--"http_files"; 	-- Serve static files from a directory over HTTP
+		"bosh";		  -- Enable BOSH clients, aka "Jabber over HTTP"
+		"http_files"; 	  -- Serve static files from a directory over HTTP
+                "websocket";
 
 	-- Other specific functionality
 		--"groups";
@@ -77,8 +76,9 @@ modules_enabled = {
 
 modules_disabled = {
 	-- "offline"; -- Store offline messages
-	-- "c2s"; -- Handle client connections
-	-- "s2s"; -- Handle server-to-server connections
+	-- "c2s";     -- Handle client connections
+	-- "s2s";     -- Handle server-to-server connections
+        -- "posix";   
 };
 
 -- Disable account creation by default, for security
