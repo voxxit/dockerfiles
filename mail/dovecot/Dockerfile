@@ -1,10 +1,4 @@
-# To run:
-#
-#    make base
-#    make dovecot
-#    docker run -d -p 25:25 -p 143:143 -p 587:587 -p 993:993 -p 465:465 -h mail.srv.im --name mail/dovecot mail/dovecot
-#
-FROM mail/base
+FROM voxxit/mail-base
 
 RUN  apk update \
   && apk add postfix dovecot coreutils \
