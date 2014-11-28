@@ -1,7 +1,7 @@
 FROM voxxit/mail-base
 
 RUN  apk update \
-  && apk add postfix dovecot rsyslog coreutils \
+  && apk add postfix dovecot rsyslog coreutils supervisor \
   && rm -rf /var/cache/apk/* \
   && cp /aliases /etc/postfix/virtual \
   && cp /domains /etc/postfix/virtual-mailbox-domains \
@@ -12,6 +12,8 @@ RUN  apk update \
 
 VOLUME [ "/srv/vmail" ]
 
+ADD ./supervisord.conf  /etc/supervisor/conf.d/supervisord.conf
+
 ADD ./rsyslog.conf      /etc/rsyslog.conf
 
 ADD ./postfix.main.cf   /etc/postfix/main.cf
@@ -20,6 +22,8 @@ ADD ./dovecot.mail      /etc/dovecot/conf.d/10-mail.conf
 ADD ./dovecot.ssl       /etc/dovecot/conf.d/10-ssl.conf
 ADD ./dovecot.auth      /etc/dovecot/conf.d/10-auth.conf
 ADD ./dovecot.master    /etc/dovecot/conf.d/10-master.conf
+
+ADD ./run.sh            /usr/local/bin/run.sh
 
 RUN  mkdir /etc/postfix/tmp \
   && awk < /etc/postfix/virtual '{ print $2 }' > /etc/postfix/tmp/virtual-receivers \
@@ -32,10 +36,4 @@ RUN  mkdir /etc/postfix/tmp \
 
 EXPOSE 465 587 993
 
-CMD \
-  sed -i "s/{LOGGLY_TOKEN}/${LOGGLY_TOKEN}/" /etc/rsyslog.conf; \
-  chown -R postfix:postfix /etc/postfix; \
-  chown -R vmail:vmail /srv/vmail; \
-  service postfix start; \
-  service rsyslog start; \
-  dovecot -F
+CMD [ "/usr/local/bin/run.sh" ]
