@@ -35,18 +35,15 @@ virtual_mailbox_maps = hash:/etc/postfix/virtual-mailbox-maps
 virtual_transport = lmtp:unix:private/dovecot-lmtp
 local_recipient_maps = $virtual_mailbox_maps
 
-smtpd_tls_cert_file=/etc/ssl/certs/dovecot.pem
-smtpd_tls_key_file=/etc/ssl/private/dovecot.pem
-smtpd_use_tls=yes
-smtpd_tls_auth_only = yes
 smtp_tls_security_level = may
 smtp_tls_loglevel = 2
-smtpd_tls_received_header = yes
 
+smtpd_use_tls=yes
+smtpd_recipient_restrictions = permit_sasl_authenticated, permit_mynetworks, reject_unauth_destination
 smtpd_sasl_type = dovecot
 smtpd_sasl_path = private/auth
 smtpd_sasl_auth_enable = yes
-smtpd_recipient_restrictions =
-  permit_sasl_authenticated,
-  permit_mynetworks,
-  reject_unauth_destination
+smtpd_tls_auth_only = yes
+smtpd_tls_cert_file=/etc/ssl/dovecot/server.pem
+smtpd_tls_key_file=/etc/ssl/dovecot/server.key
+smtpd_tls_received_header = yes
