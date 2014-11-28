@@ -6,4 +6,4 @@
 chown -R postfix:postfix /etc/postfix
 chown -R vmail:vmail /srv/vmail
 
-exec /usr/bin/supervisord -c supervisord -c /etc/supervisor/conf.d/supervisord.conf
+exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
