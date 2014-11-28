@@ -1,0 +1,52 @@
+myhostname = localhost
+mydestination = localhost
+relayhost =
+mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
+mailbox_size_limit = 0
+recipient_delimiter = +
+inet_interfaces = all
+
+# SMTP configuration for incoming mail (port 25/587)
+
+# allow all connections (since we want to receive mail from outside)
+smtpd_client_restrictions = permit
+
+# Don't talk to mail systems that don't know their own hostname.
+# With Postfix < 2.3, specify reject_unknown_hostname.
+smtpd_helo_restrictions = permit
+
+# Don't accept mail from domains that don't exist.
+smtpd_sender_restrictions = permit
+
+# Only accept mail where this server is the final destination
+smtpd_relay_restrictions = permit_auth_destination, reject
+
+# Mail thats not for us gets filtered out by smtpd_relay_restrictions
+# When the mail is for us, we just accept everything
+# (could add spam blocklists/user checking etc. here)
+smtpd_recipient_restrictions = permit
+
+# Delivery to dovecot
+alias_maps = hash:/etc/aliases
+alias_database = hash:/etc/aliases
+virtual_alias_maps = hash:/etc/postfix/virtual
+virtual_mailbox_domains = /etc/postfix/virtual-mailbox-domains
+virtual_mailbox_maps = hash:/etc/postfix/virtual-mailbox-maps
+virtual_transport = lmtp:unix:private/dovecot-lmtp
+local_recipient_maps = $virtual_mailbox_maps
+
+smtpd_tls_cert_file=/etc/ssl/certs/dovecot.pem
+smtpd_tls_key_file=/etc/ssl/private/dovecot.pem
+smtpd_use_tls=yes
+smtpd_tls_auth_only = yes
+smtp_tls_security_level = may
+smtp_tls_loglevel = 2
+smtpd_tls_received_header = yes
+
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = private/auth
+smtpd_sasl_auth_enable = yes
+smtpd_recipient_restrictions =
+  permit_sasl_authenticated,
+  permit_mynetworks,
+  reject_unauth_destination

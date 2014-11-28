@@ -1,0 +1,4 @@
+ssl = required
+disable_plaintext_auth = yes
+ssl_cert = </etc/ssl/dovecot/server.pem
+ssl_key = </etc/ssl/dovecot/server.key

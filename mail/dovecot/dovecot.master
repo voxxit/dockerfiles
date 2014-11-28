@@ -1,0 +1,51 @@
+auth_verbose = yes
+auth_debug = yes
+
+protocols = imap lmtp
+
+service imap-login {
+  inet_listener imap {
+    port = 0
+  }
+}
+
+service pop3-login {
+  inet_listener pop3 {
+    port = 0
+  }
+}
+
+# not sure if this is needed
+service lmtp {
+  unix_listener /var/spool/postfix/private/dovecot-lmtp {
+    mode = 0666
+    group = postfix
+    user = postfix
+  }
+
+  user=vmail
+}
+
+service auth {
+  # auth_socket_path points to this userdb socket by default. It's typically
+  # used by dovecot-lda, doveadm, possibly imap process, etc. Its default
+  # permissions make it readable only by root, but you may need to relax these
+  # permissions. Users that have access to this socket are able to get a list
+  # of all usernames and get results of everyone's userdb lookups.
+  unix_listener /var/spool/postfix/private/auth {
+    mode = 0666
+    user = postfix
+    group = postfix
+  }
+
+  unix_listener auth-userdb {
+    mode = 0600
+    user = vmail
+  }
+
+  user = dovecot
+}
+
+service auth-worker {
+  user = vmail
+}
