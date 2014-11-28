@@ -23,7 +23,7 @@ ADD ./dovecot.ssl       /etc/dovecot/conf.d/10-ssl.conf
 ADD ./dovecot.auth      /etc/dovecot/conf.d/10-auth.conf
 ADD ./dovecot.master    /etc/dovecot/conf.d/10-master.conf
 
-ADD ./run.sh            /usr/local/bin/run.sh
+COPY ./run.sh           /usr/local/bin/run.sh
 
 RUN  mkdir /etc/postfix/tmp \
   && awk < /etc/postfix/virtual '{ print $2 }' > /etc/postfix/tmp/virtual-receivers \
