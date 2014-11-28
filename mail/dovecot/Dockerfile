@@ -21,8 +21,7 @@ ADD ./dovecot.ssl       /etc/dovecot/conf.d/10-ssl.conf
 ADD ./dovecot.auth      /etc/dovecot/conf.d/10-auth.conf
 ADD ./dovecot.master    /etc/dovecot/conf.d/10-master.conf
 
-RUN cat /etc/postfix/master-additional.cf | tee -a /etc/postfix/master.cf \
-  && mkdir /etc/postfix/tmp \
+RUN  mkdir /etc/postfix/tmp \
   && awk < /etc/postfix/virtual '{ print $2 }' > /etc/postfix/tmp/virtual-receivers \
   && sed -r 's,(.+)@(.+),\2/\1/,' /etc/postfix/tmp/virtual-receivers > /etc/postfix/tmp/virtual-receiver-folders \
   && paste \
