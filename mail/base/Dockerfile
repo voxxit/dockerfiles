@@ -5,6 +5,6 @@ RUN  echo "http://repos.lax-noc.com/alpine/edge/main" | tee /etc/apk/repositorie
   && apk upgrade \
   && rm -rf /var/cache/apk/*
 
-ADD ./domains /domains
-ADD ./aliases /aliases
+ADD ./domains   /domains
+ADD ./aliases   /aliases
 ADD ./passwords /passwords
