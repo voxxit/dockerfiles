@@ -1,7 +1,7 @@
 FROM voxxit/mail-base
 
 RUN  apk update \
-  && apk add postfix dovecot coreutils \
+  && apk add postfix dovecot rsyslog coreutils \
   && rm -rf /var/cache/apk/* \
   && cp /aliases /etc/postfix/virtual \
   && cp /domains /etc/postfix/virtual-mailbox-domains \
@@ -11,6 +11,8 @@ RUN  apk update \
   && adduser -S -u 5000 -G vmail vmail
 
 VOLUME [ "/srv/vmail" ]
+
+ADD ./rsyslog.conf      /etc/rsyslog.conf
 
 ADD ./postfix.main.cf   /etc/postfix/main.cf
 
@@ -29,10 +31,12 @@ RUN cat /etc/postfix/master-additional.cf | tee -a /etc/postfix/master.cf \
   && postmap /etc/postfix/virtual \
   && postmap /etc/postfix/virtual-mailbox-maps
 
-EXPOSE 25 143 587 465 993
+EXPOSE 465 587 993
 
 CMD \
+  sed -i "s/{LOGGLY_TOKEN}/${LOGGLY_TOKEN}/" /etc/rsyslog.conf; \
   chown -R postfix:postfix /etc/postfix; \
   chown -R vmail:vmail /srv/vmail; \
   service postfix start; \
+  service rsyslog start; \
   dovecot -F
