@@ -15,15 +15,21 @@ service pop3-login {
   }
 }
 
-# not sure if this is needed
 service lmtp {
   unix_listener /var/spool/postfix/private/dovecot-lmtp {
     mode = 0666
     group = postfix
     user = postfix
   }
+}
 
-  user=vmail
+protocol imap {
+  mail_plugins = $mail_plugins imap_quota
+}
+
+protocol lmtp {
+  postmaster_address = postmaster@srv.im
+  mail_plugins = $mail_plugins quota
 }
 
 service auth {
