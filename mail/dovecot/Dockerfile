@@ -27,6 +27,7 @@ ADD ./dovecot.mail      /etc/dovecot/conf.d/10-mail.conf
 ADD ./dovecot.ssl       /etc/dovecot/conf.d/10-ssl.conf
 ADD ./dovecot.auth      /etc/dovecot/conf.d/10-auth.conf
 ADD ./dovecot.master    /etc/dovecot/conf.d/10-master.conf
+ADD ./dovecot.plugins   /etc/dovecot/conf.d/90-quota.conf
 
 COPY ./run.sh           /usr/local/bin/run.sh
 

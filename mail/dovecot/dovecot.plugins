@@ -1,0 +1,3 @@
+plugin {
+  quota = maildir:User quota
+}
