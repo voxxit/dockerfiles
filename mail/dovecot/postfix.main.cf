@@ -1,12 +1,9 @@
-myhostname = localhost
-mydestination = localhost
-relayhost =
+mydestination = localhost.localdomain, localhost
+relayhost = 
 mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
-mailbox_size_limit = 0
-recipient_delimiter = +
 inet_interfaces = all
 
-# Delivery to dovecot
+# Dovecot
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
 virtual_alias_maps = hash:/etc/postfix/virtual
@@ -15,15 +12,26 @@ virtual_mailbox_maps = hash:/etc/postfix/virtual-mailbox-maps
 virtual_transport = lmtp:unix:private/dovecot-lmtp
 local_recipient_maps = $virtual_mailbox_maps
 
-smtp_tls_security_level = may
-smtp_tls_loglevel = 2
+# Mailgun SMTP relay
+smtp_sasl_auth_enable = yes
+smtp_sasl_security_options = noanonymous
 
-smtpd_use_tls=yes
-smtpd_recipient_restrictions = permit_sasl_authenticated, permit_mynetworks, reject_unauth_destination
+# TLS
+smtp_tls_security_level = may
+smtp_tls_note_starttls_offer = yes
+smtpd_tls_security_level = may
+
+# SSL
+smtpd_tls_key_file = /etc/ssl/private/mail.key
+smtpd_tls_cert_file = /etc/ssl/certs/mail.crt
+smtpd_tls_CApath = /etc/ssl/certs
+
+# Authentication
 smtpd_sasl_type = dovecot
 smtpd_sasl_path = private/auth
 smtpd_sasl_auth_enable = yes
 smtpd_tls_auth_only = yes
-smtpd_tls_cert_file=/etc/ssl/dovecot/server.pem
-smtpd_tls_key_file=/etc/ssl/dovecot/server.key
-smtpd_tls_received_header = yes
+smtpd_recipient_restrictions =
+  permit_mynetworks
+  permit_sasl_authenticated
+  reject_unauth_destination

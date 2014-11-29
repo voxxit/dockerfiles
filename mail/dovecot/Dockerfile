@@ -20,8 +20,6 @@ VOLUME [ "/srv/vmail" ]
 
 ADD ./supervisord.conf  /etc/supervisor/conf.d/supervisord.conf
 
-ADD ./rsyslog.conf      /etc/rsyslog.conf
-
 ADD ./postfix.main.cf   /etc/postfix/main.cf
 ADD ./postfix.master.cf /tmp/postfix/master.cf
 
