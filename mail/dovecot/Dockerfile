@@ -16,7 +16,7 @@ RUN  apk update \
   && addgroup -S -g 5000 vmail \
   && adduser -S -u 5000 -G vmail vmail
 
-VOLUME [ "/srv/vmail" ]
+VOLUME [ "/srv/mail", "/var/spool/postfix" ]
 
 ADD ./supervisord.conf  /etc/supervisor/conf.d/supervisord.conf
 

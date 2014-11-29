@@ -1,1 +1,1 @@
-mail_location = maildir:/srv/vmail/%d/%n:LAYOUT=fs
+mail_location = maildir:/srv/mail/%d/%n:LAYOUT=fs

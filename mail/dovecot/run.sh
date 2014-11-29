@@ -1,7 +1,7 @@
 #!/bin/bash
 
 chown -R postfix:postfix /etc/postfix
-chown -R vmail:vmail /srv/vmail
+chown -R vmail:vmail /srv/mail
 
 if [ ! -z $LOGGLY_TOKEN ]; then
   mkdir -p /etc/rsyslog.d
