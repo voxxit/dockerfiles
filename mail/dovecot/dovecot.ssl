@@ -1,4 +1,5 @@
-ssl = required
+ssl      = required
+ssl_cert = </etc/ssl/certs/d.srv.im.crt
+ssl_key  = </etc/ssl/private/d.srv.im.key
+
 disable_plaintext_auth = yes
-ssl_cert = </etc/ssl/dovecot/server.pem
-ssl_key = </etc/ssl/dovecot/server.key
