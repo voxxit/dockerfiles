@@ -1,6 +1,3 @@
-auth_verbose = yes
-auth_debug = yes
-
 protocols = imap lmtp
 
 service imap-login {
