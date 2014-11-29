@@ -1,7 +1,13 @@
 FROM voxxit/mail-base
 
 RUN  apk update \
-  && apk add postfix dovecot rsyslog coreutils supervisor \
+  && apk add \
+    postfix \
+    dovecot \
+    rsyslog \
+    supervisor \
+    cyrus-sasl \
+    cyrus-sasl-digestmd5 \
   && rm -rf /var/cache/apk/* \
   && cp /aliases /etc/postfix/virtual \
   && cp /domains /etc/postfix/virtual-mailbox-domains \
@@ -17,6 +23,7 @@ ADD ./supervisord.conf  /etc/supervisor/conf.d/supervisord.conf
 ADD ./rsyslog.conf      /etc/rsyslog.conf
 
 ADD ./postfix.main.cf   /etc/postfix/main.cf
+ADD ./postfix.master.cf /tmp/postfix/master.cf
 
 ADD ./dovecot.mail      /etc/dovecot/conf.d/10-mail.conf
 ADD ./dovecot.ssl       /etc/dovecot/conf.d/10-ssl.conf
@@ -32,8 +39,10 @@ RUN  mkdir /etc/postfix/tmp \
     /etc/postfix/tmp/virtual-receivers \
     /etc/postfix/tmp/virtual-receiver-folders > /etc/postfix/virtual-mailbox-maps \
   && postmap /etc/postfix/virtual \
-  && postmap /etc/postfix/virtual-mailbox-maps
+  && postmap /etc/postfix/virtual-mailbox-maps \
+  && cat /tmp/postfix/master.cf >> /etc/postfix/master.cf \
+  && rm -rf /tmp/postfix /etc/postfix/tmp
 
-EXPOSE 465 587 993
+EXPOSE 25 465 587 993
 
 CMD [ "/usr/local/bin/run.sh" ]
