@@ -18,8 +18,9 @@ test ! -f ./cert.pem && test ! -f ./key.pem && $GOGSPATH/gogs cert --host $HOSTN
 cd $GOGSPATH
 
 sed -i "s/%%HOSTNAME%%/${HOSTNAME}/g" $GOGSPATH/conf/app.ini
+sed -i "s|%%ROOT_URL%%|${ROOT_URL:-"https://0.0.0.0:3000"}|g" $GOGSPATH/conf/app.ini
 sed -i "s/%%SECRET_KEY%%/${SECRET_KEY:-"fixme"}/g" $GOGSPATH/conf/app.ini
-sed -i "s/%%SSH_PORT%%/${SSH_PORT:-22022}/g" $GOGSPATH/conf/app.ini
+sed -i "s/%%SSH_PORT%%/${SSH_PORT:-22}/g" $GOGSPATH/conf/app.ini
 sed -i "s/%%CACHE_ADAPTER%%/${CACHE_ADAPTER:-"memory"}/g" $GOGSPATH/conf/app.ini
 sed -i "s/%%CACHE_HOST%%/${CACHE_HOST}/g" $GOGSPATH/conf/app.ini
 sed -i "s/%%LOG_MODE%%/${LOG_MODE:-"console"}/g" $GOGSPATH/conf/app.ini
@@ -37,11 +38,22 @@ sed -i "s/%%SMTP_TO_ADDR%%/${SMTP_TO_ADDR}/g" $GOGSPATH/conf/app.ini
 sed -i "s/%%SMTP_USERNAME%%/${SMTP_USERNAME}/g" $GOGSPATH/conf/app.ini
 sed -i "s/%%SMTP_PASSWORD%%/${SMTP_PASSWORD}/g" $GOGSPATH/conf/app.ini
 
+# create repos directory
+mkdir -p /var/lib/repos
+
 # ensure correct permissions
-chown -R gogs:gogs . /var/lib/repos
+chown -R git:git . /var/lib/repos
+
+# ssh security measures
+sed -i "s/#Port 22/Port ${SSH_PORT:-22}/g" /etc/ssh/sshd_config
+sed -i "s/#PasswordAuthentication yes/PasswordAuthentication no/g" /etc/ssh/sshd_config
+sed -i "s/#PermitRootLogin yes/PermitRootLogin no/g" /etc/ssh/sshd_config
+sed -i "s/#Protocol 2/Protocol 2/g" /etc/ssh/sshd_config
+sed -i "s/#PermitEmptyPasswords no/PermitEmptyPasswords no/g" /etc/ssh/sshd_config
+sed -i "s/#PubkeyAuthentication yes/PubkeyAuthentication yes/g" /etc/ssh/sshd_config
 
 # start sshd
-/usr/sbin/sshd -p $SSH_PORT
+/usr/sbin/sshd -p ${SSH_PORT:-22}
 
 # start gogs
-/usr/local/bin/gosu gogs:gogs ./gogs web
+/bin/gosu git:git ./gogs web
