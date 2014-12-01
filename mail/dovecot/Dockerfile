@@ -3,6 +3,7 @@ FROM voxxit/mail-base
 RUN  apk update \
   && apk add \
     postfix \
+    postgrey \
     dovecot \
     rsyslog \
     supervisor \
@@ -14,7 +15,10 @@ RUN  apk update \
   && cp /passwords /etc/dovecot/passwd \
   && deluser vmail \
   && addgroup -S -g 5000 vmail \
-  && adduser -S -u 5000 -G vmail vmail
+  && adduser -S -u 5000 -G vmail vmail \
+  && adduser postgrey -G postgrey \
+  && mkdir -p /var/spool/postfix/postgrey \
+  && chown -R postgrey: /var/spool/postfix/postgrey
 
 VOLUME [ "/srv/mail" ]
 
