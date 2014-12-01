@@ -35,4 +35,4 @@ smtpd_recipient_restrictions =
   permit_mynetworks
   permit_sasl_authenticated
   reject_unauth_destination
-  check_policy_service unix:/var/spool/postfix/postgrey/socket
+  check_policy_service inet:127.0.0.1:10029
