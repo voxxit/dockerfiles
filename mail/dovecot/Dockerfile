@@ -16,7 +16,7 @@ RUN  apk update \
   && deluser vmail \
   && addgroup -S -g 5000 vmail \
   && adduser -S -u 5000 -G vmail vmail \
-  && adduser postgrey -G postgrey \
+  && adduser postgrey -D -H -G postgrey \
   && mkdir -p /var/spool/postfix/postgrey \
   && chown -R postgrey: /var/spool/postfix/postgrey
 
