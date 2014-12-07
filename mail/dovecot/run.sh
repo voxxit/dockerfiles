@@ -1,5 +1,19 @@
 #!/bin/bash
 
+TMP_RECV=`mktemp` || exit 1
+TMP_FOLD=`mktemp` || exit 1
+
+# create virtual mailbox mappings from /etc/postfix/virtual
+cat /etc/postfix/virtual | awk '{ print $2 }' | uniq > $TMP_RECV
+sed -r 's,(.+)@(.+),\2/\1/,' $TMP_RECV > $TMP_FOLD
+paste $TMP_RECV $TMP_FOLD > /etc/postfix/virtual-mailbox-maps
+rm $TMP_RECV $TMP_FOLD
+
+# build postfix dbs
+postmap /etc/postfix/virtual
+postmap /etc/postfix/virtual-mailbox-maps
+
+# ensure proper permissions
 chown -R postfix:postfix /etc/postfix
 chown -R vmail:vmail /srv/mail
 
@@ -25,4 +39,8 @@ if [ ! -z $MAILGUN_SMTP_PASSWORD ]; then
   fi
 fi
 
-exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+# remove SSL config if no certificate or private key found
+test -f /etc/ssl/certs/mail.crt   || rm -f /etc/dovecot/conf.d/10-ssl.conf
+test -f /etc/ssl/private/mail.key || rm -f /etc/dovecot/conf.d/10-ssl.conf
+
+exec /usr/bin/supervisord -c /etc/supervisord.conf

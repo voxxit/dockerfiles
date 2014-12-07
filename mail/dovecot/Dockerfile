@@ -23,10 +23,10 @@ RUN  apk update \
 
 VOLUME [ "/srv/mail" ]
 
-ADD ./supervisord.conf  /etc/supervisor/conf.d/supervisord.conf
+ADD ./supervisord.conf  /etc/supervisord.conf
 
 ADD ./postfix.main.cf   /etc/postfix/main.cf
-ADD ./postfix.master.cf /tmp/postfix/master.cf
+ADD ./postfix.master.cf /etc/postfix/master.cf
 
 ADD ./dovecot.mail      /etc/dovecot/conf.d/10-mail.conf
 ADD ./dovecot.ssl       /etc/dovecot/conf.d/10-ssl.conf
@@ -35,17 +35,6 @@ ADD ./dovecot.master    /etc/dovecot/conf.d/10-master.conf
 ADD ./dovecot.plugins   /etc/dovecot/conf.d/90-quota.conf
 
 COPY ./run.sh           /usr/local/bin/run.sh
-
-RUN  mkdir /etc/postfix/tmp \
-  && awk < /etc/postfix/virtual '{ print $2 }' > /etc/postfix/tmp/virtual-receivers \
-  && sed -r 's,(.+)@(.+),\2/\1/,' /etc/postfix/tmp/virtual-receivers > /etc/postfix/tmp/virtual-receiver-folders \
-  && paste \
-    /etc/postfix/tmp/virtual-receivers \
-    /etc/postfix/tmp/virtual-receiver-folders > /etc/postfix/virtual-mailbox-maps \
-  && postmap /etc/postfix/virtual \
-  && postmap /etc/postfix/virtual-mailbox-maps \
-  && cat /tmp/postfix/master.cf >> /etc/postfix/master.cf \
-  && rm -rf /tmp/postfix /etc/postfix/tmp
 
 EXPOSE 25 465 587 993
 
