@@ -9,6 +9,7 @@ RUN  apk update \
     supervisor \
     cyrus-sasl \
     cyrus-sasl-digestmd5 \
+    coreutils \
   && rm -rf /var/cache/apk/* \
   && cp /aliases /etc/postfix/virtual \
   && cp /domains /etc/postfix/virtual-mailbox-domains \

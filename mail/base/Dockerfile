@@ -1,9 +1,7 @@
-FROM alpinelinux/base:latest
+FROM voxxit/base:alpine
 
-RUN  echo "http://repos.lax-noc.com/alpine/edge/main" | tee /etc/apk/repositories \
-  && apk update \
-  && apk upgrade \
-  && apk add ca-certificates coreutils \
+RUN  apk update \
+  && apk add ca-certificates \
   && rm -rf /var/cache/apk/*
 
 ADD ./domains   /domains
