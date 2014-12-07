@@ -23,18 +23,8 @@ RUN  apk update \
 
 VOLUME [ "/srv/mail" ]
 
-ADD ./supervisord.conf  /etc/supervisord.conf
-
-ADD ./postfix.main.cf   /etc/postfix/main.cf
-ADD ./postfix.master.cf /etc/postfix/master.cf
-
-ADD ./dovecot.mail      /etc/dovecot/conf.d/10-mail.conf
-ADD ./dovecot.ssl       /etc/dovecot/conf.d/10-ssl.conf
-ADD ./dovecot.auth      /etc/dovecot/conf.d/10-auth.conf
-ADD ./dovecot.master    /etc/dovecot/conf.d/10-master.conf
-ADD ./dovecot.plugins   /etc/dovecot/conf.d/90-quota.conf
-
-COPY ./run.sh           /usr/local/bin/run.sh
+COPY ./etc/ /etc/
+COPY ./bin/ /usr/local/bin/
 
 EXPOSE 25 465 587 993
 
