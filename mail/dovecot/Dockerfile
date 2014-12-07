@@ -2,14 +2,7 @@ FROM voxxit/mail-base
 
 RUN  apk update \
   && apk add \
-    postfix \
-    postgrey \
-    dovecot \
-    rsyslog \
-    supervisor \
-    cyrus-sasl \
-    cyrus-sasl-digestmd5 \
-    coreutils \
+    postfix postgrey dovecot rsyslog supervisor cyrus-sasl cyrus-sasl-digestmd5 coreutils \
   && rm -rf /var/cache/apk/* \
   && cp /aliases /etc/postfix/virtual \
   && cp /domains /etc/postfix/virtual-mailbox-domains \
