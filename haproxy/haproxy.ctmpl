@@ -1,0 +1,31 @@
+global
+    log {{key "service/haproxy/log"}} local2
+    log-send-hostname
+    pidfile /var/run/haproxy.pid
+    maxconn {{key "service/haproxy/maxconn"}}
+    user haproxy
+    group haproxy
+
+defaults
+    mode {{key "service/haproxy/mode"}}
+    log global{{range ls "service/haproxy/options"}}
+    option {{.Key}} {{.Value}}{{end}}
+    retries {{key "service/haproxy/retries"}}{{range ls "service/haproxy/timeouts"}}
+    timeout {{.Key}} {{.Value}}{{end}}
+    maxconn {{key "service/haproxy/maxconn"}}
+
+listen stats *:8000
+    stats uri /stats
+    stats refresh {{key "service/haproxy/stats/refresh"}}
+    stats realm HAProxy\ Global\ Stats
+    stats auth {{key "service/haproxy/stats/username"}}:{{key "service/haproxy/stats/password"}}
+
+frontend web
+    bind *:80
+
+    acl is_consul hdr(host) -i consul.srv.im
+    use_backend consul if is_consul
+
+backend consul
+    balance roundrobin{{range service "consul"}}
+    server {{.Node}} {{.Address}}:8500{{end}}
