@@ -1,9 +1,13 @@
-FROM uggedal/alpine-3.0
+FROM voxxit/base:alpine
 
-MAINTAINER Joshua Delsman <@voxxit>
+MAINTAINER Joshua Delsman <j at srv.im>
 
-RUN echo "http://repos.lax-noc.com/alpine/v3.0/main" > /etc/apk/repositories && \
-    apk update && \
-    apk add nginx
+RUN apk update && apk add nginx && mkdir /tmp/nginx
 
-CMD ["sh"]
+ADD nginx.conf /etc/nginx/nginx.conf
+
+VOLUME [ "/etc/nginx" ]
+
+EXPOSE 80 443
+
+CMD [ "nginx", "-c", "/etc/nginx/nginx.conf" ]
