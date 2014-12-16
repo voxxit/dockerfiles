@@ -1,37 +1,29 @@
-FROM debian:stable
+FROM voxxit/base:alpine
 
-MAINTAINER @voxxit
+MAINTAINER Joshua Delsman <j (at) srv.im>
 
-ENV HOME /root
+ENV GEM_HOME /gems
+ENV PATH $GEM_HOME/bin:$PATH
+ENV BUNDLE_APP_CONFIG $GEM_HOME
 
-# [optional] build a data-only container to share
-# gems between projects which use this base image:
-#
-# docker run -d -v /gems/2.1 --name gems-2.1 tianon/true
-#
-ENV GEM_HOME /gems/2.1
-
-# from: https://deb.nodesource.com/setup
-ADD node-setup.sh /node-setup.sh
-
-RUN bash /node-setup.sh \
-  && apt-get update \
-  && apt-get -y upgrade \
-  && apt-get -y install \
-    git-core \
-    nodejs \
-    libsqlite3-dev \
-	  libmysqlclient-dev \
-	  libpq-dev \
-    make \
-  && git clone --branch v0.4.3 --depth 1 https://github.com/postmodern/ruby-install.git /ruby-install \
-  && cd ruby-install \
-  && make install \
-  && ruby-install -i /usr/local/ ruby -- --disable-install-rdoc \
-  && gem update --system --no-document \
-  && gem install bundler --no-document \
-  && apt-get autoremove \
-  && apt-get clean \
+RUN apk update \
+  && apk add git ruby ruby-mysql2 ruby-sqlite ruby-pg nodejs \
+  && echo 'gem: --no-rdoc --no-ri' | tee -a "/root/.gemrc" \
+  && gem update --system \
+  && gem install bundler \
+  && bundle config --global path "$GEM_HOME" \
+  && bundle config --global bin "$GEM_HOME/bin" \
+  && bundle config --global frozen 1 \
+  && mkdir -p /usr/src/app \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-CMD ["/bin/bash"]
+WORKDIR /usr/src/app
+
+ONBUILD COPY Gemfile /usr/src/app/
+ONBUILD COPY Gemfile.lock /usr/src/app/
+
+ONBUILD RUN bundle install
+
+ONBUILD COPY . /usr/src/app
+
+CMD [ "irb" ]
