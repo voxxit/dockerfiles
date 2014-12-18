@@ -1,10 +1,6 @@
-FROM alpinelinux/base:latest
+FROM voxxit/base:alpine
 
-ENV ALPINE_MIRROR http://repos.lax-noc.com/alpine/v3.1/main
-
-RUN echo "$ALPINE_MIRROR" | tee /etc/apk/repositories \
-  && apk update \
-  && apk upgrade \
+RUN  apk update \
   && apk add nodejs nodejs-dev git \
   && rm -rf /var/cache/apk/* \
   && npm install -g npm@latest \

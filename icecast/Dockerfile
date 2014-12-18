@@ -1,12 +1,8 @@
-FROM alpinelinux/base:latest
+FROM voxxit/base:alpine
 
 MAINTAINER Joshua Delsman <j (at) srv.im>
 
-ENV ALPINE_MIRROR http://repos.lax-noc.com/alpine/latest-stable/main
-
-RUN echo "$ALPINE_MIRROR" > /etc/apk/repositories \
-  && apk update \
-  && apk upgrade \
+RUN apk update \
   && apk add lame icecast \
   && rm -rf /var/cache/apk/*
 

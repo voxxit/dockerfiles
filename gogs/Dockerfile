@@ -1,12 +1,10 @@
-FROM alpinelinux/base:latest
+FROM voxxit/base:alpine
 
 ENV GOPATH   /go
 ENV GOGSPATH $GOPATH/src/github.com/gogits/gogs
 ENV PATH     $GOPATH/bin:$PATH
 
-RUN  echo "http://repos.lax-noc.com/alpine/edge/main" | tee /etc/apk/repositories \
-  && apk update \
-  && apk upgrade \
+RUN  apk update \
   && apk add go git openssh \
   && curl -o /bin/gosu -sSL "https://github.com/tianon/gosu/releases/download/1.2/gosu-amd64" \
   && chmod +x /bin/gosu \
@@ -25,8 +23,6 @@ COPY ./run.sh  $GOGSPATH/scripts/run.sh
 
 VOLUME [ "/go/src/github.com/gogits/gogs", "/var/lib/repos" ]
 
-# SSH     - port 22
-# HTTP(S) - port 3000
 EXPOSE 22 3000
 
 CMD [ "./scripts/run.sh" ]
