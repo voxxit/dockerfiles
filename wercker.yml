@@ -5,11 +5,9 @@ build:
         name: docker version
         code: |
           docker -v
-
   after-steps:
-    - sherzberg/slack-notify:
-        subdomain: voxxit
+    - wantedly/pretty-slack-notify:
+        team: voxxit
         token: $SLACK_TOKEN
-        channel: "ops"
+        channel: ops
         username: wercker
-        icon_url: https://avatars3.githubusercontent.com/u/1695193?s=140
