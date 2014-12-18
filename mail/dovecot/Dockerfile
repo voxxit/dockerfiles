@@ -1,4 +1,4 @@
-FROM voxxit/mail-base
+FROM r.srv.im/mail-base:latest
 
 RUN  apk update \
   && apk add \
