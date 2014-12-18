@@ -2,7 +2,7 @@ FROM voxxit/base:alpine
 
 MAINTAINER Joshua Delsman <j (at) srv.im>
 
-RUN apk update \
+RUN  apk update \
   && apk add lame icecast \
   && rm -rf /var/cache/apk/*
 
