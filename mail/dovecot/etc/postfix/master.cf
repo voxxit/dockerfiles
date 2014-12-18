@@ -38,9 +38,11 @@ submission inet n       -       n       -       -       smtpd
   -o smtpd_enforce_tls=yes
   -o smtpd_tls_security_level=encrypt
   -o smtpd_sasl_auth_enable=yes
+  -o smtpd_recipient_restrictions=$smtpd_recipient_restrictions
 smtps     inet  n       -       n       -       -       smtpd
   -o syslog_name=postfix/smtps
   -o smtpd_tls_wrappermode=yes
   -o smtpd_sasl_auth_enable=yes
+  -o smtpd_recipient_restrictions=$smtpd_recipient_restrictions
 policy-spf  unix  -       n       n       -       -       spawn
-     user=nobody argv=/usr/sbin/postfix-policyd-spf-perl
+     user=nobody argv=/usr/bin/postfix-policyd-spf-perl

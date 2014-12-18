@@ -24,21 +24,22 @@ mkdir -p /var/db/gross
 chown -R gross: /var/run/gross /var/db/gross
 /usr/sbin/grossd -u gross -C 2>/dev/null
 
-if [ ! -z $DEBUG ]; then
-  echo "auth_verbose = yes" >> /etc/dovecot/dovecot.conf
-  echo "auth_debug = yes" >> /etc/dovecot/dovecot.conf
-fi
+# debugging
+[ ! -z $DEBUG ] && \
+  echo "auth_verbose = yes" | tee -a /etc/dovecot/dovecot.conf && \
+  echo "auth_debug = yes" | tee -a /etc/dovecot/dovecot.conf
 
-if [ ! -z $MAILGUN_SMTP_PASSWORD ]; then
-  if [ ! -z $MAILGUN_SMTP_USERNAME ]; then
-    postconf -e \
-      smtp_sasl_password_maps="static:$MAILGUN_SMTP_USERNAME:$MAILGUN_SMTP_PASSWORD" \
-      relayhost="[smtp.mailgun.org]:587"
-  fi
-fi
+# mailgun support
+[ ! -z $MAILGUN_SMTP_PASSWORD ] && [ ! -z $MAILGUN_SMTP_USERNAME ] && \
+  postconf -e \
+    smtp_sasl_password_maps="static:$MAILGUN_SMTP_USERNAME:$MAILGUN_SMTP_PASSWORD" \
+    relayhost="[smtp.mailgun.org]:587"
 
 # remove SSL config if no certificate or private key found
 test -f /etc/ssl/certs/mail.crt   || rm -f /etc/dovecot/conf.d/10-ssl.conf
 test -f /etc/ssl/private/mail.key || rm -f /etc/dovecot/conf.d/10-ssl.conf
+
+# build system aliases
+/usr/bin/newaliases
 
 exec /usr/bin/supervisord -c /etc/supervisord.conf

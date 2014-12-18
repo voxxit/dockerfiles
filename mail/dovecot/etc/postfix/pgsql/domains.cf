@@ -3,4 +3,4 @@ user = PGSQL_USER
 password = PGSQL_PASSWORD
 dbname = PGSQL_DBNAME
 
-query = SELECT email FROM aliases WHERE alias = '%s'
+query = SELECT domain FROM domains WHERE domain = '%s'
