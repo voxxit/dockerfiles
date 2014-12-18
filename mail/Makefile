@@ -14,4 +14,3 @@ all: dovecot spamassassin mailpile
 push: all
 	docker push r.srv.im/dovecot
 	docker push r.srv.im/spamassassin
-	docker push voxxit/mailpile
