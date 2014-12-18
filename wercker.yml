@@ -7,7 +7,6 @@ build:
           docker -v
   after-steps:
     - wantedly/pretty-slack-notify:
-        team: voxxit
-        token: $SLACK_TOKEN
+        webhook_url: $SLACK_WEBHOOK_URL
         channel: ops
         username: wercker
