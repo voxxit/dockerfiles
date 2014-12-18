@@ -7,7 +7,7 @@ dovecot: base
 	docker build --tag r.srv.im/dovecot ./dovecot
 
 spamassassin: base
-  docker build --tag r.srv.im/spamassassin ./spamd
+	docker build --tag r.srv.im/spamassassin ./spamd
 
 push:
 	docker push r.srv.im/mail-base
