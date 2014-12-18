@@ -1,6 +1,6 @@
 FROM alpinelinux/base:latest
 
-MAINTAINER Joshua Delsman <j@srv.im>
+MAINTAINER Joshua Delsman <j (at) srv.im>
 
 ENV ALPINE_MIRROR http://repos.lax-noc.com/alpine/latest-stable/main
 

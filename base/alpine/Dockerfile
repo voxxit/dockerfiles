@@ -1,11 +1,11 @@
 FROM alpinelinux/base:latest
 
-MAINTAINER Joshua Delsman <j@srv.im>
+MAINTAINER Joshua Delsman <j (at) srv.im>
 
 RUN echo "http://repos.lax-noc.com/alpine/edge/main" | tee /etc/apk/repositories \
   && apk update \
   && apk upgrade \
-  && apk add git \ 
+  && apk add git \
   && git clone https://github.com/sstephenson/bats.git /usr/local/src/bats \
   && /usr/local/src/bats/install.sh /usr/local \
   && apk del git \

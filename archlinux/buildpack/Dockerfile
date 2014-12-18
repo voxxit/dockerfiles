@@ -1,6 +1,6 @@
 FROM voxxit/archlinux:latest
 
-MAINTAINER Joshua Delsman <j@srv.im>
+MAINTAINER Joshua Delsman <j (at) srv.im>
 
 RUN pacman \
     --sync \

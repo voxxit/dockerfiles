@@ -1,6 +1,6 @@
 FROM base/archlinux:latest
 
-MAINTAINER Joshua Delsman <j@srv.im>
+MAINTAINER Joshua Delsman <j (at) srv.im>
 
 ONBUILD RUN \
   pacman --sync \
