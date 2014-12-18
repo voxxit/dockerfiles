@@ -22,15 +22,6 @@ if [ ! -z $DEBUG ]; then
   echo "auth_debug = yes" >> /etc/dovecot/dovecot.conf
 fi
 
-if [ ! -z $LOGGLY_TOKEN ]; then
-  if [ ! -z $LOGGLY_UID ]; then
-    mkdir -p /etc/rsyslog.d
-
-    echo "\$template LogglyFormat, \"<%pri%>%protocol-version% %timestamp:::date-rfc3339% %HOSTNAME% %app-name% %procid% %msgid% [$LOGGLY_TOKEN@$LOGGLY_UID tag=\\\"mail\\\"] %msg%\n\"" > /etc/rsyslog.d/22-loggly.conf
-    echo "*.* @@logs-01.loggly.com:514;LogglyFormat" >> /etc/rsyslog.d/22-loggly.conf
-  fi
-fi
-
 if [ ! -z $MAILGUN_SMTP_PASSWORD ]; then
   if [ ! -z $MAILGUN_SMTP_USERNAME ]; then
     postconf -e \
