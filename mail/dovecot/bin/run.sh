@@ -8,10 +8,20 @@ cat /etc/postfix/virtual | awk '{ print $2 }' | uniq > $TMP_RECV
 sed -r 's,(.+)@(.+),\2/\1/,' $TMP_RECV > $TMP_FOLD
 paste $TMP_RECV $TMP_FOLD > /etc/postfix/virtual-mailbox-maps
 rm $TMP_RECV $TMP_FOLD
+unset TMP_RECV
+unset TMP_FOLD
 
 # build postfix dbs
 postmap /etc/postfix/virtual
 postmap /etc/postfix/virtual-mailbox-maps
+
+# (re-)build postfix queue
+install -d -o postfix -g postfix /var/spool/postfix/{active,bounce,corrupt,defer,deferred,flush,hold,incoming,private,saved,trace}
+install -d -o postfix -g postdrop /var/spool/postfix/{maildrop,public}
+install -d -o postgrey -g postgrey /var/spool/postfix/postgrey
+chmod 700 /var/spool/postfix/{active,bounce,corrupt,defer,deferred,flush,hold,incoming,private,saved,trace}
+chmod 730 /var/spool/postfix/maildrop
+chmod 710 /var/spool/postfix/public
 
 # ensure proper permissions
 chown -R postfix:postfix /etc/postfix

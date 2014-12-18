@@ -2,7 +2,14 @@ FROM r.srv.im/mail-base:latest
 
 RUN  apk update \
   && apk add \
-    postfix postgrey dovecot supervisor cyrus-sasl cyrus-sasl-digestmd5 coreutils \
+    postfix \
+    postfix-policyd-spf-perl \
+    postgrey \
+    dovecot \
+    supervisor \
+    cyrus-sasl \
+    cyrus-sasl-digestmd5 \
+    coreutils \
   && rm -rf /var/cache/apk/* \
   && cp /aliases /etc/postfix/virtual \
   && cp /domains /etc/postfix/virtual-mailbox-domains \
@@ -10,11 +17,9 @@ RUN  apk update \
   && deluser vmail \
   && addgroup -S -g 5000 vmail \
   && adduser -S -u 5000 -G vmail vmail \
-  && adduser postgrey -D -H -G postgrey \
-  && mkdir -p /var/spool/postfix/postgrey \
-  && chown -R postgrey: /var/spool/postfix/postgrey
+  && adduser postgrey -D -H -G postgrey
 
-VOLUME [ "/srv/mail" ]
+VOLUME [ "/srv/mail", "/var/spool/postfix" ]
 
 COPY ./etc/ /etc/
 COPY ./bin/ /usr/local/bin/

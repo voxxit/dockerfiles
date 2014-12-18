@@ -35,6 +35,10 @@ smtpd_recipient_restrictions =
   permit_mynetworks
   permit_sasl_authenticated
   reject_unauth_destination
+  check_policy_service unix:private/policy-spf
   reject_rbl_client zen.spamhaus.org
   reject_rbl_client bl.spamcop.net
   check_policy_service inet:127.0.0.1:10029
+
+# SPF
+policy-spf_time_limit = 3600s
