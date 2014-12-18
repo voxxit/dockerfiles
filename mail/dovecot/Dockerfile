@@ -1,23 +1,23 @@
-FROM r.srv.im/mail-base:latest
+FROM voxxit/base:alpine
+
+MAINTAINER Joshua Delsman <j (at) srv.im>
 
 RUN  apk update \
   && apk add \
+    ca-certificates \
     postfix \
+    postfix-pgsql \
     postfix-policyd-spf-perl \
-    postgrey \
     dovecot \
+    dovecot-pgsql \
+    gross \
     supervisor \
     cyrus-sasl \
     cyrus-sasl-digestmd5 \
-    coreutils \
   && rm -rf /var/cache/apk/* \
-  && cp /aliases /etc/postfix/virtual \
-  && cp /domains /etc/postfix/virtual-mailbox-domains \
-  && cp /passwords /etc/dovecot/passwd \
   && deluser vmail \
   && addgroup -S -g 5000 vmail \
-  && adduser -S -u 5000 -G vmail vmail \
-  && adduser postgrey -D -H -G postgrey
+  && adduser -S -u 5000 -G vmail vmail
 
 VOLUME [ "/srv/mail", "/var/spool/postfix" ]
 
