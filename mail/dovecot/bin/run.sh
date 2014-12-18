@@ -1,31 +1,28 @@
 #!/bin/bash
+set -x
 
-TMP_RECV=`mktemp` || exit 1
-TMP_FOLD=`mktemp` || exit 1
-
-# create virtual mailbox mappings from /etc/postfix/virtual
-cat /etc/postfix/virtual | awk '{ print $2 }' | uniq > $TMP_RECV
-sed -r 's,(.+)@(.+),\2/\1/,' $TMP_RECV > $TMP_FOLD
-paste $TMP_RECV $TMP_FOLD > /etc/postfix/virtual-mailbox-maps
-rm $TMP_RECV $TMP_FOLD
-unset TMP_RECV
-unset TMP_FOLD
-
-# build postfix dbs
-postmap /etc/postfix/virtual
-postmap /etc/postfix/virtual-mailbox-maps
+# for postgresql mapping
+sed -i "s/PGSQL_HOST/${PGSQL_HOST}/" /etc/postfix/pgsql/* /etc/dovecot/dovecot-sql.conf
+sed -i "s/PGSQL_USER/${PGSQL_USER}/" /etc/postfix/pgsql/* /etc/dovecot/dovecot-sql.conf
+sed -i "s/PGSQL_PASSWORD/${PGSQL_PASSWORD}/" /etc/postfix/pgsql/* /etc/dovecot/dovecot-sql.conf
+sed -i "s/PGSQL_DBNAME/${PGSQL_DBNAME}/" /etc/postfix/pgsql/* /etc/dovecot/dovecot-sql.conf
 
 # (re-)build postfix queue
-install -d -o postfix -g postfix /var/spool/postfix/{active,bounce,corrupt,defer,deferred,flush,hold,incoming,private,saved,trace}
-install -d -o postfix -g postdrop /var/spool/postfix/{maildrop,public}
-install -d -o postgrey -g postgrey /var/spool/postfix/postgrey
-chmod 700 /var/spool/postfix/{active,bounce,corrupt,defer,deferred,flush,hold,incoming,private,saved,trace}
-chmod 730 /var/spool/postfix/maildrop
-chmod 710 /var/spool/postfix/public
+for queue in {active,bounce,corrupt,defer,deferred,flush,hold,incoming,private,saved,trace}; do
+  install -d -o postfix -g postfix /var/spool/postfix/$queue
+  chmod 700 /var/spool/postfix/$queue
+done
 
 # ensure proper permissions
-chown -R postfix:postfix /etc/postfix
+chmod 730 /var/spool/postfix/maildrop
+chmod 710 /var/spool/postfix/public
+chown -R root /etc/postfix
 chown -R vmail:vmail /srv/mail
+
+# setup grossd
+mkdir -p /var/db/gross
+chown -R gross: /var/run/gross /var/db/gross
+/usr/sbin/grossd -u gross -C 2>/dev/null
 
 if [ ! -z $DEBUG ]; then
   echo "auth_verbose = yes" >> /etc/dovecot/dovecot.conf

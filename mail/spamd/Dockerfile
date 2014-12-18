@@ -1,4 +1,4 @@
-FROM r.srv.im/mail-base:latest
+FROM voxxit/base:alpine
 
 MAINTAINER Joshua Delsman <j (at) srv.im>
 

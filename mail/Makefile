@@ -1,15 +1,13 @@
-.PHONY: dovecot base push
+.PHONY: dovecot spamassassin push
 
-base:
-	docker build --tag r.srv.im/mail-base ./base
-
-dovecot: base
+dovecot:
 	docker build --tag r.srv.im/dovecot ./dovecot
 
-spamassassin: base
+spamassassin:
 	docker build --tag r.srv.im/spamassassin ./spamd
 
-push:
-	docker push r.srv.im/mail-base
+all: dovecot spamassassin
+
+push: all
 	docker push r.srv.im/dovecot
-	docker push r.srv.im/spamd
+	docker push r.srv.im/spamassassin

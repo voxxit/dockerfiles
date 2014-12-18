@@ -1,0 +1,7 @@
+hosts=PGSQL_HOST
+user=PGSQL_USER
+password=PGSQL_PASSWORD
+dbname=PGSQL_DBNAME
+table=transports
+select_field=transport
+where_field=domain

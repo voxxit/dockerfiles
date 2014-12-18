@@ -3,12 +3,13 @@ relayhost =
 mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
 inet_interfaces = all
 
-# Dovecot
-alias_maps = hash:/etc/aliases
-alias_database = hash:/etc/aliases
-virtual_alias_maps = hash:/etc/postfix/virtual
-virtual_mailbox_domains = /etc/postfix/virtual-mailbox-domains
-virtual_mailbox_maps = hash:/etc/postfix/virtual-mailbox-maps
+# PG Virtual Mapping
+transport_maps = pgsql:/etc/postfix/pgsql/transports.cf
+virtual_uid_maps = static:5000
+virtual_gid_maps = static:5000
+virtual_mailbox_base = /srv/mail
+virtual_mailbox_maps = pgsql:/etc/postfix/pgsql/mailboxes.cf
+virtual_maps = pgsql:/etc/postfix/pgsql/aliases.cf
 virtual_transport = lmtp:unix:private/dovecot-lmtp
 local_recipient_maps = $virtual_mailbox_maps
 
@@ -32,13 +33,20 @@ smtpd_sasl_path = private/auth
 smtpd_sasl_auth_enable = yes
 smtpd_tls_auth_only = yes
 smtpd_recipient_restrictions =
-  permit_mynetworks
-  permit_sasl_authenticated
-  reject_unauth_destination
-  check_policy_service unix:private/policy-spf
-  reject_rbl_client zen.spamhaus.org
-  reject_rbl_client bl.spamcop.net
-  check_policy_service inet:127.0.0.1:10029
+  reject_invalid_hostname,
+  reject_non_fqdn_hostname,
+  reject_non_fqdn_sender,
+  reject_non_fqdn_recipient,
+  reject_unknown_sender_domain,
+  reject_unknown_recipient_domain,
+  permit_sasl_authenticated,
+  permit_mynetworks,
+  reject_unauth_destination,
+  check_policy_service unix:private/policy-spf,
+  check_policy_service inet:127.0.0.1:5525
+smtpd_data_restrictions =
+  reject_unauth_pipelining,
+  permit
 
 # SPF
 policy-spf_time_limit = 3600s
