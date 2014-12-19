@@ -45,4 +45,4 @@ smtps     inet  n       -       n       -       -       smtpd
 policy-spf  unix  -       n       n       -       -       spawn
   user=nobody argv=/usr/bin/postfix-policyd-spf-perl
 spamfilter  unix  -       n       n       -       -       pipe
-  flags=Rq user=nobody argv=/usr/bin/spamfilter.sh -oi -f ${sender} ${recipient}
+  flags=Rq user=nobody argv=/usr/local/bin/spam_filter.sh -oi -f ${sender} ${recipient}

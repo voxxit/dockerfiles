@@ -25,7 +25,10 @@ RUN  apk update \
 VOLUME [ "/srv/mail", "/var/spool/postfix" ]
 
 COPY ./etc/ /etc/
-COPY ./bin/ /usr/local/bin/
+
+COPY ./bin/run.sh /usr/local/bin/
+COPY ./bin/update_spamassassin_rules.sh /usr/local/bin/
+COPY ./bin/spam_filter.sh /usr/local/bin/
 
 EXPOSE 25 465 587 993
 
