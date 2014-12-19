@@ -1,6 +1,16 @@
 #!/bin/bash
 set -x
 
+# update spamassassin rules
+/usr/local/bin/update_spamassassin_rules.sh ${RULES_FILE}
+
+# Set SpamAssassin options
+cat > /etc/mail/spamassassin/local.cf <<EOF
+rewrite_header Subject **SPAM** (_SCORE_)
+report_safe 0
+add_header ham HAM-Report _REPORT_
+EOF
+
 # for postgresql mapping
 sed -i "s/PGSQL_HOST/${PGSQL_HOST}/" /etc/postfix/pgsql/* /etc/dovecot/dovecot-sql.conf
 sed -i "s/PGSQL_USER/${PGSQL_USER}/" /etc/postfix/pgsql/* /etc/dovecot/dovecot-sql.conf
@@ -18,6 +28,8 @@ chmod 730 /var/spool/postfix/maildrop
 chmod 710 /var/spool/postfix/public
 chown -R root /etc/postfix
 chown -R vmail:vmail /srv/mail
+chmod 755 /usr/local/bin/spam_filter.sh
+chown root:root /usr/local/bin/spam_filter.sh
 
 # setup grossd
 mkdir -p /var/db/gross
