@@ -1,7 +1,10 @@
-.PHONY: mta push
+.PHONY: build push
 
-mta:
-	docker build --no-cache --tag r.srv.im/mta ./mta
+build:
+	docker build --tag r.srv.im/mta:latest ./mta
+
+test: build
+	docker run --rm -it r.srv.im/mta:latest bats /tests.bats
 
 push:
-	docker push r.srv.im/mta
+	docker push r.srv.im/mta:latest
