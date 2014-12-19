@@ -2,8 +2,7 @@ mydestination = localhost.localdomain, localhost
 relayhost =
 mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
 inet_interfaces = all
-alias_maps = hash:/etc/aliases
-local_recipient_maps = unix:passwd.byname $alias_maps
+local_recipient_maps =
 
 # Sanity checking
 broken_sasl_auth_clients = no
@@ -41,22 +40,16 @@ smtpd_tls_auth_only = yes
 smtpd_sasl_security_options = noanonymous
 
 smtpd_recipient_restrictions =
-  reject_invalid_hostname,
-  permit_sasl_authenticated,
-  reject_non_fqdn_hostname,
-  reject_non_fqdn_sender,
-  reject_non_fqdn_recipient,
-  reject_unknown_sender_domain,
-  reject_unknown_recipient_domain,
-  reject_unauth_pipelining,
   permit_mynetworks,
-  reject_unauth_destination,
-  check_policy_service unix:private/policy-spf,
-  check_policy_service inet:127.0.0.1:5525, permit
-
-smtpd_data_restrictions =
+  permit_sasl_authenticated,
   reject_unauth_pipelining,
-  permit
+  reject_invalid_hostname,
+  reject_non_fqdn_sender,
+  reject_unauth_destination,
+  reject_unknown_recipient_domain,
+  check_policy_service unix:private/policy-spf,
+  check_policy_service inet:127.0.0.1:5525,
+  reject_non_fqdn_recipient
 
 # SPF
 policy-spf_time_limit = 3600s
