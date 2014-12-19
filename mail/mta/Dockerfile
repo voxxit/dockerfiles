@@ -2,12 +2,15 @@ FROM voxxit/base:alpine
 
 MAINTAINER Joshua Delsman <j (at) srv.im>
 
+ENV RULES_FILE Mail-SpamAssassin-rules-3.4.0.r1565117.tgz
+
 RUN  apk update \
   && apk add \
     ca-certificates \
     postfix \
     postfix-pgsql \
     postfix-policyd-spf-perl \
+    spamassassin \
     dovecot \
     dovecot-pgsql \
     gross \
