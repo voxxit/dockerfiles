@@ -1,6 +1,9 @@
 #!/bin/bash
 set -x
 
+mkdir -p /var/spool/postfix/etc
+cp /etc/resolv.conf /var/spool/postfix/etc/
+
 # update spamassassin rules
 /usr/local/bin/update_spamassassin_rules.sh ${RULES_FILE}
 
