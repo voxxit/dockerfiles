@@ -1,7 +1,7 @@
 FROM voxxit/base:alpine
 
 RUN  apk update \
-  && apk add make gcc libc-dev git ruby libxml2-dev libxslt-dev libffi-dev yaml-dev openssl-dev zlib-dev readline-dev \
+  && apk add make nodejs gcc libc-dev git ruby libxml2-dev libxslt-dev libffi-dev yaml-dev openssl-dev zlib-dev readline-dev \
   && mkdir -p /usr/src/app \
   && git clone https://github.com/postmodern/ruby-install /usr/src/ruby-install \
   && cd /usr/src/ruby-install \
@@ -9,6 +9,7 @@ RUN  apk update \
   && ruby-install --system ruby 2.2.0-rc1 -- --disable-install-rdoc \
   && gem install bundler puma --no-ri --no-rdoc \
   && bundle config --global build.nokogiri --use-system-libraries \
+  && npm install -g npm@latest \
   && apk del ruby \
   && rm -rf /usr/src/* /var/cache/apk/*
 
