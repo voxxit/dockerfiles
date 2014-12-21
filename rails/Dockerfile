@@ -8,6 +8,7 @@ RUN  apk update \
   && make install \
   && ruby-install --system ruby 2.2.0-rc1 -- --disable-install-rdoc \
   && gem install bundler puma --no-ri --no-rdoc \
+  && bundle config --global build.nokogiri --use-system-libraries \
   && apk del ruby \
   && rm -rf /usr/src/* /var/cache/apk/*
 
