@@ -19,7 +19,7 @@ ONBUILD COPY ./Gemfile.lock /usr/src/app/
 
 ONBUILD RUN bundle install --system
 
-ONBUILD COPY ./packages.json /usr/src/app/
+ONBUILD COPY ./package.json /usr/src/app/
 ONBUILD COPY ./bower.json /usr/src/app/
 
 ONBUILD RUN npm install && bower install --allow-root
