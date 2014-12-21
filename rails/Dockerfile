@@ -1,10 +1,15 @@
 FROM voxxit/base:alpine
 
 RUN  apk update \
-  && apk add ruby ruby-dev openssl-dev nodejs ca-certificates git \
+  && apk add make gcc libc-dev git ruby libffi-dev yaml-dev openssl-dev zlib-dev readline-dev \
+  && mkdir -p /usr/src/app \
+  && git clone https://github.com/postmodern/ruby-install /usr/src/ruby-install \
+  && cd ruby-install \
+  && make install \
+  && ruby-install --system ruby 2.2.0-rc1 -- --disable-install-rdoc \
   && gem install bundler puma --no-ri --no-rdoc \
-  && npm install -g gulp bower \
-  && rm -rf /var/cache/apk/*
+  && apk del libffi-dev yaml-dev openssl-dev zlib-dev readlin-dev ruby \
+  && rm -rf /usr/src/* /var/cache/apk/*
 
 WORKDIR /usr/src/app
 
@@ -14,7 +19,7 @@ ONBUILD COPY ./Gemfile.lock /usr/src/app/
 ONBUILD RUN bundle install --system
 
 ONBUILD COPY ./packages.json /usr/src/app/
-ONBUILD COPY ./bower.json
+ONBUILD COPY ./bower.json /usr/src/app/
 
 ONBUILD RUN npm install && bower install --allow-root
 
