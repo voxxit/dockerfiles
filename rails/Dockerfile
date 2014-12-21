@@ -1,13 +1,13 @@
 FROM voxxit/base:alpine
 
 RUN  apk update \
-  && apk add make gcc libc-dev git ruby libffi-dev yaml-dev openssl-dev zlib-dev readline-dev \
+  && apk add make gcc libc-dev git ruby libxml2-dev libxslt-dev libffi-dev yaml-dev openssl-dev zlib-dev readline-dev \
   && mkdir -p /usr/src/app \
   && git clone https://github.com/postmodern/ruby-install /usr/src/ruby-install \
   && cd /usr/src/ruby-install \
   && make install \
   && ruby-install --system ruby 2.2.0-rc1 -- --disable-install-rdoc \
-  && gem install bundler rails puma --no-ri --no-rdoc \
+  && gem install bundler puma --no-ri --no-rdoc \
   && apk del ruby \
   && rm -rf /usr/src/* /var/cache/apk/*
 
@@ -16,11 +16,7 @@ WORKDIR /usr/src/app
 ONBUILD COPY ./Gemfile /usr/src/app/
 ONBUILD COPY ./Gemfile.lock /usr/src/app/
 
-ONBUILD RUN apk update \
-  && add $BUNDLER_APK_PACKAGES \
-  && bundle install --system \
-  && apk del $BUNDLER_APK_PACKAGES \
-  && rm -rf /var/cache/apk/*
+ONBUILD RUN bundle install --system
 
 ONBUILD COPY ./packages.json /usr/src/app/
 ONBUILD COPY ./bower.json /usr/src/app/
