@@ -10,6 +10,7 @@ RUN  apk update \
   && gem install bundler puma --no-ri --no-rdoc \
   && bundle config --global build.nokogiri --use-system-libraries \
   && npm install -g npm@latest \
+  && npm install -g gulp bower \
   && apk del ruby \
   && rm -rf /usr/src/* /var/cache/apk/*
 
