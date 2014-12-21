@@ -7,8 +7,8 @@ RUN  apk update \
   && cd /usr/src/ruby-install \
   && make install \
   && ruby-install --system ruby 2.2.0-rc1 -- --disable-install-rdoc \
-  && gem install bundler puma --no-ri --no-rdoc \
-  && apk del libffi-dev yaml-dev openssl-dev zlib-dev readlin-dev ruby \
+  && gem install bundler rails puma --no-ri --no-rdoc \
+  && apk del ruby \
   && rm -rf /usr/src/* /var/cache/apk/*
 
 WORKDIR /usr/src/app
@@ -27,4 +27,5 @@ ONBUILD COPY . /usr/src/app
 
 EXPOSE 9292/tcp
 
+# replace in your Dockerfile with another ruby server, etc.
 CMD [ "puma" ]
