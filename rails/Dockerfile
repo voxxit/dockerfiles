@@ -1,7 +1,7 @@
 FROM voxxit/base:alpine
 
 RUN  apk update \
-  && apk add ruby ruby-dev nodejs ca-certificates git \
+  && apk add ruby ruby-dev openssl-dev nodejs ca-certificates git \
   && gem install bundler puma --no-ri --no-rdoc \
   && npm install -g gulp bower \
   && rm -rf /var/cache/apk/*
