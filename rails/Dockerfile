@@ -16,7 +16,11 @@ WORKDIR /usr/src/app
 ONBUILD COPY ./Gemfile /usr/src/app/
 ONBUILD COPY ./Gemfile.lock /usr/src/app/
 
-ONBUILD RUN bundle install --system
+ONBUILD RUN apk update \
+  && add $BUNDLER_APK_PACKAGES \
+  && bundle install --system \
+  && apk del $BUNDLER_APK_PACKAGES \
+  && rm -rf /var/cache/apk/*
 
 ONBUILD COPY ./packages.json /usr/src/app/
 ONBUILD COPY ./bower.json /usr/src/app/
