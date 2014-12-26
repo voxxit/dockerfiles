@@ -8,4 +8,4 @@ VOLUME [ "/etc/bind" ]
 
 EXPOSE 53
 
-CMD [ "/usr/sbin/named", "-4", "-f", "-c /etc/bind/named.conf" ]
+CMD [ "/usr/sbin/named", "-c", "/etc/bind/named.conf", "-f" ]
