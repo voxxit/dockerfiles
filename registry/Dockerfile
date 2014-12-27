@@ -7,7 +7,7 @@ RUN  apt-get update \
   && cp /docker-registry/config/boto.cfg /etc/boto.cfg \
   && pip install /docker-registry/depends/docker-registry-core \
   && pip install file:///docker-registry#egg=docker-registry[bugsnag,newrelic,cors] \
-  && patch /usr/lib/python2.7/site-packages/boto/connection.py < /docker-registry/contrib/boto_header_patch.diff
+  && patch $(python -c 'import boto; import os; print os.path.dirname(boto.__file__)')/connection.py < /docker-registry/contrib/boto_header_patch.diff
 
 ENV DOCKER_REGISTRY_CONFIG /config.yml
 ENV SETTINGS_FLAVOR production
