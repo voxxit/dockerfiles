@@ -6,6 +6,7 @@ RUN apk update \
     py-yaml py-jinja2 py-hiredis py-simplejson zeromq zeromq-dev libffi-dev \
   && pip install msgpack-python apache-libcloud requests \
     pyzmq pycrypto m2crypto psutil docker-py python-etcd redis \
+    pygit \
   && pip install salt \
   && rm -rf /root/.pip /var/cache/apk/*
 
