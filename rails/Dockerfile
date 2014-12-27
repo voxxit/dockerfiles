@@ -7,10 +7,8 @@ RUN  apk update \
   && cd /usr/src/ruby-install \
   && make install \
   && ruby-install --system ruby 2.2.0-rc1 -- --disable-install-rdoc \
-  && gem install bundler puma --no-ri --no-rdoc \
+  && gem install bundler --no-ri --no-rdoc \
   && bundle config --global build.nokogiri --use-system-libraries \
-  && npm install -g npm@latest \
-  && npm install -g gulp bower \
   && apk del ruby \
   && rm -rf /usr/src/* /var/cache/apk/*
 
@@ -21,14 +19,9 @@ ONBUILD COPY ./Gemfile.lock /usr/src/app/
 
 ONBUILD RUN bundle install --system
 
-ONBUILD COPY ./package.json /usr/src/app/
-ONBUILD COPY ./bower.json /usr/src/app/
-
-ONBUILD RUN npm install && bower install --allow-root
-
 ONBUILD COPY . /usr/src/app
 
-EXPOSE 9292/tcp
+EXPOSE 3000/tcp
 
 # replace in your Dockerfile with another ruby server, etc.
-CMD [ "puma" ]
+CMD bundle exec rails server
