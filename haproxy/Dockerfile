@@ -4,12 +4,9 @@ RUN  apk update \
   && apk add haproxy \
   && rm -rf /var/cache/apk/*
   
-EXPOSE 80 443 8000
+EXPOSE 80 443
 
-# template for use with consul
-ADD ./haproxy.ctmpl /etc/haproxy/haproxy.ctmpl
-
-VOLUME [ "/etc/haproxy" ]
+VOLUME [ "/etc/haproxy", "/var/lib/haproxy" ]
 
 ENTRYPOINT [ "haproxy" ]
 
