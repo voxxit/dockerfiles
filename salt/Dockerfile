@@ -1,14 +1,7 @@
-FROM voxxit/base:alpine
+FROM base/archlinux:latest
 
-RUN apk update \
-  && apk add \
-    git linux-headers build-base openssl-dev swig python python-dev py-pip \
-    py-yaml py-jinja2 py-hiredis py-simplejson zeromq zeromq-dev libffi-dev \
-  && pip install msgpack-python apache-libcloud requests \
-    pyzmq pycrypto m2crypto psutil docker-py python-etcd redis \
-    pygit \
-  && pip install salt \
-  && rm -rf /root/.pip /var/cache/apk/*
+RUN  pacman -Syyu salt-raet python2-pip python2-pygit2 python2-redis \
+  && pip2 install six
 
 COPY ./minion.sh /usr/local/bin/minion
 COPY ./master.sh /usr/local/bin/master
