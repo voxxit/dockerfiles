@@ -2,7 +2,7 @@ FROM voxxit/base:alpine
 
 RUN apk update \
   && apk add \
-    git linux-headers gcc libc-dev openssl-dev swig python python-dev py-pip \
+    git linux-headers build-base openssl-dev swig python python-dev py-pip \
     py-yaml py-jinja2 py-hiredis py-simplejson zeromq zeromq-dev libffi-dev \
   && pip install msgpack-python apache-libcloud requests \
     pyzmq pycrypto m2crypto psutil docker-py python-etcd redis \
