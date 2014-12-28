@@ -2,6 +2,7 @@
 
 if [ ! -f /etc/salt/minion ]; then
   cat > /etc/salt/minion <<EOF
+transport: ${SALT_TRANSPORT:-'raet'}
 master: ${SALT_MINION_MASTER:-'salt'}
 keysize: ${SALT_MINION_KEYSIZE:-'2048'}
 mine_interval: ${SALT_MINION_MINE_INTERVAL:-'2'}
