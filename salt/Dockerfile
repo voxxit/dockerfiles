@@ -1,6 +1,8 @@
 FROM base/archlinux:latest
 
-RUN  pacman -Syu --noconfirm git salt-raet python2-pip python2-pygit2 python2-redis python2-six
+RUN  pacman -Syu --noconfirm \
+  git salt-raet python2-pip python2-pygit2 python2-redis python2-six python2-crypto \
+  python2-m2crypto python2-msgpack python2-yaml python2-jinja
 
 COPY ./minion.sh /usr/local/bin/minion
 COPY ./master.sh /usr/local/bin/master
