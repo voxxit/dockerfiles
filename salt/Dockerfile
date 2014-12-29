@@ -4,10 +4,11 @@ RUN  pacman -Syu --noconfirm salt-raet python2-pip python2-pygit2 python2-redis 
 
 COPY ./minion.sh /usr/local/bin/minion
 COPY ./master.sh /usr/local/bin/master
+COPY ./minion.conf /etc/salt/minion
+COPY ./master.conf /etc/salt/master
 
 VOLUME [ "/etc/salt", "/var/cache/salt", "/var/log/salt", "/srv/salt" ]
 
-# salt-master
-EXPOSE 4505/tcp 4506/tcp
+EXPOSE 4505/tcp 4506/tcp 4510/udp
 
 CMD [ "salt" ]

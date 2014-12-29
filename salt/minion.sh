@@ -1,16 +1,10 @@
 #!/bin/sh
+config=/etc/salt/minion
 
-if [ ! -f /etc/salt/minion ]; then
-  cat > /etc/salt/minion <<EOF
-transport: ${SALT_TRANSPORT:-'raet'}
-master: ${SALT_MINION_MASTER:-'salt'}
-keysize: ${SALT_MINION_KEYSIZE:-'2048'}
-mine_interval: ${SALT_MINION_MINE_INTERVAL:-'2'}
-mine_functions:
-  test.ping: []
-  network.get_hostname: []
-  network.ip_addrs: [eth0]
-EOF
+if [ -f $config ]; then
+  sed "s/%master%/${SALT_MASTER:-'salt'}/g"            -i $config
+  sed "s/%keysize%/${SALT_KEYSIZE:-'2048'}/g"          -i $config
+  sed "s/%mine_interval%/${SALT_MINE_INTERVAL:-'2'}/g" -i $config
 fi
 
-exec salt-minion -l ${SALT_MINION_LOGLEVEL:-'warning'}
+exec salt-minion -l ${SALT_LOGLEVEL:-'warning'}
