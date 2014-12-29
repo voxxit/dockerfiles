@@ -1,0 +1,23 @@
+options {
+  directory "/var/bind";
+  pid-file  "/var/run/named/named.pid";
+
+  // for security purposes
+  version "none";
+
+  // conform to RFC1035
+  auth-nxdomain no;
+
+  // DNSSEC
+  dnssec-enable      yes;
+  dnssec-validation  yes;
+  dnssec-lookaside   auto;
+
+  listen-on    { 127.0.0.1; 172.17.42.1; }
+  listen-on-v6 { any; }
+
+  allow-query       { trusted; };
+  allow-transfer    { none;    };
+  allow-recursion   { trusted; };
+  allow-query-cache { trusted; };
+};
