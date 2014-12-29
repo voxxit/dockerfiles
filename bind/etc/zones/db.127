@@ -1,0 +1,10 @@
+;
+; BIND reverse data file for local loopback interface
+;
+
+$ORIGIN 127.in-addr.arpa.
+$TTL    1w
+
+@       IN  SOA     localhost. root.localhost. ( 1999010100 3h 15m 1w 1d )
+@       IN  NS      localhost.
+1.0.0   IN  PTR     localhost.
