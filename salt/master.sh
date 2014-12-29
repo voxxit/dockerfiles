@@ -1,11 +1,9 @@
 #!/bin/sh
+config=/etc/salt/master
 
-if [ ! -f /etc/salt/master ]; then
-  cat > /etc/salt/master <<EOF
-transport: ${SALT_TRANSPORT:-'raet'}
-interface: ${SALT_MASTER_BIND:-'0.0.0.0'}
-state_verbose: ${SALT_MASTER_STATE_VERBOSE:-'False'}
-EOF
+if [ -f $config ]; then
+  sed "s/%interface%/${SALT_INTERFACE:-'0.0.0.0'}/g" -i $config
+  sed "s/%state_verbose%/${SALT_STATE_VERBOSE:-'False'}/g" -i $config
 fi
 
-exec salt-master -l ${SALT_MASTER_LOGLEVEL:-'warning'}
+exec salt-master -l ${SALT_LOGLEVEL:-'warning'}
