@@ -14,23 +14,32 @@ docker run \
   --restart on-failure:10 \
   --name salt-master \
   --link redis:redis \
-  voxxit/salt master
+  salt master
 ```
 
 To start a minion:
 
 ```
 docker run \
-  --restart on-failure:10 \
-  --detach \
-  -p 4510:4510/udp \
+  -d \
   -v /dev/log:/dev/log \
   -v /etc/salt:/etc/salt \
   -v /srv/salt:/srv/salt \
   -v /var/log/salt:/var/log/salt \
+  --restart on-failure:10 \
   --name salt-minion \
   --link redis:redis \
   voxxit/salt minion
+```
+
+### Helpful Aliases
+
+Alternatively, replace `salt-master` below for `salt-minion` if that container is running on the server.
+
+```
+alias salt="docker exec -it salt-master salt"
+alias salt-key="docker exec -it salt-master salt-key"
+alias salt-call="docker exec -it salt-master salt-call"
 ```
 
 **salt-master** Environment variables:
