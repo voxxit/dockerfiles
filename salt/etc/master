@@ -1,0 +1,28 @@
+# /salt/etc/master
+
+user:               salt
+interface:          '::'
+publish_port:       4505
+ret_port:           4506
+ipv6:               True
+state_verbose:      False
+
+root_dir:           /
+cachedir:           /salt/cache/master
+log_file:           /salt/log/master
+key_logfile:        /salt/log/key
+pki_dir:            /salt/pki/master
+roster_file:        /salt/roster
+sock_dir:           /salt/run/master
+pidfile:            /salt/run/master.pid
+
+log_level:          info
+log_level_logfile:  warning
+
+file_roots:
+  base:
+    - /salt/files
+
+pillar_roots:
+  base:
+    - /salt/pillars
