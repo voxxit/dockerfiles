@@ -10,9 +10,8 @@ RUN  pacman -Syu --noconfirm \
   python2-pip \
   python2-pygit2 \
   python2-redis \
-  python2-six \
   python2-yaml \
-  salt-raet
+  salt-zmq
 
 COPY minion.sh   /usr/local/bin/minion
 COPY master.sh   /usr/local/bin/master
@@ -22,6 +21,6 @@ COPY master.conf /etc/salt/master
 
 VOLUME [ "/etc/salt", "/var/cache/salt", "/var/log/salt", "/srv/salt" ]
 
-EXPOSE 4505/tcp 4506/tcp 4510/udp
+EXPOSE 4505 4506
 
 CMD [ "salt" ]

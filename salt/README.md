@@ -5,11 +5,11 @@ docker run \
   -d \
   -p 4505:4505/tcp \
   -p 4506:4506/tcp \
-  -p 4510:4510/udp \
   -v /dev/log:/dev/log \
   -v /etc/salt:/etc/salt \
   -v /srv/salt:/srv/salt \
   -v /var/log/salt:/var/log/salt \
+  -v /var/cache/salt:/var/cache/salt \
   -h salt \
   --restart on-failure:10 \
   --name salt-master \
@@ -26,6 +26,7 @@ docker run \
   -v /etc/salt:/etc/salt \
   -v /srv/salt:/srv/salt \
   -v /var/log/salt:/var/log/salt \
+  -v /var/cache/salt:/var/cache/salt \
   --restart on-failure:10 \
   --name salt-minion \
   --link redis:redis \
@@ -34,13 +35,18 @@ docker run \
 
 ### Helpful Aliases
 
-Alternatively, replace `salt-master` below for `salt-minion` if that container is running on the server.
+The following aliases assume you're running them on a machine with the salt-minion config above. Alternatively, replace `salt-minion` below for `salt-master` if that container is running on the server.
 
 ```
-alias salt="docker exec -it salt-master salt"
-alias salt-key="docker exec -it salt-master salt-key"
-alias salt-call="docker exec -it salt-master salt-call"
+alias salt="docker exec -it salt-minion salt"
+alias salt-api="docker exec -it salt-minion salt-api"
+alias salt-key="docker exec -it salt-minion salt-key"
+alias salt-call="docker exec -it salt-minion salt-call"
+alias salt-cp="docker exec -it salt-minion salt-cp"
+alias salt-run="docker exec -it salt-minion salt-run"
 ```
+
+Add these to your `.bashrc` or `.zshrc` file
 
 **salt-master** Environment variables:
 
