@@ -1,7 +1,3 @@
 //
 // Primary, secondary and dynamic zones for this nameserver go here
 //
-
-// RFC1918 zones. You can remove them as necessary, keeping the ones
-// you do not customize.
-include "/etc/bind/zones.rfc1918";
