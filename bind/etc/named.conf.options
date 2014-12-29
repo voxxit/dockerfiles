@@ -1,3 +1,7 @@
+acl "trusted" { localhost; localnets; };
+acl "masters" { };
+acl "slaves"  { };
+
 options {
   directory "/var/bind";
   pid-file  "/var/run/named/named.pid";
@@ -13,8 +17,8 @@ options {
   dnssec-validation  yes;
   dnssec-lookaside   auto;
 
-  listen-on    { 127.0.0.1; 172.17.42.1; }
-  listen-on-v6 { any; }
+  listen-on    { any; };
+  listen-on-v6 { any; };
 
   allow-query       { trusted; };
   allow-transfer    { none;    };
