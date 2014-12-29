@@ -1,13 +1,24 @@
 FROM base/archlinux:latest
 
 RUN  pacman -Syu --noconfirm \
-  git salt-raet python2-pip python2-pygit2 python2-redis python2-six python2-crypto \
-  python2-m2crypto python2-msgpack python2-yaml python2-jinja
+  git \
+  python2 \
+  python2-crypto \
+  python2-jinja \
+  python2-m2crypto \
+  python2-msgpack \
+  python2-pip \
+  python2-pygit2 \
+  python2-redis \
+  python2-six \
+  python2-yaml \
+  salt-raet
 
-COPY ./minion.sh /usr/local/bin/minion
-COPY ./master.sh /usr/local/bin/master
-COPY ./minion.conf /etc/salt/minion
-COPY ./master.conf /etc/salt/master
+COPY minion.sh   /usr/local/bin/minion
+COPY master.sh   /usr/local/bin/master
+
+COPY minion.conf /etc/salt/minion
+COPY master.conf /etc/salt/master
 
 VOLUME [ "/etc/salt", "/var/cache/salt", "/var/log/salt", "/srv/salt" ]
 
