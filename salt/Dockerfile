@@ -1,7 +1,6 @@
 FROM base/archlinux:latest
 
-RUN  pacman -Syu --noconfirm salt-raet python2-pip python2-pygit2 python2-redis \
-  && pip2 install six
+RUN  pacman -Syu --noconfirm salt-raet python2-pip python2-pygit2 python2-redis python2-six
 
 COPY ./minion.sh /usr/local/bin/minion
 COPY ./master.sh /usr/local/bin/master
