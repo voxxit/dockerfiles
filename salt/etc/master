@@ -1,20 +1,22 @@
 # /salt/etc/master
 
 user:               salt
+
 interface:          '::'
 publish_port:       4505
 ret_port:           4506
+
 ipv6:               True
 state_verbose:      False
 
 root_dir:           /
 cachedir:           /salt/cache/master
-log_file:           /salt/log/master
-key_logfile:        /salt/log/key
+log_file:           /salt/master.log
+key_logfile:        /salt/key.log
 pki_dir:            /salt/pki/master
 roster_file:        /salt/roster
-sock_dir:           /salt/run/master
-pidfile:            /salt/run/master.pid
+sock_dir:           /salt/master.sock
+pidfile:            /salt/master.pid
 
 log_level:          info
 log_level_logfile:  warning
