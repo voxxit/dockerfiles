@@ -27,4 +27,6 @@ ENV SALT_MINION_CONFIG  /salt/etc/minion
 
 EXPOSE 4505 4506
 
-CMD chown -R salt /salt && salt
+USER salt
+
+CMD [ "salt" ]
