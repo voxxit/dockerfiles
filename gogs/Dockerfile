@@ -1,28 +1,34 @@
 FROM voxxit/base:alpine
 
-ENV GOPATH   /go
-ENV GOGSPATH $GOPATH/src/github.com/gogits/gogs
-ENV PATH     $GOPATH/bin:$PATH
+ENV HOME /usr/local/gogs
+
+COPY ./files/  $HOME
 
 RUN  apk update \
-  && apk add go git openssh \
-  && curl -o /bin/gosu -sSL "https://github.com/tianon/gosu/releases/download/1.2/gosu-amd64" \
-  && chmod +x /bin/gosu \
-  && mkdir -p $GOPATH/src $GOPATH/bin \
-  && go get -u -tags "cert redis" github.com/gogits/gogs \
-  && cd $GOGSPATH \
-  && go build -tags "cert redis" \
-  && adduser -h $GOGSPATH -s /bin/bash -D -H git \
-  && apk del go \
-  && rm -rf /var/cache/apk/*
+  # install gogs dependencies & go
+  && apk add libc-dev gcc go curl git openssh \
+  # add gosu
+  && curl -o /usr/local/bin/gosu -sSL "https://github.com/tianon/gosu/releases/download/1.2/gosu-amd64" \
+  && chmod +x /usr/local/bin/gosu \
+  # build gogs
+  && export GOPATH=/go \
+  && mkdir -p /go/src /go/bin \
+  && go get -v -tags "sqlite redis memcache cert" github.com/gogits/gogs \
+  && cd /go/src/github.com/gogits/gogs \
+  && go install -v -tags "sqlite redis memcache cert" \
+  && mv /go/bin/gogs ~/ \
+  # add git user
+  && adduser -h $HOME -s /bin/sh -D -H git \
+  # cleanup
+  && apk del libc-dev gcc go \
+  && rm -rf /go/src /go/bin /var/cache/apk/*
 
-WORKDIR $GOGSPATH
+WORKDIR $HOME
 
-COPY ./app.ini $GOGSPATH/conf/app.ini
-COPY ./run.sh  $GOGSPATH/scripts/run.sh
+COPY ./run.sh  $HOME/scripts/run.sh
 
-VOLUME [ "/go/src/github.com/gogits/gogs", "/var/lib/repos" ]
+VOLUME [ "/usr/local/gogs/repos" ]
 
 EXPOSE 22 3000
 
-CMD [ "./scripts/run.sh" ]
+CMD [ "/usr/local/gogs/scripts/run.sh" ]
