@@ -1,29 +1,30 @@
 FROM voxxit/base:alpine
 
-ENV HOME /usr/local/gogs
+MAINTAINER Joshua Delsman <j@srv.im>
 
-COPY ./files/  $HOME
-
-RUN  apk update \
-  # install gogs dependencies & go
-  && apk add libc-dev gcc go git openssh \
-  # build gogs
-  && export GOPATH=/go \
-  && mkdir -p /go/src /go/bin \
-  && go get -v -tags "sqlite redis memcache cert" github.com/gogits/gogs \
-  && cd /go/src/github.com/gogits/gogs \
-  && go install -v -tags "sqlite redis memcache cert" \
-  && mv /go/bin/gogs ~/ \
-  # add git user
-  && deluser git \
-  && adduser -h $HOME -s /bin/bash -D -H git \
-  # cleanup
-  && apk del libc-dev gcc go \
-  && rm -rf /go/src /go/bin /var/cache/apk/*
+ENV HOME      /usr/local/gogs
+ENV GOGS_REPO "github.com/gogits/gogs"
+ENV GOGS_TAGS "sqlite redis memcache cert"
 
 WORKDIR $HOME
 
-COPY ./run.sh  $HOME/scripts/run.sh
+# install gogs dependencies & go
+RUN  apk update \
+  && apk add libc-dev gcc curl go git openssh \
+  # gogs v0.5.11
+  && curl -fsSL -o /usr/local/gogs.zip http://git.io/mAWxew \
+  && unzip -o /usr/local/gogs.zip \
+  # build gogs
+  && export GOPATH="/go" \
+  && go get -v -tags $GOGS_TAGS $GOGS_REPO \
+  && go build -v -tags $GOGS_TAGS $GOGS_REPO \
+  # add git user
+  && adduser -h /usr/local/gogs -s /bin/bash -D -H git \
+  # cleanup
+  && apk del libc-dev gcc go curl \
+  && rm -rf /usr/local/gogs.zip /go /var/cache/apk/*
+
+COPY ./run.sh  /usr/local/gogs/scripts/
 
 VOLUME [ "/usr/local/gogs/repos" ]
 
