@@ -6,10 +6,7 @@ COPY ./files/  $HOME
 
 RUN  apk update \
   # install gogs dependencies & go
-  && apk add libc-dev gcc go curl git openssh \
-  # add gosu
-  && curl -o /usr/local/bin/gosu -sSL "https://github.com/tianon/gosu/releases/download/1.2/gosu-amd64" \
-  && chmod +x /usr/local/bin/gosu \
+  && apk add libc-dev gcc go git openssh \
   # build gogs
   && export GOPATH=/go \
   && mkdir -p /go/src /go/bin \
