@@ -15,7 +15,8 @@ RUN  apk update \
   && go install -v -tags "sqlite redis memcache cert" \
   && mv /go/bin/gogs ~/ \
   # add git user
-  && adduser -h $HOME -s /bin/sh -D -H git \
+  && deluser git \
+  && adduser -h $HOME -s /bin/bash -D -H git \
   # cleanup
   && apk del libc-dev gcc go \
   && rm -rf /go/src /go/bin /var/cache/apk/*

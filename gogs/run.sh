@@ -31,9 +31,9 @@ sed -i "s/#PermitEmptyPasswords no/PermitEmptyPasswords no/g" /etc/ssh/sshd_conf
 sed -i "s/#PubkeyAuthentication yes/PubkeyAuthentication yes/g" /etc/ssh/sshd_config
 
 # ensure correct permissions
-chown -R git:git .
+chown -R git .
 
 # start sshd & gogs
 /usr/sbin/sshd -p ${SSH_PORT:-22}
 
-exec /usr/local/bin/gosu git:git ~/gogs web
+exec /usr/local/bin/gosu git ~/gogs web
