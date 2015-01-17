@@ -30,14 +30,7 @@ COPY ./bin/       /usr/local/bin/
 COPY ./etc/       /etc/
 COPY ./var/       /var/
 
-COPY ./dns.patch  /
-
 COPY ./tests.bats /
-
-# Patch for SpamAssassin's DNS Resolving to fix the
-# issues with Net::DNS 0.76
-# RUN cd /usr/share/perl5/vendor_perl/Mail/SpamAssassin \
-#   && patch -p0 -i /dns.patch
 
 EXPOSE 25 465 587 993
 
