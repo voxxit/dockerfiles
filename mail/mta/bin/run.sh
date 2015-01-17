@@ -28,8 +28,8 @@ chmod 755 /usr/local/bin/spam_filter.sh
 chown root: /usr/local/bin/spam_filter.sh
 
 # setup grossd
-mkdir -p /var/db/gross
-chown -R gross: /var/run/gross /var/db/gross
+mkdir -p /var/run/gross
+chown -R gross: /var/run/gross
 /usr/sbin/grossd -u gross -C 2>/dev/null
 
 # debugging
