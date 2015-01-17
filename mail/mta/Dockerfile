@@ -12,6 +12,7 @@ RUN  apt-get -y update \
     dovecot-common \
     dovecot-pgsql \
     dovecot-sieve \
+    dovecot-lmtpd \
     gross \
     supervisor \
     libsasl2-modules-sql \
@@ -20,7 +21,7 @@ RUN  apt-get -y update \
   && adduser --system --home /srv/mail --no-create-home \
     --uid 5000 --gid 5000 --disabled-password \
     --disabled-login vmail \
-  && rm -rf /var/lib/apt/lists/* /var/tmp/* /tmp/*
+  && rm -rf /var/lib/apt/lists/* /var/tmp/* /tmp/* /etc/dovecot/conf.d/*
 
 VOLUME [ "/srv/mail" ]
 
