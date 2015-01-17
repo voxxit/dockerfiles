@@ -13,6 +13,7 @@ RUN  apt-get -y update \
     dovecot-pgsql \
     dovecot-sieve \
     dovecot-lmtpd \
+    dovecot-imapd \
     gross \
     supervisor \
     libsasl2-modules-sql \
