@@ -1,6 +1,4 @@
-#!/bin/bash
-set -e
-set -x
+#!/bin/bash -xe
 
 URL=http://www.apache.org/dist/spamassassin/source/${RULES_FILE}
 

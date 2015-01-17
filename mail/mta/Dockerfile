@@ -1,41 +1,41 @@
-FROM voxxit/base:alpine
-
-MAINTAINER Joshua Delsman <j (at) srv.im>
+FROM voxxit/base:ubuntu
 
 ENV RULES_FILE Mail-SpamAssassin-rules-3.4.0.r1565117.tgz
 
-RUN  apk update \
-  && apk add \
+RUN  apt-get -y update \
+  && apt-get -y install \
     ca-certificates \
     postfix \
     postfix-pgsql \
-    postfix-policyd-spf-perl \
+    postfix-policyd-spf-python \
     spamassassin \
-    dovecot \
+    dovecot-common \
     dovecot-pgsql \
+    dovecot-sieve \
     gross \
     supervisor \
-    cyrus-sasl \
-    cyrus-sasl-digestmd5 \
-  && rm -rf /var/cache/apk/* \
-  && deluser vmail \
-  && addgroup -S -g 5000 vmail \
-  && adduser -S -u 5000 -G vmail vmail
+    libsasl2-modules-sql \
+    sasl2-bin \
+  && addgroup --system --gid 5000 vmail \
+  && adduser --system --home /srv/mail --no-create-home \
+    --uid 5000 --gid 5000 --disabled-password \
+    --disabled-login vmail \
+  && rm -rf /var/lib/apt/lists/* /var/tmp/* /tmp/*
 
-VOLUME [ "/srv/mail", "/var/spool/postfix" ]
+VOLUME [ "/srv/mail" ]
 
-COPY ./etc/ /etc/
+COPY ./bin/       /usr/local/bin/
+COPY ./etc/       /etc/
+COPY ./var/       /var/
 
-COPY ./bin/run.sh /usr/local/bin/
-COPY ./bin/update_spamassassin_rules.sh /usr/local/bin/
-COPY ./bin/spam_filter.sh /usr/local/bin/
-COPY ./dns.patch /
+COPY ./dns.patch  /
+
 COPY ./tests.bats /
 
 # Patch for SpamAssassin's DNS Resolving to fix the
 # issues with Net::DNS 0.76
-RUN cd /usr/share/perl5/vendor_perl/Mail/SpamAssassin \
-  && patch -p0 -i /dns.patch
+# RUN cd /usr/share/perl5/vendor_perl/Mail/SpamAssassin \
+#   && patch -p0 -i /dns.patch
 
 EXPOSE 25 465 587 993
 

@@ -1,0 +1,22 @@
+driver = pgsql
+
+connect = host=PGSQL_HOST dbname=PGSQL_DBNAME user=PGSQL_USER password=PGSQL_PASSWORD
+
+default_pass_scheme = CRYPT
+
+password_query = \
+  SELECT email AS user, password \
+  FROM users \
+  WHERE email = '%u'
+
+user_query = \
+  SELECT '/srv/mail/' || (\
+    SUBSTRING(email FROM (position('@' IN email) + 1) \
+    FOR (char_length(email) - position('@' IN email) + 1)) || '/' || \
+    SUBSTRING(email FROM 0 FOR position('@' IN email)) || '/') AS home, uid, gid \
+  FROM users \
+  WHERE email = '%u'
+
+iterate_query = \
+  SELECT email AS user \
+  FROM users

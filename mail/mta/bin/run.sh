@@ -9,9 +9,9 @@ cp /etc/resolv.conf /var/spool/postfix/etc/
 
 # Set SpamAssassin options
 cat > /etc/mail/spamassassin/local.cf <<EOF
+add_header all Status _YESNO_, score=_SCORE_ required=_REQD_ tests=_TESTS_ autolearn=_AUTOLEARN_ version=_VERSION_
 rewrite_header Subject **SPAM** (_SCORE_)
 report_safe 0
-add_header ham HAM-Report _REPORT_
 EOF
 
 # for postgresql mapping

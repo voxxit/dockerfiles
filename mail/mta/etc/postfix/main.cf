@@ -45,11 +45,11 @@ smtpd_recipient_restrictions =
   reject_unauth_pipelining,
   reject_invalid_hostname,
   reject_non_fqdn_sender,
-  reject_unauth_destination,
   reject_unknown_recipient_domain,
-  check_policy_service unix:private/policy-spf,
+  reject_unauth_destination,
+  check_policy_service unix:private/policyd-spf,
   check_policy_service inet:127.0.0.1:5525,
   reject_non_fqdn_recipient
 
 # SPF
-policy-spf_time_limit = 3600s
+policyd-spf_time_limit = 3600
