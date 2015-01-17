@@ -42,7 +42,7 @@ smtps     inet  n       -       n       -       -       smtpd
   -o syslog_name=postfix/smtps
   -o smtpd_tls_wrappermode=yes
   -o smtpd_sasl_auth_enable=yes
-policy-spf  unix  -       n       n       -       -       spawn
-  user=nobody argv=/usr/bin/postfix-policyd-spf-perl
+policyd-spf  unix  -       n       n       -       0       spawn
+  user=policyd-spf argv=/usr/bin/policyd-spf
 spamfilter  unix  -       n       n       -       -       pipe
   flags=Rq user=nobody argv=/usr/local/bin/spam_filter.sh -oi -f ${sender} ${recipient}
