@@ -2,7 +2,7 @@ driver = pgsql
 
 connect = host=PGSQL_HOST dbname=PGSQL_DBNAME user=PGSQL_USER password=PGSQL_PASSWORD
 
-default_pass_scheme = CRYPT
+default_pass_scheme = SHA512
 
 password_query = \
   SELECT email AS user, password \
