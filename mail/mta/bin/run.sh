@@ -24,7 +24,8 @@ chmod 730 /var/spool/postfix/maildrop
 chmod 710 /var/spool/postfix/public
 chown -R root /etc/postfix
 chown -R postfix /var/spool/postfix
-chown -R vmail: /srv/mail
+chgrp -R postdrop /var/spool/postfix/{maildrop,public}
+chown -R vmail /srv/mail
 chmod 755 /usr/local/bin/spam_filter.sh
 chown root: /usr/local/bin/spam_filter.sh
 
