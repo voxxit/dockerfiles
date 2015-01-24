@@ -1,4 +1,16 @@
-#!/bin/bash -x
+#!/bin/bash -ex
+#
+# ensure resolv.conf is functioning
+#
+cat > /etc/resolv.conf <<EOF
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+nameserver 2001:4860:4860::8888
+nameserver 2001:4860:4860::8844
+options rotate
+EOF
+
+host yahoo.com >/dev/null || exit 1
 
 mkdir -p /srv/mail
 
@@ -25,13 +37,14 @@ chmod 710 /var/spool/postfix/public
 chown -R root /etc/postfix
 chown -R postfix /var/spool/postfix
 chgrp -R postdrop /var/spool/postfix/{maildrop,public}
-chown -R vmail /srv/mail
+chown -R vmail /srv/mail /var/lib/dovecot/sieve
 chmod 755 /usr/local/bin/spam_filter.sh
 chown root: /usr/local/bin/spam_filter.sh
 
 # setup grossd
-mkdir -p /var/{db,run}/gross
-chown -R gross: /var/{db,run}/gross
+mkdir -p /var/db/gross /var/run/gross
+chown -R gross:gross /var/db/gross /var/run/gross
+
 /usr/sbin/grossd -u gross -C 2>/dev/null
 
 # debugging

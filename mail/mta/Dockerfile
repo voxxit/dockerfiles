@@ -1,7 +1,5 @@
 FROM voxxit/base:ubuntu
 
-ENV RULES_FILE Mail-SpamAssassin-rules-3.4.0.r1565117.tgz
-
 RUN  apt-get -y update \
   && apt-get -y install \
     ca-certificates \
@@ -14,6 +12,8 @@ RUN  apt-get -y update \
     dovecot-sieve \
     dovecot-lmtpd \
     dovecot-imapd \
+    libgeo-ip-perl \
+    geoip-bin \
     gross \
     supervisor \
     libsasl2-modules-sql \
@@ -26,11 +26,9 @@ RUN  apt-get -y update \
 
 VOLUME [ "/srv/mail" ]
 
-COPY ./bin/       /usr/local/bin/
-COPY ./etc/       /etc/
-COPY ./var/       /var/
-
-COPY ./tests.bats /
+COPY ./bin/ /usr/local/bin/
+COPY ./etc/ /etc/
+COPY ./var/ /var/
 
 EXPOSE 25 465 587 993
 
