@@ -15,7 +15,6 @@ host yahoo.com >/dev/null || exit 1
 # for jail
 mkdir -p /var/spool/postfix/etc
 cp /etc/resolv.conf /var/spool/postfix/etc/resolv.conf
-chown root: /var/spool/postfix/etc/resolv.conf
 
 mkdir -p /srv/mail
 
@@ -42,6 +41,7 @@ chmod 710 /var/spool/postfix/public
 chown -R root /etc/postfix
 chown -R postfix /var/spool/postfix
 chgrp -R postdrop /var/spool/postfix/{maildrop,public}
+chown root: /var/spool/postfix/etc/resolv.conf
 chown -R vmail /srv/mail /var/lib/dovecot/sieve
 chmod 755 /usr/local/bin/spam_filter.sh
 chown root: /usr/local/bin/spam_filter.sh
