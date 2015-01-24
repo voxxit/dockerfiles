@@ -12,6 +12,11 @@ EOF
 
 host yahoo.com >/dev/null || exit 1
 
+# for jail
+mkdir -p /var/spool/postfix/etc
+cp /etc/resolv.conf /var/spool/postfix/etc/resolv.conf
+chown root: /var/spool/postfix/etc/resolv.conf
+
 mkdir -p /srv/mail
 
 # Set SpamAssassin options
