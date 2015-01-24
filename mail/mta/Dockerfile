@@ -14,6 +14,7 @@ RUN  apt-get -y update \
     dovecot-imapd \
     libgeo-ip-perl \
     geoip-bin \
+    bind9-host \
     gross \
     supervisor \
     libsasl2-modules-sql \
