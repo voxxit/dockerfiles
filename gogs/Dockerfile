@@ -11,6 +11,9 @@ WORKDIR $HOME
 # install gogs dependencies & go
 RUN  apk update \
   && apk add libc-dev gcc curl go git openssh \
+  # gosu
+  && curl -o /usr/local/bin/gosu -sSL "https://github.com/tianon/gosu/releases/download/1.2/gosu-amd64" \
+  && chmod +x /usr/local/bin/gosu \
   # gogs v0.5.11
   && curl -fsSL -o /usr/local/gogs.zip http://git.io/mAWxew \
   && unzip -o /usr/local/gogs.zip \
