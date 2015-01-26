@@ -40,7 +40,7 @@ pushd /var/spool/postfix
   chmod 710 ./public
   chown -R postfix .
   chgrp -R postdrop ./{maildrop,public}
-  chwon root: ./etc/resolv.conf
+  chown root: ./etc/resolv.conf
 popd
 
 # precompile sieve
