@@ -9,13 +9,13 @@ broken_sasl_auth_clients = no
 disable_vrfy_command = yes
 
 # PG Virtual Mapping
-transport_maps = pgsql:/etc/postfix/pgsql/transports.cf
+transport_maps = proxy:pgsql:/etc/postfix/pgsql/transports.cf
 virtual_uid_maps = static:5000
 virtual_gid_maps = static:5000
 virtual_mailbox_base = /srv/mail
-virtual_mailbox_domains = pgsql:/etc/postfix/pgsql/domains.cf
-virtual_mailbox_maps = pgsql:/etc/postfix/pgsql/mailboxes.cf
-virtual_maps = pgsql:/etc/postfix/pgsql/aliases.cf
+virtual_mailbox_domains = proxy:pgsql:/etc/postfix/pgsql/domains.cf
+virtual_mailbox_maps = proxy:pgsql:/etc/postfix/pgsql/mailboxes.cf
+virtual_maps = proxy:pgsql:/etc/postfix/pgsql/aliases.cf
 virtual_transport = lmtp:unix:private/dovecot-lmtp
 
 # Mailgun SMTP relay
