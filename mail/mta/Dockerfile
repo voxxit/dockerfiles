@@ -1,24 +1,25 @@
-FROM voxxit/base:ubuntu
+FROM debian:jessie
 
-RUN  apt-get -y update \
-  && apt-get -y install \
+RUN  DEBIAN_FRONTEND=noninteractive apt-get update \
+  && DEBIAN_FRONTEND=noninteractive apt-get -y install \
+    bind9-host \
     ca-certificates \
-    postfix \
-    postfix-pgsql \
-    postfix-policyd-spf-python \
-    spamassassin \
     dovecot-common \
     dovecot-pgsql \
     dovecot-sieve \
     dovecot-lmtpd \
     dovecot-imapd \
-    libgeo-ip-perl \
     geoip-bin \
-    bind9-host \
     gross \
-    supervisor \
+    libgeo-ip-perl \
     libsasl2-modules-sql \
+    postfix \
+    postfix-pgsql \
+    postfix-policyd-spf-python \
     sasl2-bin \
+    spamassassin \
+    supervisor \
+    razor \
   && addgroup --system --gid 5000 vmail \
   && adduser --system --home /srv/mail --no-create-home \
     --uid 5000 --gid 5000 --disabled-password \

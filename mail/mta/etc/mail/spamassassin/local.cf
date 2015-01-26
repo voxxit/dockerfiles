@@ -1,0 +1,35 @@
+# Scores of 5.0+ are considered spam
+required_score 5.0
+
+# Don't touch the body; just the headers
+report_safe 0
+
+# Skip DNS checks; done already in grossd
+skip_rbl_checks 1
+skip_uribl_checks 1
+
+# Add DNS servers just in case
+dns_server 8.8.8.8
+dns_server 8.8.4.4
+
+# Use these headers for reporting
+add_header all Flag _YESNOCAPS_
+add_header all Status _YESNO_, score=_SCORE_ required=_REQD_ tests=_TESTS_ autolearn=_AUTOLEARN_ version=_VERSION_
+add_header all Level _STARS(*)_
+add_header all Checker-Version SpamAssassin _VERSION_ (_SUBVERSION_) on _HOSTNAME_
+
+# Skip these headers for Bayes filtering
+bayes_ignore_header X-Spam-Flag
+bayes_ignore_header X-Spam-Status
+bayes_ignore_header X-Spam-Level
+
+# Only really receive emails in Chinese or English
+ok_locales en zh
+
+# Reporting email
+report_contact postmaster@srv.im
+
+# use Razor, if installed
+use_razor2 1
+
+pyzor_options --homedir /etc/mail/spamassassin
