@@ -1,7 +1,7 @@
 FROM debian:jessie
 
 RUN  DEBIAN_FRONTEND=noninteractive apt-get update \
-  && DEBIAN_FRONTEND=noninteractive apt-get upgrade \
+  && DEBIAN_FRONTEND=noninteractive apt-get -y upgrade \
   && DEBIAN_FRONTEND=noninteractive apt-get -y install \
     bind9-host \
     ca-certificates \
