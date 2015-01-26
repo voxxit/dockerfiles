@@ -20,6 +20,7 @@ RUN  DEBIAN_FRONTEND=noninteractive apt-get update \
     spamassassin \
     supervisor \
     razor \
+    pyzor \
   && addgroup --system --gid 5000 vmail \
   && adduser --system --home /srv/mail --no-create-home \
     --uid 5000 --gid 5000 --disabled-password \
