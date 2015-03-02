@@ -17,7 +17,6 @@ RUN apt-get -y update &&\
   rm -rf /var/lib/apt/lists*
 
 COPY ./radio.liq /
-COPY ./playlist.txt /
 COPY ./run.sh /
 
 EXPOSE 10000

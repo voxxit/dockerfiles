@@ -10,9 +10,9 @@ radio = fallback(track_sensitive=false, [ live, files ])
 output.icecast(
   %mp3.cbr(bitrate=128),
   mount="/",
-  url="http://gayrad.io/",
+  url="http://gayrad.io",
   genre="Electronic",
-  description="Listen & chat for free - 24/7/365!",
+  description="Listen for free - 24/7/365!",
   name="gayrad.io",
-  host="icecast", port=8000, password="hackme",
+  host="icecast", port=8000, password="yaT3bYlt3uM6kauC0oF3cyT1aX3",
   radio)
