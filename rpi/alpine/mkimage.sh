@@ -31,6 +31,6 @@ echo $REPO > $CHROOT/etc/apk/repositories
 
 rm -rf $CHROOT/var/cache/apk/*
 
-tar --numeric-owner -C $CHROOT -c . | gzip -9 > `dirname $0`/../rootfs.tar.gz
+tar --numeric-owner -C $CHROOT -c . | gzip -9 > `dirname $0`/rootfs.tar.gz
 
 exit 0
