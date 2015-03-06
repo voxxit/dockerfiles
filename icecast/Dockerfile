@@ -1,4 +1,4 @@
-FROM voxxit/base:alpine
+FROM voxxit/alpine-rpi:latest
 
 MAINTAINER Joshua Delsman <j (at) srv.im>
 
