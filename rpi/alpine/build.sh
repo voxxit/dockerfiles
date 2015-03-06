@@ -1,19 +1,20 @@
-#!/bin/sh -ex
-CIDFILE=".cidfile"
+#!/bin/sh -xe
+
+PWD=`dirname $0`
+CIDFILE="$PWD/.cidfile"
 
 if [ -f $CIDFILE ]; then
-  docker rm -f $(cat $CIDFILE)
+  docker rm -f `cat $CIDFILE`
   rm -f $CIDFILE
 fi
 
-docker build --tag alpine-mkimage ./build/
-docker run --cidfile="$CIDFILE" alpine-mkimage
+docker build --tag alpine-mkimage $PWD/build/
 
-CID=$(cat $CIDFILE)
+docker run --cidfile=$CIDFILE alpine-mkimage
 
-rm -f rootfs.tar.gz
+CID=`cat $CIDFILE`
 
-docker cp $CID:/rootfs.tar.gz .
+docker cp $CID:/rootfs.tar.gz $PWD
+
 docker rm -f $CID
-
 rm -f $CIDFILE
