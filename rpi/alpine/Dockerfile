@@ -1,3 +1,3 @@
 FROM scratch
-COPY rootfs.tar.xz /
-CMD  ["ash"]
+ADD  rootfs.tar.gz /
+CMD  [ "ash" ]
