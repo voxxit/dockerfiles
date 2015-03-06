@@ -24,6 +24,7 @@ apk.static \
   --allow-untrusted \
   --root $CHROOT \
   --arch $ARCH \
+  --initdb \
   add alpine-base
 
 echo $REPO > $CHROOT/etc/apk/repositories
