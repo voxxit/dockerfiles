@@ -1,31 +1,19 @@
-#!/bin/bash -x
+#!/bin/sh -ex
+CIDFILE=".cidfile"
 
-REPO="http://repos.lax-noc.com/alpine/v3.1/main"
-ARCH="armhf"
+if [ -f $CIDFILE ]; then
+  docker rm -f $(cat $CIDFILE)
+  rm -f $CIDFILE
+fi
 
-#[ "$(id -u)" = "0" ] || echo 'This script requires root' && exit 1
+docker build --tag alpine-mkimage ./build/
+docker run --cidfile="$CIDFILE" alpine-mkimage
 
-TMP=`mktemp -d ${TMPDIR:-/var/tmp}/alpine-docker-XXXXXXXXXX`
-ROOTFS=`mktemp -d ${TMPDIR:-/var/tmp}/alpine-docker-rootfs-XXXXXXXXXX`
+CID=$(cat $CIDFILE)
 
-trap "rm -rf $TMP $ROOTFS" EXIT TERM INT
+rm -f rootfs.tar.gz
 
-# get APK tools version
-apkv() {
-  curl -sSL $REPO/$ARCH/APKINDEX.tar.gz | tar -Oxz | grep '^P:apk-tools-static$' -a -A1 | tail -n1 | cut -d: -f2
-}
+docker cp $CID:/rootfs.tar.gz .
+docker rm -f $CID
 
-curl -sSL $REPO/$ARCH/apk-tools-static-$(apkv).apk | tar -xz -C $TMP sbin/apk.static
-
-$TMP/sbin/apk.static \
-  --repository $REPO \
-  --update-cache \
-  --allow-untrusted \
-  --root $ROOTFS \
-  --initdb add alpine-base
-
-echo $REPO > $ROOTFS/etc/apk/repositories
-
-rm -rf $ROOTFS/var/cache/apk/*
-
-tar --numeric-owner -C $ROOTFS -c . | xz > rootfs.tar.xz
+rm -f $CIDFILE
