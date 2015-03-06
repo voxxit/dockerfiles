@@ -1,1 +1,2 @@
-rootfs.tar.xz
+rootfs.tar.*
+.cidfile
