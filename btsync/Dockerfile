@@ -7,6 +7,7 @@ ENV MIRROR mirrors.digitalocean.com
 RUN  sed -i "s/archive.ubuntu.com/$MIRROR/g" /etc/apt/sources.list \
   && apt-get -y update \
   && apt-get -y install wget \
+  && cd /usr/local/bin \
   && wget -O- http://download-new.utorrent.com/endpoint/btsync/os/linux-x64/track/stable | tar -xz \
   && apt-get -y remove --purge wget \
   && apt-get -y autoremove \
@@ -14,6 +15,8 @@ RUN  sed -i "s/archive.ubuntu.com/$MIRROR/g" /etc/apt/sources.list \
 
 EXPOSE 8888 55555
 
-ENTRYPOINT [ "btsync" ]
+VOLUME [ "/btsync" ]
+
+ENTRYPOINT [ "/usr/local/bin/btsync" ]
 
 CMD [ "--config", "/btsync/btsync.conf", "--nodaemon" ]
