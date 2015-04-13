@@ -8,7 +8,7 @@ RUN  sed -i "s/archive.ubuntu.com/$MIRROR/g" /etc/apt/sources.list \
   && apt-get -y update \
   && apt-get -y install wget \
   && cd /usr/local/bin \
-  && wget -O- http://download-new.utorrent.com/endpoint/btsync/os/linux-x64/track/stable | tar -xz \
+  && wget -O- https://download-cdn.getsyncapp.com/stable/linux-x64/BitTorrent-Sync_x64.tar.gz | tar -xz \
   && apt-get -y remove --purge wget \
   && apt-get -y autoremove \
   && rm -rf /var/lib/apt/lists/*
