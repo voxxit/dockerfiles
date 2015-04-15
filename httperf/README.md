@@ -12,9 +12,10 @@ includes the ability to generate and sustain server overload, support for the
 HTTP/1.1 and SSL protocols, and its extensibility to new workload generators and
 performance measurements.
 
-**Relevant Projects:**
+**Relevant Links:**
 
   * [autoperf](http://mervine.net/projects/gems/autoperf) - a Ruby driver for httperf
+  * [Performance Testing with httperf](http://mervine.net/performance-testing-with-httperf)
 
 Running a test with Docker
 --------------------------
@@ -57,4 +58,15 @@ Session: avg 0.00 connections/session
 Session lifetime [s]: 0.0
 Session failtime [s]: 96.0
 Session length histogram: 7 4 5 5 4 0 1 5 2 1 2 2 2
+```
+
+Preparing nginx logs to replay
+------------------------------
+
+```shell
+# Find all URLs and parse them so they are the only item on each line
+awk '{ print $7 }' /var/log/nginx/access.log > /tmp/urls.log
+
+# Convert new line separators to ASCII NUL separators for httperf
+tr "\n" "\0" < /tmp/urls.log > /tmp/wlog.log
 ```
