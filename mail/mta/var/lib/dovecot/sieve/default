@@ -1,6 +1,0 @@
-require ["fileinto"];
-# Move spam to Junk folder
-if header :contains "X-Spam-Flag" ["YES"] {
-  fileinto "Junk";
-  stop;
-}

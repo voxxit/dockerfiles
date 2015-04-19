@@ -1,6 +1,0 @@
-hosts = PGSQL_HOST
-user = PGSQL_USER
-password = PGSQL_PASSWORD
-dbname = PGSQL_DBNAME
-
-query = SELECT SUBSTRING(email FROM (position('@' IN email) + 1) FOR (char_length(email) - position('@' IN email) + 1)) || '/' || SUBSTRING(email FROM 0 FOR position('@' IN email)) || '/' FROM users WHERE email = '%s'

@@ -1,6 +1,0 @@
-hosts = PGSQL_HOST
-user = PGSQL_USER
-password = PGSQL_PASSWORD
-dbname = PGSQL_DBNAME
-
-query = SELECT email FROM aliases WHERE alias = '%s'
