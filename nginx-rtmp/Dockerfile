@@ -5,8 +5,8 @@ RUN  apt-get -y update \
   && apt-get -y install wget build-essential git-core libssl-dev libpcre3-dev \
   && cd /usr/local/src \
   && git clone git://github.com/arut/nginx-rtmp-module.git \
-  && wget -qO- http://nginx.org/download/nginx-1.7.12.tar.gz | tar -xz \
-  && cd nginx-1.7.12 \
+  && wget -qO- http://nginx.org/download/nginx-1.8.0.tar.gz | tar -xz \
+  && cd nginx-1.8.0 \
   && ./configure --prefix=/usr/local/nginx --add-module=/usr/local/src/nginx-rtmp-module \
   && make \
   && make install \
