@@ -17,4 +17,4 @@ VOLUME [ "/btsync" ]
 
 ENTRYPOINT [ "/usr/local/bin/btsync" ]
 
-CMD [ "--config", "/btsync/btsync.conf", "--nodaemon" ]
+CMD [ "--nodaemon" ]
