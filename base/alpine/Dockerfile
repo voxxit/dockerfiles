@@ -1,6 +1,6 @@
-FROM alpinelinux/base:latest
+FROM alpine:edge
 
-MAINTAINER Joshua Delsman <j (at) srv.im>
+MAINTAINER Joshua Delsman <j@srv.im>
 
 RUN echo "http://repos.lax-noc.com/alpine/edge/main" | tee /etc/apk/repositories \
   && apk update \

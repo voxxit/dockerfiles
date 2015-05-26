@@ -1,17 +1,20 @@
 FROM voxxit/base:alpine
 
 RUN apk update \
-  && apk add wget go git gcc musl-dev \
-  && GOPATH=/go go get github.com/hashicorp/consul \
-  && cd /bin \
-  && GOPATH=/go go build github.com/hashicorp/consul \
+  && apk add make wget go git gcc musl-dev openssl-dev \
+  && export GOPATH=/go \
+  && go get -u -v github.com/hashicorp/consul \
+  && cd /go/src/github.com/hashicorp/consul \
+  && git checkout v0.5.2 \
+  && make \
+  && mv bin/consul /bin/ \
   && rm -rf /go \
   && cd /tmp \
-  && wget --no-check-certificate -O ui.zip https://dl.bintray.com/mitchellh/consul/0.4.1_web_ui.zip \
+  && wget -O ui.zip http://dl.bintray.com/mitchellh/consul/0.5.2_web_ui.zip \
   && unzip ui.zip \
   && mv dist /ui \
   && rm ui.zip \
-  && apk del wget go git gcc musl-dev \
+  && apk del make wget go git gcc musl-dev openssl-dev \
   && rm -rf /var/cache/apk/*
 
 ENV GOMAXPROCS 2
