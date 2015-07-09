@@ -1,0 +1,26 @@
+<? INC Header.tmpl ?>
+
+<div class="container col-md-10 col-md-offset-1">
+	<div class="panel panel-default">
+		<div class="panel-heading">Perform &middot; Add a Command</div>
+			<div class="panel-body">
+				<form method="post" action="<? VAR URIPrefix TOP ?><? VAR ModPath ?>">
+				<? INC _csrf_check.tmpl ?>
+				
+				<div class="form-group">
+					<label for="inputperformCommands" class="col-sm-2 control-label">Commands:</label>
+						<div class="col-sm-10">
+							<textarea type="text" class="form-control" id="inputperformCommands" name="perform" cols="70" rows="5" class="monospace"><? LOOP PerformLoop ?><? VAR Perform ?><? ENDLOOP ?></textarea>
+							<div class="alert alert-info help-block">Commands sent to the IRC server on connect, one per line.</div>
+						</div>
+				</div>
+			</div>
+			<div class="panel-footer text-right">
+				<input class="btn btn-danger" type="reset" value="Reset">
+				<input class="btn btn-success" type="submit" name="save" value="Save" />
+			</div>
+				</form>
+	</div>
+</div>
+
+<? INC Footer.tmpl ?>

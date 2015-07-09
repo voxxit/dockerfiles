@@ -1,0 +1,60 @@
+<? INC Header.tmpl ?>
+
+<div class="container col-md-10 col-md-offset-1">
+	<div class="panel panel-default">
+		<div class="panel-heading">List of Users</div>
+			<div class="panel-body">
+				<?IF !UserLoop?>
+				<div class="alert alert-warning">
+					There are no users defined. Click <a href="<? VAR URIPrefix TOP ?><? VAR ModPath TOP ?>adduser">here</a> if you would like to add one.
+				</div>
+				<?ELSE?>
+		
+				<div class="row">
+					<div class="col-md-4 col-md-offset-8"> 
+						<div class="input-group custom-search-form" style=".custom-search-form{margin-top:5px;}">
+							<input class="form-control" id="system-search" name="q" placeholder="Search..." required>
+							<span class="input-group-btn">
+								<button type="submit" class="btn btn-default">
+									<span class="fa fa-search"></span>
+								</button>
+							</span>
+						</div>
+					</div>
+
+				</div>
+				<br>
+				<table class="table table-bordered table-hover table-striped table-list-search">
+					<thead>
+						<tr>
+							<td><a href="<? VAR URIPrefix TOP ?><? VAR ModPath TOP ?>adduser" class="btn btn-default btn-xs">Add</a></td>
+							<td>Username</td>
+							<td>Networks</td>
+							<td>Clients</td>
+						</tr>
+					</thead>
+					<tbody>
+						<?LOOP UserLoop SORTASC=Username ?>
+						<tr class="<?IF __EVEN__?>evenrow<?ELSE?>oddrow<?ENDIF?>">
+							<td>
+								<span class="nowrap">
+									<a href="<? VAR URIPrefix TOP ?><? VAR ModPath TOP ?>edituser?user=<?VAR Username ESC=URL?>" class="btn btn-primary btn-xs">Edit</a>
+									<a href="<? VAR URIPrefix TOP ?><? VAR ModPath TOP ?>adduser?clone=<? VAR Username ESC=URL ?>" alt="Clone <? VAR Username ESC=URL ?>" class="btn btn-warning btn-xs">Clone</a>
+									<? IF !IsSelf ?><a href="<? VAR URIPrefix TOP ?><? VAR ModPath TOP ?>deluser?user=<?VAR Username ESC=URL?>" class="btn btn-danger btn-xs">Delete</a><? ENDIF ?>
+								</span>
+							</td>
+							<td><? VAR Username ?></td>
+							<td><? VAR Networks ?></td>
+							<td><? VAR Clients ?></td>
+						</tr>
+						<?ENDLOOP?>
+					</tbody>
+				</table>
+				<?ENDIF?>
+			</div>
+	</div>
+</div>
+
+<script type="text/javascript">$(document).ready(function(){var e=$(".list-group-item.active");$("#system-search").keyup(function(){var e=this;var t=$(".table-list-search tbody");var n=$(".table-list-search tbody tr");$(".search-sf").remove();n.each(function(r,i){var s=$(i).text().toLowerCase();var o=$(e).val().toLowerCase();if(o!=""){$(".search-query-sf").remove();t.prepend('<tr class="search-query-sf"><td colspan="6"><strong>Searching for: "'+$(e).val()+'"</strong></td></tr>')}else{$(".search-query-sf").remove()}if(s.indexOf(o)==-1){n.eq(r).hide()}else{$(".search-sf").remove();n.eq(r).show()}});if(n.children(":visible").length==0){t.append('<tr class="search-sf"><td class="text-muted" colspan="6">No entries found.</td></tr>')}})})</script>
+
+<? INC Footer.tmpl ?>

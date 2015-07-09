@@ -1,0 +1,138 @@
+<? IF LoggedIn ?>
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="<? VAR URIPrefix TOP ?>/">ZNC</a>
+		</div>
+		<div class="navbar-collapse collapse">
+			<ul class="nav navbar-nav">
+				<li class="topitem<? IF !ModName && PageName == "index" ?> active<? ENDIF ?>"><a href="<? VAR URIPrefix TOP ?>/"><i class="fa fa-home"></i>  Home</a></li>
+					<? IF GlobalModLoop ?>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog"></i> Global Modules <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<? LOOP GlobalModLoop SORTASC=ModName ?>
+									<li class="modtitle<? IF Active ?> active<? ENDIF ?>"><a href="/mods/global/<? VAR ModName ?>"><? VAR Title ?></a></li>
+								<? ENDLOOP ?>
+							</ul>
+					</li>
+					<? ENDIF ?>
+		
+					<? IF UserModLoop ?>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog"></i> User Modules <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<? LOOP UserModLoop SORTASC=ModName ?>
+									<li class="modtitle<? IF Active ?> active<? ENDIF ?>"><a href="<? VAR URIPrefix TOP ?><? VAR ModPath ?><? VAR PageName ?><? IF Params ?>?<? VAR Params ?><? ENDIF ?>"><? VAR Title ?></a></li>					
+								<? ENDLOOP ?>
+							</ul>
+					</li>
+					<? ENDIF ?>
+					
+					<? IF NetworkModLoop ?>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog"></i> Network Modules <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<? LOOP NetworkModLoop SORTASC=NetworkName ?>
+										<? IF ModLoop ?>
+											<li class="dropdown-header"><? VAR NetworkName ?></li>
+												<? LOOP ModLoop SORTASC=ModName ?>
+													<li class="modtitle<? IF Active ?> active<? ENDIF ?>"><a href="<? VAR URIPrefix TOP ?><? VAR ModPath ?>"><? VAR Title ?></a></li>
+													<? LOOP SubPageLoop ?>
+													<li class="subitem<? IF Active ?> active<? ENDIF ?>"><a href="<? VAR URIPrefix TOP ?><? VAR ModPath ?><? VAR PageName ?><? IF Params ?>?<? VAR Params ?><? ENDIF ?>"><? VAR Title ?></a></li>
+													<? ENDLOOP ?>
+												<? ENDLOOP ?>
+										<? ENDIF ?>
+									<? ENDLOOP ?>
+								</ul>
+						</li>	
+					<? ENDIF ?>
+				
+				<? IF GlobalModLoop || UserModLoop ?>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench"></i> Settings <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<? LOOP UserModLoop SORTASC=ModName ?>
+									<? LOOP SubPageLoop ?>
+									<li class="subitem<? IF Active ?> active<? ENDIF ?>"><a href="<? VAR URIPrefix TOP ?><? VAR ModPath ?><? VAR PageName ?><? IF Params ?>?<? VAR Params ?><? ENDIF ?>"><? VAR Title ?></a></li>
+									<? ENDLOOP ?>
+								<? ENDLOOP ?>
+							</li>
+				<? IF GlobalModLoop ?>
+					<li class="dropdown-header">Global Module</li>
+						<? LOOP GlobalModLoop SORTASC=ModName ?>
+							<? LOOP SubPageLoop ?>
+								<li class="subitem<? IF Active ?> active<? ENDIF ?>"><a href="<? VAR URIPrefix TOP ?><? VAR ModPath ?><? VAR PageName ?><? IF Params ?>?<? VAR Params ?><? ENDIF ?>"><? VAR Title ?></a></li>
+						<? ENDLOOP ?>
+				<? ENDLOOP ?>
+				<? ELSE ?>
+					<? BREAK ?>
+				<? ENDIF ?>
+								</li>
+							</ul>
+					</li>
+				<? ENDIF ?>	
+				</ul>
+				
+				<ul class="nav navbar-nav navbar-right">
+			 	<? IF LoggedIn ?>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-info-circle"></i> Help <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="http://wiki.znc.in/FAQ" target="_blank">FAQ</a></li>
+							<li><a href="http://wiki.znc.in/Modules" target="_blank">Modules</a></li>
+							<li><a href="http://docs.znc.in" target="_blank">Documentation</a></li>
+							<li><a href="http://wiki.znc.in/Using_commands" target="_blank">Using Commands</a></li>
+							<li><a href="http://wiki.znc.in/Connecting_to_ZNC" target="_blank">Connecting to ZNC</a></li>
+						</ul>
+				</li>					 
+				<? ENDIF ?>
+				
+				<? IF LoggedIn ?>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <? VAR SessionUser ?> <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+                        <li>
+                            <div class="navbar-login">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <p class="text-center">
+                                            <span class="fa fa-user icon-size"></span>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <p class="text-left"><strong>User: <? VAR SessionUser ?></strong></p>
+                                        <p class="text-left small">IP Address: <? VAR SessionIP ?></p>
+                                        <p class="text-left">
+                                            <a href="<? VAR URIPrefix TOP ?><? VAR ModPath ?>/edituser" class="btn btn-primary btn-block btn-sm"><i class="fa fa-wrench"></i> Edit Settings</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <div class="navbar-login navbar-login-session">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <p>
+                                            <a href="/logout" class="btn btn-danger btn-block"><i class="fa fa-sign-out"></i> Sign Out</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+					</li>
+				<? ENDIF ?>
+				</ul>
+			</div>
+		</div>
+	</div>
+<? ENDIF ?>	

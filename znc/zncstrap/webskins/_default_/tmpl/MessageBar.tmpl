@@ -1,0 +1,18 @@
+<? LOOP ErrorLoop ?>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<div class="alert alert-danger"><? VAR Message ?></div>
+			</div>
+		</div>
+	</div>		
+<? ENDLOOP ?>
+<? LOOP SuccessLoop ?>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<div class="alert alert-info"><? VAR Message ?></div>
+			</div>
+		</div>
+	</div>
+<? ENDLOOP ?>

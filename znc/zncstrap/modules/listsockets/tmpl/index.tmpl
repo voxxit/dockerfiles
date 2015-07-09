@@ -1,0 +1,39 @@
+<? INC Header.tmpl ?>
+
+<div class="container col-md-10 col-md-offset-1">
+	<div class="panel panel-default">
+		<div class="panel-heading">Listsockets</div>
+			<div class="panel-body">
+  				<table class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<td>Name</td>
+							<td>Created</td>
+							<td>State</td>
+							<td>SSL</td>
+							<td>Local</td>
+							<td>Remote</td>
+							<td>Data In</td>
+ 							<td>Data Out</td>
+						</tr>
+					</thead>
+					<tbody>
+						<? LOOP SocketsLoop ?>
+						<tr>
+							<td><? VAR Name ?></td>
+							<td><? VAR Created ?></td>
+							<td><? VAR State ?></td>
+							<td><? VAR SSL ?></td>
+							<td><? VAR Local ?></td>
+							<td><? VAR Remote ?></td>
+							<td><? VAR In ?></td>
+ 							<td><? VAR Out ?></td>
+						</tr>
+						<? ENDLOOP ?>
+					</tbody>
+				</table>
+			</div>
+	</div>
+</div>
+
+<? INC Footer.tmpl ?>

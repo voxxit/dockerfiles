@@ -1,0 +1,187 @@
+<? INC Header.tmpl ?>
+
+<div class="container col-md-10 col-md-offset-1">
+	<div class="panel panel-default">
+		<div class="panel-heading">Traffic Information</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-6"><div id="totalstats"></div></div>
+					<div class="col-md-6"><div id="usertraffic"></div></div>
+				</div>
+			
+			
+			<script type="text/javascript" src="//www.google.com/jsapi"></script>
+			<script>
+				google.load('visualization', '1.0', {'packages':['corechart']});
+				google.setOnLoadCallback(drawChart);
+					function drawChart() {
+						var data = google.visualization.arrayToDataTable([
+							['Task', 'ZNC Stats'],
+							['Users', <? VAR TotalUsers ?>],
+							['Networks', <? VAR TotalNetworks ?>]
+						]);
+						var options = {
+							width: 503,
+							pieHole: 0.3,
+							colors: ['#428bca', '#5bc0de'],
+							backgroundColor: 'transparent',
+							legend: {textStyle: {color: 'gray'}}
+						};
+						var chart = new google.visualization.PieChart(document.getElementById('totalstats'));
+						chart.draw(data, options);
+					}
+				</script>
+				<script>
+					google.load('visualization', '1.0', {'packages':['corechart']});
+					google.setOnLoadCallback(drawChart2);
+					function drawChart2() {
+						var data2 = google.visualization.arrayToDataTable([
+							['Task', 'User Traffic'],
+							['Attached Networks', <? VAR AttachedNetworks ?>],
+							['Client Connections', <? VAR TotalCConnections ?>],
+							['IRC Connections', <? VAR TotalIRCConnections ?>]
+						]);
+						var options2 = {
+							width: 503,
+							pieHole: 0.3,
+							colors: ['#5cb85c', '#f0ad4e', '#d9534f'],
+							backgroundColor: 'transparent',
+							legend: {textStyle: {color: 'gray'}}
+						};
+						var chart2 = new google.visualization.PieChart(document.getElementById('usertraffic'));
+						chart2.draw(data2, options2);
+					}
+			</script>
+ 
+			
+			
+				<table class="table table-bordered table-hover">
+					<tbody>
+						<tr>
+							<th>Uptime</th>
+							<td><? VAR Uptime ?></td>
+							<td>
+								<div class="progress" data-toggle="tooltip" data-placement="right" data-original-title="<? VAR Uptime ?> Uptime">
+									<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+									</div>
+								</div>
+						</td>
+					</tr>
+						<? IF IsAdmin ?>
+						<tr>
+							<th>Total Users</th>
+							<td>
+							<? VAR TotalUsers ?>
+							</td>
+							<td>
+								<div class="progress"  data-toggle="tooltip" data-placement="right" data-original-title="<? VAR TotalUsers ?> Total Users"> 
+									<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<? VAR TotalUsers ?>" aria-valuemin="0" aria-valuemax="500" style="width: <? VAR TotalUsers ?>%">
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th>Total Networks</th>
+							<td><? VAR TotalNetworks ?></td>
+							<td>
+								<div class="progress" data-toggle="tooltip" data-placement="right" data-original-title="<? VAR TotalNetworks ?> Total Networks">
+									<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<? VAR TotalNetworks ?>" aria-valuemin="0" aria-valuemax="500" style="width: <? VAR TotalNetworks ?>%">
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th>Attached Networks</th>
+							<td><? VAR AttachedNetworks ?></td>
+							<td>
+								<div class="progress" data-toggle="tooltip" data-placement="right" data-original-title="<? VAR AttachedNetworks ?> Attached Networks">
+									<div class="progress-bar" role="progressbar" aria-valuenow="<? VAR AttachedNetworks ?>" aria-valuemin="0" aria-valuemax="500" style="width: <? VAR AttachedNetworks ?>%;">
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th>Total Client Connections</th>
+							<td><? VAR TotalCConnections ?></td>
+							<td>
+								<div class="progress" data-toggle="tooltip" data-placement="right" data-original-title="<? VAR TotalCConnections ?> Total Client Connections">
+									<div class="progress-bar" role="progressbar" aria-valuenow="<? VAR TotalCConnections ?>" aria-valuemin="0" aria-valuemax="500" style="width: <? VAR TotalCConnections ?>%;">
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th>Total IRC Connections</th>
+							<td><? VAR TotalIRCConnections ?></td>
+							<td>
+								<div class="progress" data-toggle="tooltip" data-placement="right" data-original-title="<? VAR TotalIRCConnections ?> Total IRC Connections">
+									<div class="progress-bar" role="progressbar" aria-valuenow="<? VAR TotalIRCConnections ?>" aria-valuemin="0" aria-valuemax="500" style="width: <? VAR TotalIRCConnections ?>%;">
+									</div>
+								</div>
+							</td>
+						</tr>
+						<? ENDIF ?>
+					</tbody>
+				</table>
+						
+<? IF IsAdmin && TrafficLoop ?>
+	<br />
+	<div class="row">
+		<div class="col-md-4 col-md-offset-8"> 
+            <div class="input-group custom-search-form" style=".custom-search-form{margin-top:5px;}">
+				<input class="form-control" id="system-search" name="q" placeholder="Search..." required>
+				<span class="input-group-btn">
+					<button type="submit" class="btn btn-default"><span class="fa fa-search"></span></button>
+				</span>
+             </div>
+		</div>
+	</div>
+	<br>
+		<table class="table table-bordered table-hover table-striped table-list-search">
+			<thead>
+				<tr>
+					<td>Username</td>
+					<td>In</td>
+					<td>Out</td>
+					<td>Total</td>
+				</tr>
+			</thead>
+			<tbody>
+				<? LOOP TrafficLoop SORTASC=Username ?>
+				<tr>
+					<td><? VAR Username ?></td>
+					<td><? VAR In  ?></td>
+					<td><? VAR Out ?></td>
+					<td><? VAR Total ?></td>
+				</tr>
+					<? REM ?>Add the totals separately so that if sort is ever used they stay at the bottom By keeping them inside the loop we can figure out even/odd classes though.
+					<? ENDREM ?>
+				<? IF __LAST__ ?>
+				<tr>
+					<td>User Total</td>
+					<td><? VAR UserIn TOP ?></td>
+					<td><? VAR UserOut TOP ?></td>
+					<td><? VAR UserTotal TOP ?></td>
+				</tr>
+				<tr>
+					<td>ZNC Total</td>
+					<td><? VAR ZNCIn TOP ?></td>
+					<td><? VAR ZNCOut TOP ?></td>
+					<td><? VAR ZNCTotal TOP ?></td>
+				</tr>
+				<tr>
+					<td>Grand Total</td>
+					<td><? VAR AllIn TOP ?></td>
+					<td><? VAR AllOut TOP ?></td>
+					<td><? VAR AllTotal TOP ?></td>
+				</tr>
+				<? ENDIF ?>
+			<? ENDLOOP ?>
+			</tbody>
+		</table>
+<? ENDIF ?>
+			</div>
+	</div>
+</div>
+<script type="text/javascript">$(document).ready(function(){var e=$(".list-group-item.active");$("#system-search").keyup(function(){var e=this;var t=$(".table-list-search tbody");var n=$(".table-list-search tbody tr");$(".search-sf").remove();n.each(function(r,i){var s=$(i).text().toLowerCase();var o=$(e).val().toLowerCase();if(o!=""){$(".search-query-sf").remove();t.prepend('<tr class="search-query-sf"><td colspan="6"><strong>Searching for: "'+$(e).val()+'"</strong></td></tr>')}else{$(".search-query-sf").remove()}if(s.indexOf(o)==-1){n.eq(r).hide()}else{$(".search-sf").remove();n.eq(r).show()}});if(n.children(":visible").length==0){t.append('<tr class="search-sf"><td class="text-muted" colspan="6">No entries found.</td></tr>')}})})</script>
+<? INC Footer.tmpl ?>

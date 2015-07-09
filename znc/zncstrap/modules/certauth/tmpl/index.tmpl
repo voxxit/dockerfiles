@@ -1,0 +1,49 @@
+<? INC Header.tmpl ?>
+
+<div class="container col-md-10 col-md-offset-1">
+	<div class="panel panel-default">
+		<div class="panel-heading">Certauth &mdash; Add A Note</div>
+			<div class="panel-body">
+				<form class="form-horizontal" method="post" action="<? VAR URIPrefix TOP ?><? VAR ModPath ?>add">
+				<? INC _csrf_check.tmpl ?>
+				<div class="form-group">
+					<label for="inputKey" class="col-sm-2 control-label">Key:</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="inputKey" name="key" size="40">
+						</div>
+				</div>
+
+				<? IF !KeyLoop ?>
+					<p class="text-center">You have no keys.</p>
+				<? ELSE ?>
+				
+				<br />
+				
+				<table class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<td>Action</td>
+							<td>Key</td>
+						</tr>
+					</thead>
+					<tbody>
+						<? LOOP KeyLoop ?>
+						<tr>
+							<td><a href="<? VAR ModPath ?>delete?key=<? VAR Key ESC=URL,HTML ?>" class="btn btn-danger btn-xs">Delete</a></td>
+							<td><? VAR Key ?></td>
+						</tr>
+						<? ENDLOOP ?>
+					</tbody>
+				</table>
+				<? ENDIF ?>
+			</div>
+			
+			<div class="panel-footer text-right">
+				<input class="btn btn-danger" type="reset" value="Reset">
+				<input class="btn btn-success" type="submit" name="add" value="Add Key" />
+			</div>	
+			</form>
+	</div>
+</div>
+	
+<? INC Footer.tmpl ?>

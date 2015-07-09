@@ -1,0 +1,28 @@
+<? INC Header.tmpl ?>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			<div class="panel panel-danger">
+				<div class="panel-heading">Confirm Network Deletion</div>
+					<div class="panel-body">
+						<p>Are you absolutely sure you want to delete <b>"<? VAR Network ?>"</b> network, <? VAR Username ?>?</p>
+						<br>
+						<center>
+						<form action="<? VAR URIPrefix TOP ?><? VAR ModPath TOP ?>delnetwork" method="post">
+						<? INC _csrf_check.tmpl ?>
+							<input type="hidden" name="user" value="<? VAR Username ?>" />
+							<input type="hidden" name="name" value="<? VAR Network ?>" />
+							<input type="submit" class="btn btn-danger btn-xs" value="Yes, I want <? VAR Network ?> deleted" />
+						</form><br>
+						<form action="<? VAR URIPrefix TOP ?><? VAR ModPath TOP ?>listusers" method="get">
+							<input type="submit" class="btn btn-success btn-xs" value="No, I want to keep <? VAR Network ?>" />
+						</form>
+						</center>
+					</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<? INC Footer.tmpl ?>

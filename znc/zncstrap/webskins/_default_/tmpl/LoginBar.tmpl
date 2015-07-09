@@ -1,0 +1,22 @@
+<? IF !LoggedIn ?>
+<div class="container" style="padding-top: 30px">
+	<div class="row">
+		<div class="col-md-4 col-md-offset-4">	
+			
+
+			
+			<div class="main">		 
+			<form role="form" action="<? VAR URIPrefix TOP ?>/login" method="post">
+				<div class="form-group">
+					<input type="text" class="form-control input-lg" id="inputUsername" name="user" required="required" placeholder="Username" autocomplete="off">
+				</div>
+				<div class="form-group">
+					<input type="password" class="form-control input-lg" id="inputPassword" name="pass" required="required" placeholder="Password" autocomplete="off">
+				</div>
+				<button type="submit" class="btn btn-primary pull-right" name="submitted" value="1"><i class="fa fa-sign-in"></i> Sign In</button>
+			</form>
+			</div> 
+			
+		</div>	
+	</div>
+</div> <? ENDIF ?>

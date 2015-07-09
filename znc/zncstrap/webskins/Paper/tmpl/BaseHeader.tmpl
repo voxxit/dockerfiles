@@ -1,0 +1,37 @@
+<? INC DocType.tmpl ?>
+<? ADDROW CSSLoop HREF=/skinfiles/Paper/bootstrap.min.css ?>
+<? ADDROW CSSLoop HREF=/skinfiles/_default_/font-awesome.min.css ?>
+<? ADDROW JSLoop HREF=/skinfiles/_default_/jquery.min.js ?>
+<? ADDROW JSLoop HREF=/skinfiles/_default_/bootstrap.min.js ?>
+<? ADDROW FAVLOOP HREF=/skinfiles/_default_/favicon.ico ?>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>ZNC &mdash; <? VAR Title DEFAULT="Web Frontend" ?></title>
+	<? LOOP FAVLOOP ?>
+	<?IF HREF?><link rel="shortcut icon" href="<? VAR URIPrefix TOP ?><? VAR HREF ?>"><?ENDIF?>
+	<?ENDLOOP?>
+	<? LOOP CSSLoop ?>
+	<?IF HREF?><link rel="stylesheet" type="text/css" href="<? VAR URIPrefix TOP ?><? VAR HREF ?>" /><?ENDIF?>
+	<?ENDLOOP?>
+	<? LOOP JSLoop ?>
+	<?IF HREF?><script type="text/javascript" src="<? VAR URIPrefix TOP ?><? VAR HREF ?>"></script><?ENDIF?>
+	<?ENDLOOP?>	
+	 <? INC ExtraHeader.tmpl ?>
+</head>
+<body>
+	<? INC Navbar.tmpl ?>
+	<? INC Banner.tmpl ?>
+	<? INC MessageBar.tmpl ?>
+	<? INC LoginBar.tmpl ?>
+	<? REM ?>
+		In your subpage (module page or static page) you'll probably want to do something like this...
+			<? INC Header.tmpl ?>
+				This is my <b>super</b> cool sub page!
+			<? INC Footer.tmpl ?>
+		If you'd like to add your own local css file to be included after the global main.css, you can make your own Header.tmpl like so...
+			<? ADDROW CSSLoop HREF=/pub/your_local.css ?>
+			<? ADDROW JSLoop HREF=/pub/your_local.js ?>
+			<? INC BaseHeader.tmpl ?>
+	<? ENDREM ?>
+	<? INC BreadCrumbs.tmpl ?>

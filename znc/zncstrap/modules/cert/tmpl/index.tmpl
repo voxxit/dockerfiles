@@ -1,0 +1,30 @@
+<? INC Header.tmpl ?>
+
+<div class="container col-md-10 col-md-offset-1">
+	<div class="panel panel-default">
+		<div class="panel-heading">Certificate</div>
+			<div class="panel-body">
+				<? IF Cert ?>
+					<div class="alert alert-success">You already have a certificate set, use the form below to overwrite the current certificate. Alternatively click <a href="<? VAR URIPrefix TOP ?><? VAR ModPath ?>delete">here</a> to <a href="<? VAR URIPrefix TOP ?><? VAR ModPath ?>delete">delete</a> your certificate.</div>
+				<? ELSE ?>
+					<div class="alert alert-danger">You do not have a cert.</div>
+				<? ENDIF ?>
+
+				<form class="form-horizontal" method="post" action="<? VAR URIPrefix TOP ?><? VAR ModPath ?>update">
+				<? INC _csrf_check.tmpl ?>
+					<div class="form-group">
+					<label for="inputPEM" class="col-sm-2 control-label">PEM File: </label>
+						<div class="col-sm-10">
+							<textarea class="form-control" rows="5" name="cert"></textarea>
+						</div>
+					</div>
+			</div>	
+			<div class="panel-footer text-right">
+				<input class="btn btn-danger" type="reset" value="Reset">
+				<input class="btn btn-success" type="submit" name="add" value="Update" />
+			</div>
+				</form>	
+	</div>
+</div>
+
+<? INC Footer.tmpl ?>

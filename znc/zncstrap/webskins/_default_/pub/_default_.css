@@ -1,0 +1,70 @@
+/* Some minor re-design for zncstrap */
+body {
+  padding-top: 80px;
+} 
+#footer {
+  height: 60px;
+  padding-top: 30px;
+}
+/* for BindHosts textarea */
+.form-control {
+  word-wrap: break-word;
+  white-space: -moz-pre-wrap;
+  white-space: pre-wrap;
+}
+/* for Traffic page */
+.progress {
+  margin-bottom: 0px;
+}
+/* Switch & SwitchMini checkbox re-design */
+input[type=checkbox] {
+	visibility: hidden;
+}
+.checkboxSwitch,
+.checkboxSwitchMini {
+	position: relative;
+}
+.checkboxSwitch label {
+	display: block;
+	width: 20px;
+	height: 20px;
+	border-radius: 100px;
+	-webkit-transition: all .5s ease;
+	-moz-transition: all .5s ease;
+	-o-transition: all .5s ease;
+	-ms-transition: all .5s ease;
+	transition: all .5s ease;
+	cursor: pointer;
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	z-index: 1;
+	background: #d9534f;
+	-webkit-box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
+	-moz-box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
+	box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
+}
+.checkboxSwitchMini label {
+	display: block;
+	width: 13px;
+	height: 13px;
+	border-radius: 100px;
+	-webkit-transition: all .5s ease;
+	-moz-transition: all .5s ease;
+	-o-transition: all .5s ease;
+	-ms-transition: all .5s ease;
+	transition: all .5s ease;
+	cursor: pointer;
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	z-index: 1;
+	background:  #d9534f;
+	-webkit-box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
+	-moz-box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
+	box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
+}
+.checkboxSwitch input[type=checkbox]:checked + label,
+.checkboxSwitchMini input[type=checkbox]:checked + label {
+	background: #5cb85c;
+}

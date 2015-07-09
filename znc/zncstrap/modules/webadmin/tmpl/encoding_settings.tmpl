@@ -1,0 +1,56 @@
+<div class="radio">
+	<label>
+		<input type="radio" name="encoding_utf" id="encoding_utf_legacy" value="legacy" <? IF EncodingUtf == "legacy" ?>checked="checked"<? ENDIF ?> <? IF EncodingDisabled ?>disabled="disabled"<? ENDIF ?> />
+		<span class="help-block" for="encoding_utf_legacy">Don't ensure any encoding at all (legacy mode, not recommended)</span>
+	</label>
+</div>
+
+<div class="radio">
+	<label>
+		<input type="radio" name="encoding_utf" id="encoding_utf_send" value="send" <? IF EncodingUtf == "send" ?>checked="checked"<? ENDIF ?> <? IF EncodingDisabled ?>disabled="disabled"<? ENDIF ?> />
+		<span class="help-block" for="encoding_utf_send">Try to parse as UTF-8 and as <span class="encoding-placeholder-big text-success">&nbsp;&nbsp;<span class="encoding-placeholder"></span>&nbsp;&nbsp;</span>, send as UTF-8</span>
+	</label>
+</div>
+
+<div class="radio">
+	<label>
+		<input type="radio" name="encoding_utf" id="encoding_utf_receive" value="receive" <? IF EncodingUtf == "receive" ?>checked="checked"<? ENDIF ?> <? IF EncodingDisabled ?>disabled="disabled"<? ENDIF ?> />
+		<span class="help-block" for="encoding_utf_receive">Try to parse as UTF-8 and as <span class="encoding-placeholder-big text-success">&nbsp;&nbsp;<span class="encoding-placeholder"></span>&nbsp;&nbsp;</span>, send as <span class="encoding-placeholder-big text-success">&nbsp;&nbsp;<span class="encoding-placeholder"></span	>&nbsp;&nbsp;</span>
+	</label>
+</div>
+
+<div class="radio">
+	<label>
+		<input type="radio" name="encoding_utf" id="encoding_utf_simple" value="simple" <? IF EncodingUtf == "simple" ?>checked="checked"<? ENDIF ?> <? IF EncodingDisabled ?>disabled="disabled"<? ENDIF ?> />
+		<span class="help-block" for="encoding_utf_simple">Parse and send as <span class="encoding-placeholder-big text-success">&nbsp;&nbsp;<span class="encoding-placeholder"></span>&nbsp;&nbsp;</span> only</span>
+	</label>
+</div> 
+ 
+<div class="test-text">
+	<input class="form-control" type="text"	name="encoding" placeholder="Enter a text here (e.g. UTF-8 or ISO-8859-15)" value="<? VAR Encoding ?>" list="encoding_list" <? IF EncodingDisabled ?>disabled="disabled"<? ENDIF ?> />
+</div>
+
+<datalist id="encoding_list">
+	<? LOOP EncodingLoop ?>
+		<option value="<? VAR Encoding ?>"/>
+	<? ENDLOOP ?>
+</datalist>
+		
+<script type="text/javascript">
+	function updateEncodingText() {
+		var value = jQuery("input[name=encoding]").val();
+			jQuery(".encoding-placeholder").each(function(index, element) {
+				jQuery(element).text(value);
+			});
+	}
+		jQuery("input[name=encoding]").on("keyup change input", updateEncodingText);
+			updateEncodingText();
+
+		function updateEncodingLegacy() {
+			var disabled = jQuery("input:radio[name=encoding_utf]:checked").val() == "legacy";
+			jQuery("input[name=encoding]").prop("disabled", disabled);
+		}
+		
+		jQuery("input:radio[name=encoding_utf]").change(updateEncodingLegacy);
+		updateEncodingLegacy();
+</script>

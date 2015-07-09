@@ -1,0 +1,106 @@
+<? INC Header.tmpl ?>
+
+<form class="form-horizontal" role="form" action="<? IF Edit ?>editchan<? ELSE ?>addchan<? ENDIF ?>" method="post">
+	<? INC _csrf_check.tmpl ?>
+	<div class="section">
+		<input type="hidden" name="submitted" value="1" />
+		<input type="hidden" name="user" value="<? VAR User ?>" />
+		<input type="hidden" name="network" value="<? VAR Network ?>" />
+		<? IF Edit ?>
+			<input type="hidden" name="name" value="<? VAR ChanName ?>" />
+		<? ENDIF ?>
+
+<div class="container col-md-10 col-md-offset-1">
+	<div class="panel with-nav-tabs panel-default">
+        <div class="panel-heading">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#chaninfotab" data-toggle="tab">Channel Info</a></li>
+				<li><a href="#flagstab" data-toggle="tab">Flags</a></li>
+				<li><a href="#othermods" data-toggle="tab">More</a></li>
+			</ul>
+        </div>
+
+		<div class="panel-body">
+            <div class="tab-content">
+				<!-- Channel Info -->
+                <div class="tab-pane fade in active" id="chaninfotab">
+					<? IF !Edit ?>
+						<div class="form-group">
+						<label for="inputlabelChanName" class="col-sm-2 control-label">Channel Name:</label>
+							<div class="col-sm-10">
+								<input class="form-control" id="inputlabelChanName" type="text" name="name" value="" placeholder="The channel name.">
+							</div>
+						</div>
+					<? ENDIF ?>
+
+						<div class="form-group">
+						<label for="inputlabelKey" class="col-sm-2 control-label">Key:</label>
+							<div class="col-sm-10">
+								<input type="test" class="form-control" id="inputlabelKey" name="key" value="<? VAR Key ?>" placeholder="The password of the channel, if there is one.">
+							</div>
+						</div>
+  
+						<div class="form-group">
+						<label for="inputlabelBufferCount" class="col-sm-2 control-label">Buffer Count:</label>
+							<div class="col-sm-10">
+								<input class="form-control" id="inputlabelBufferCount" type="number" name="buffercount" value="<? VAR BufferCount ?>" size="10" min="0" placeholder="The buffer count.">
+							</div>
+						</div>
+  
+					<div class="form-group">
+					<label for="inputDefaultModes" class="col-sm-2 control-label">Default Modes:</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="inputDefaultModes" name="defmodes" value="<? VAR DefModes ?>" size="10" placeholder="The default modes of the channel.">
+						</div>
+					</div>				 
+				</div> <!-- Channel Info -->
+				
+				<!-- Flags -->
+				<div class="tab-pane fade" id="flagstab">
+					<div class="col-md-6 col-md-offset-3">
+						<table class="table table-bordered table-hover table-striped">
+							<thead>
+								<tr>
+									<td>Status</td>
+									<td>Flag Title</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><div class="switch"><input type="checkbox" name="save" id="save" class="cmn-toggle cmn-toggle-round-flat" value="true"<? IF InConfig ?> checked="checked"<? ENDIF ?> /> <label for="save"></label> </div></td>
+									<td>Save to config</td>
+								</tr>
+								<? LOOP OptionLoop ?>
+								<tr>
+									<td><div class="switch"><input type="checkbox" name="<? VAR Name ?>" id="opt_<? VAR Name ?>" class="cmn-toggle cmn-toggle-round-flat" value="true"<? IF Checked ?> checked="checked"<? ENDIF ?><? IF Disabled ?> disabled="disabled"<? ENDIF ?> /> <label for="opt_<? VAR Name ?>"></label> </div></td>
+									<td><? VAR DisplayName ?></td>		 
+								</tr>
+								<? ENDLOOP ?>	
+							</tbody>
+						</table>
+					</div>
+				</div> <!-- Flags -->	
+	
+			<!-- Other Modules -->
+			<div class="tab-pane fade" id="othermods">
+			<? LOOP EmbeddedModuleLoop ?>
+				<? IF Embed ?>
+					<h3>Module <? VAR ModName ?></h3>
+					<? INC *Embed ?>
+				<? ENDIF ?>
+			<? ENDLOOP ?>			
+			</div> <!-- Other Modules -->	
+		</div>
+	</div>
+	
+	<div class="panel-footer text-right">
+		<input class="btn btn-danger" type="reset" value="Reset">
+		<input class="btn btn-success"type="submit" name="submit_return" value="<? IF Edit ?>Save<? ELSE ?>Add Channel<? ENDIF ?>" />
+ 		<input class="btn btn-default"type="submit" name="submit_continue" value="<? IF Edit ?>Save and continue<? ELSE ?>Save and continue<? ENDIF ?>" />
+	</div>
+			
+		
+	</div>
+</div>
+</form>
+<? INC Footer.tmpl ?>
