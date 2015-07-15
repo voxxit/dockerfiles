@@ -1,6 +1,0 @@
-$ORIGIN localhost.
-$TTL    1d
-
-@       IN  SOA     localhost. root.localhost. ( 1999010100 1d 2h 4w 1h )
-@       IN  NS      @
-@       IN  A       127.0.0.1

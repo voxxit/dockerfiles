@@ -1,0 +1,3 @@
+*.zone
+rndc.key
+named.conf
