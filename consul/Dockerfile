@@ -1,28 +1,23 @@
-FROM voxxit/base:alpine
+FROM alpine:edge
 
-RUN apk update \
-  && apk add make wget go git gcc musl-dev openssl-dev \
-  && export GOPATH=/go \
-  && go get -u -v github.com/hashicorp/consul \
-  && cd /go/src/github.com/hashicorp/consul \
-  && git checkout v0.5.2 \
-  && make \
-  && mv bin/consul /bin/ \
-  && rm -rf /go \
+ENV CONSUL_VERSION 0.6.0
+
+RUN  apk add --update ca-certificates \
+  && wget https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip \
+  && unzip consul_${CONSUL_VERSION}_linux_amd64.zip \
+  && mv consul /bin/ \
+  && rm -rf consul_${CONSUL_VERSION}_linux_amd64.zip \
   && cd /tmp \
-  && wget -O ui.zip http://dl.bintray.com/mitchellh/consul/0.5.2_web_ui.zip \
+  && wget -O ui.zip https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_web_ui.zip \
   && unzip ui.zip \
-  && mv dist /ui \
-  && rm ui.zip \
-  && apk del make wget go git gcc musl-dev openssl-dev \
-  && rm -rf /var/cache/apk/*
-
-ENV GOMAXPROCS 2
+  && mkdir -p /ui \
+  && mv * /ui \
+  && rm -rf /tmp/* /var/cache/apk/*
 
 EXPOSE 8300 8301 8301/udp 8302 8302/udp 8400 8500 8600 8600/udp
 
-VOLUME [ "/data", "/config" ]
+VOLUME [ "/data" ]
 
 ENTRYPOINT [ "/bin/consul" ]
 
-CMD []
+CMD [ "agent", "-data-dir", "/data" ]
