@@ -1,25 +1,29 @@
-FROM voxxit/base:alpine
+FROM alpine:latest
 
-ENV BUILD_DEPS build-base automake autoconf libtool git
-ENV RUN_DEPS   libxslt-dev libxml2-dev libogg-dev libtheora-dev libvorbis-dev speex-dev
+RUN  echo "http://repos.lax-noc.com/alpine/v3.3/main" > /etc/apk/repositories \
+  && apk add --update \
+        icecast \
+        pwgen \
+        build-base \
+        libxml2-dev \
+        libshout-dev \
+  && mkdir -p /usr/src \
+  && cd /usr/src \
+  && wget http://downloads.us.xiph.org/releases/ices/ices-2.0.2.tar.gz \
+  && tar -xzf ices-2.0.2.tar.gz \
+  && cd ices-2.0.2/ \
+  && ./configure --prefix=/usr \
+  && make \
+  && make install \
+  && apk del build-base \
+  && rm -rf /var/cache/apk/* /usr/src/*
 
-RUN  apk update \
-  && apk upgrade \
-  && apk add $BUILD_DEPS $RUN_DEPS \
-  && cd /usr/local/src \
-    && wget -O- http://downloads.xiph.org/releases/icecast/icecast-2.5-beta1.tar.gz | tar -xz \
-    && cd icecast* \
-    && ./configure \
-    && make \
-    && adduser -h /var/log/icecast -s /sbin/nologin -D icecast \
-    && install -d -D -o icecast -g icecast /var/log/icecast \
-    && touch /etc/mime.types \
-    && make install \
-  && apk del $BUILD_DEPS \
-  && rm -rf /var/cache/apk/* /usr/local/src/*
-
+COPY mime.types /etc/mime.types
 COPY icecast.xml /etc/icecast.xml
+COPY ices.xml /etc/ices.xml
+COPY start-icecast.sh /usr/bin/start-icecast.sh
+COPY start-ices.sh /usr/bin/start-ices.sh
 
-EXPOSE 80
+EXPOSE 80/tcp
 
-CMD [ "icecast", "-c", "/etc/icecast.xml" ]
+CMD [ "/usr/bin/start-icecast.sh" ]
