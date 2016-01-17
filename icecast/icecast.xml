@@ -43,97 +43,54 @@
         <header name="Access-Control-Allow-Origin" value="*" />
     </http-headers>
 
-    <!-- Relaying
-         You don't need this if you only have one server.
-         Please refer to the config for a detailed explanation.
-    -->
-    <!--<master-server>127.0.0.1</master-server>-->
-    <!--<master-server-port>8001</master-server-port>-->
-    <!--<master-update-interval>120</master-update-interval>-->
-    <!--<master-password>hackme</master-password>-->
-
-    <!-- setting this makes all relays on-demand unless overridden, this is
-         useful for master relays which do not have <relay> definitions here.
-         The default is 0 -->
-    <!--<relays-on-demand>1</relays-on-demand>-->
-
-    <!--
-    <relay>
-        <server>127.0.0.1</server>
-        <port>8080</port>
-        <mount>/example.ogg</mount>
-        <local-mount>/different.ogg</local-mount>
-        <on-demand>0</on-demand>
-
-        <relay-shoutcast-metadata>0</relay-shoutcast-metadata>
-    </relay>
-    -->
-
-
-    <!-- Mountpoints
-         Only define <mount> sections if you want to use advanced options,
-         like alternative usernames or passwords
-    -->
-
-    <!-- Default settings for all mounts that don't have a specific <mount type="normal">.
-    -->
-    <!--
     <mount type="default">
-        <public>0</public>
-        <intro>/server-wide-intro.ogg</intro>
-        <max-listener-duration>3600</max-listener-duration>
-        <authentication type="url">
-                <option name="mount_add" value="http://auth.example.org/stream_start.php"/>
-        </authentication>
-        <http-headers>
-                <header name="foo" value="bar" />
-        </http-headers>
+      <public>0</public>
+      <max-listener-duration>3600</max-listener-duration>
+      <http-headers>
+        <header name="Access-Control-Allow-Origin" value="http://webplayer.example.org" />
+      </http-headers>
     </mount>
-    -->
 
-    <!-- Normal mounts -->
-    <!--
     <mount type="normal">
-        <mount-name>/example-complex.ogg</mount-name>
-
-        <username>othersource</username>
-        <password>hackmemore</password>
-
-        <max-listeners>1</max-listeners>
-        <dump-file>/tmp/dump-example1.ogg</dump-file>
-        <burst-size>65536</burst-size>
-        <fallback-mount>/example2.ogg</fallback-mount>
-        <fallback-override>1</fallback-override>
-        <fallback-when-full>1</fallback-when-full>
-        <intro>/example_intro.ogg</intro>
-        <hidden>1</hidden>
-        <public>1</public>
-        <authentication type="htpasswd">
-                <option name="filename" value="myauth"/>
-                <option name="allow_duplicate_users" value="0"/>
-        </authentication>
-        <http-headers>
-                <header name="Access-Control-Allow-Origin" value="http://webplayer.example.org" />
-                <header name="baz" value="quux" />
-        </http-headers>
-        <on-connect>/home/icecast/bin/stream-start</on-connect>
-        <on-disconnect>/home/icecast/bin/stream-stop</on-disconnect>
+      <mount-name>/live.opus</mount-name>
+      <fallback-mount>/stream.opus</fallback-mount>
+      <fallback-override>1</fallback-override>
+      <hidden>1</hidden>
+      <public>0</public>
     </mount>
-    -->
 
-    <!--
     <mount type="normal">
-        <mount-name>/auth_example.ogg</mount-name>
-        <authentication type="url">
-            <option name="mount_add"       value="http://myauthserver.net/notify_mount.php"/>
-            <option name="mount_remove"    value="http://myauthserver.net/notify_mount.php"/>
-            <option name="listener_add"    value="http://myauthserver.net/notify_listener.php"/>
-            <option name="listener_remove" value="http://myauthserver.net/notify_listener.php"/>
-            <option name="headers"         value="x-pragma,x-token"/>
-            <option name="header_prefix"   value="ClientHeader."/>
-        </authentication>
+      <mount-name>/live.ogg</mount-name>
+      <fallback-mount>/stream.ogg</fallback-mount>
+      <fallback-override>1</fallback-override>
+      <hidden>1</hidden>
+      <public>0</public>
     </mount>
-    -->
+
+    <mount type="normal">
+      <mount-name>/live.mp3</mount-name>
+      <fallback-mount>/stream.mp3</fallback-mount>
+      <fallback-override>1</fallback-override>
+      <hidden>1</hidden>
+      <public>0</public>
+    </mount>
+
+    <mount type="normal">
+      <mount-name>/stream.opus</mount-name>
+      <fallback-mount>/stream.ogg</fallback-mount>
+      <public>1</public>
+    </mount>
+
+    <mount type="normal">
+      <mount-name>/stream.mp3</mount-name>
+      <fallback-mount>/stream.ogg</fallback-mount>
+      <public>1</public>
+    </mount>
+
+    <mount type="normal">
+      <mount-name>/stream.ogg</mount-name>
+      <public>1</public>
+    </mount>
 
     <fileserve>1</fileserve>
 
