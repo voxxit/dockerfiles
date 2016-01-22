@@ -6,7 +6,7 @@ consul1:
     - "8400:8400"
     - "8500:8500"
     - "53:53"
-  command: "-server -bootstrap-expect 3 -ui-dir /ui"
+  command: "agent -data-dir /data -server -bootstrap-expect 3 -ui-dir /ui -client=0.0.0.0"
 
 consul2:
   image: "voxxit/consul:latest"
