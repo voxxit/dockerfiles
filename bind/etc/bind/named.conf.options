@@ -1,0 +1,55 @@
+acl "trusted" {
+  10.0.0.0/8;
+  192.168.0.0/16;
+  172.16.0.0/12;
+  localhost;
+  localnets;
+};
+
+options {
+	directory "/var/bind";
+
+	// If there is a firewall between you and nameservers you want
+	// to talk to, you may need to fix the firewall to allow multiple
+	// ports to talk.  See http://www.kb.cert.org/vuls/id/800113
+
+	// If your ISP provided one or more IP addresses for stable
+	// nameservers, you probably want to use them as forwarders.
+	// Uncomment the following block, and insert the addresses replacing
+	// the all-0's placeholder.
+
+	forwarders {
+    8.8.8.8;
+    8.8.4.4;
+	};
+
+	allow-query { any; };
+  allow-recursion { trusted; };
+  allow-query-cache { trusted; };
+
+  // Specify a list of IPs/masks to allow zone transfers to here. You can
+  // override this on a per-zone basis by specifying this inside a zone
+	// block.
+	//
+	// WARNING: Removing this block will cause BIND to revert to its default
+	//          behaviour of allowing zone transfers to any host (!).
+	allow-transfer { trusted; };
+
+	//========================================================================
+	// If BIND logs error messages about the root key being expired,
+	// you will need to update your keys.  See https://www.isc.org/bind-keys
+	//========================================================================
+
+	auth-nxdomain no; # conform to RFC1035
+
+  listen-on-v6 { any; };
+
+	dnssec-enable no;
+	dnssec-validation no;
+};
+
+// In practice, difficulties can arise when using EDNS traversing firewalls,
+// since some firewalls assume a maximum DNS message length of 512 bytes
+// and block longer DNS packets.
+server ::/0      { edns no; };
+server 0.0.0.0/0 { edns no; };

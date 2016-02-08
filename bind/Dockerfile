@@ -1,9 +1,13 @@
 FROM voxxit/base:alpine
 
-RUN apk add --update bind && rm -rf /var/cache/apk/*
+RUN apk add --update bind bind-doc bind-tools && rm -rf /var/cache/apk/*
 
-ADD . /etc/bind/
+COPY etc/bind/ /etc/bind/
+COPY entrypoint.sh /sbin/entrypoint.sh
 
 EXPOSE 53/udp
 
-CMD [ "named", "-g" ]
+VOLUME ["/data"]
+
+ENTRYPOINT ["/sbin/entrypoint.sh"]
+CMD ["/usr/sbin/named", "-f", "-g"]
