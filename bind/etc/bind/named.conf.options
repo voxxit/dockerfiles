@@ -1,9 +1,9 @@
-acl "trusted" {
-  10.0.0.0/8;
-  192.168.0.0/16;
-  172.16.0.0/12;
-  localhost;
-  localnets;
+// RFC1918 private IPv4 address ranges
+acl "private" {
+  10/8;
+  127/8;
+  172.16/12;
+  192.168/16;
 };
 
 options {
@@ -17,15 +17,9 @@ options {
 	// nameservers, you probably want to use them as forwarders.
 	// Uncomment the following block, and insert the addresses replacing
 	// the all-0's placeholder.
-
-	forwarders {
-    8.8.8.8;
-    8.8.4.4;
-	};
-
 	allow-query { any; };
-  allow-recursion { trusted; };
-  allow-query-cache { trusted; };
+  allow-query-cache { private; };
+  allow-recursion { private; };
 
   // Specify a list of IPs/masks to allow zone transfers to here. You can
   // override this on a per-zone basis by specifying this inside a zone
@@ -33,7 +27,7 @@ options {
 	//
 	// WARNING: Removing this block will cause BIND to revert to its default
 	//          behaviour of allowing zone transfers to any host (!).
-	allow-transfer { trusted; };
+	allow-transfer { none; };
 
 	//========================================================================
 	// If BIND logs error messages about the root key being expired,
@@ -44,6 +38,8 @@ options {
 
   listen-on-v6 { any; };
 
+  version "dns server";
+
 	dnssec-enable no;
 	dnssec-validation no;
 };
@@ -53,3 +49,10 @@ options {
 // and block longer DNS packets.
 server ::/0      { edns no; };
 server 0.0.0.0/0 { edns no; };
+
+// Disable rndc controls
+controls { };
+
+logging {
+  category lame-servers { null; };
+};

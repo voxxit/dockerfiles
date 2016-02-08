@@ -5,7 +5,7 @@ RUN apk add --update bind bind-doc bind-tools && rm -rf /var/cache/apk/*
 COPY etc/bind/ /etc/bind/
 COPY entrypoint.sh /sbin/entrypoint.sh
 
-EXPOSE 53/udp
+EXPOSE 53 53/udp
 
 VOLUME ["/data"]
 

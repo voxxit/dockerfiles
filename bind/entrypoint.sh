@@ -52,7 +52,7 @@ fi
 # default behaviour is to launch named
 if [[ -z ${1} ]]; then
   echo "Starting named..."
-  exec $(which named) -u ${BIND_USER} -f -g ${EXTRA_ARGS}
+  exec $(which named) -u ${BIND_USER} -f -g -4 ${EXTRA_ARGS}
 else
   exec "$@"
 fi
