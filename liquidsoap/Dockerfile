@@ -29,4 +29,6 @@ EXPOSE 10000/tcp
 
 COPY start-liquidsoap.sh /usr/bin/start-liquidsoap.sh
 
+USER liquidsoap
+
 ENTRYPOINT [ "/usr/bin/start-liquidsoap.sh" ]
