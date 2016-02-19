@@ -7,7 +7,7 @@ RUN  apt-get -y update \
   && apt-get -y install mp3gain liquidsoap liquidsoap-plugin-all \
   && rm -rf /var/lib/apt/lists/*
 
-COPY start-liquidsoap.sh /usr/bin/start-liquidsoap.sh
+ENV LOG_NAME  "stream.log"
 
 ENV PLAYLIST_DIR  "/media"
 
@@ -23,6 +23,10 @@ ENV ICECAST_HOSTNAME "stream.example.com"
 ENV ICECAST_PORT     8000
 ENV ICECAST_PASS     "hackme"
 
-VOLUME [ "/media" ]
+VOLUME [ "/media", "/var/log/liquidsoap" ]
+
+EXPOSE 10000/tcp
+
+COPY start-liquidsoap.sh /usr/bin/start-liquidsoap.sh
 
 ENTRYPOINT [ "/usr/bin/start-liquidsoap.sh" ]
