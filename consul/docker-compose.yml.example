@@ -18,7 +18,7 @@ consul2:
     - "8600"
   links:
     - "consul1:consul1"
-  command: "-server -join consul1"
+  command: "agent -server -join consul1"
 
 consul3:
   image: "voxxit/consul:latest"
@@ -30,4 +30,4 @@ consul3:
     - "8600"
   links:
     - "consul1:consul1"
-  command: "-server -join consul1"
+  command: "agent -server -join consul1"
