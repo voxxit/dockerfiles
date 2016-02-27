@@ -1,3 +1,0 @@
-[submodule "asterisk"]
-	path = asterisk
-	url = https://github.com/voxxit/docker-asterisk.git

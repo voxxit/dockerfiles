@@ -6,8 +6,7 @@ ENV GEM_HOME /gems
 ENV PATH $GEM_HOME/bin:$PATH
 ENV BUNDLE_APP_CONFIG $GEM_HOME
 
-RUN apk update \
-  && apk add git ruby ruby-mysql2 ruby-sqlite ruby-pg nodejs \
+RUN  apk add --update git ruby ruby-mysql2 ruby-sqlite ruby-pg nodejs \
   && echo 'gem: --no-rdoc --no-ri' | tee -a "/root/.gemrc" \
   && gem update --system \
   && gem install bundler \

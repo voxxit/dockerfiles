@@ -1,8 +1,7 @@
 FROM voxxit/base:alpine
 
-RUN apk update \
-  && apk add redis \
-  && rm -rf /var/cache/apk/lists/*
+RUN  apk add --update redis \
+  && rm -rf /var/cache/apk/*
 
 EXPOSE 6379
 

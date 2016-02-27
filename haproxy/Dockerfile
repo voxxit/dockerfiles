@@ -1,9 +1,8 @@
 FROM voxxit/base:alpine
 
-RUN  apk update \
-  && apk add haproxy \
+RUN apk add --update haproxy \
   && rm -rf /var/cache/apk/*
-  
+
 EXPOSE 80 443
 
 VOLUME [ "/etc/haproxy", "/var/lib/haproxy" ]

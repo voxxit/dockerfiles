@@ -2,7 +2,9 @@ FROM voxxit/base:alpine
 
 MAINTAINER Joshua Delsman <j at srv.im>
 
-RUN apk update && apk add nginx && mkdir /tmp/nginx
+RUN  apk add --update nginx \
+  && mkdir /tmp/nginx \
+  && rm -rf /var/cache/apk/*
 
 ADD nginx.conf /etc/nginx/nginx.conf
 

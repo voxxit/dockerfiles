@@ -1,7 +1,8 @@
 FROM voxxit/base:alpine
 
-RUN  apk update \
-  && apk add make nodejs gcc libc-dev git ruby libxml2-dev libxslt-dev libffi-dev yaml-dev openssl-dev zlib-dev readline-dev \
+RUN  apk add --update \
+    make nodejs gcc libc-dev git ruby libxml2-dev libxslt-dev \
+    libffi-dev yaml-dev openssl-dev zlib-dev readline-dev \
   && mkdir -p /usr/src/app \
   && git clone https://github.com/postmodern/ruby-install /usr/src/ruby-install \
   && cd /usr/src/ruby-install \

@@ -1,8 +1,6 @@
 FROM voxxit/base:alpine
 
-RUN  apk update \
-  && apk upgrade \
-  && apk add build-base git automake autoconf flex bison libtool \
+RUN  apk add --update build-base git automake autoconf flex bison libtool \
   && git clone https://github.com/stedolan/jq.git /usr/local/src/jq \
   && cd /usr/local/src/jq \
   && autoreconf -i \

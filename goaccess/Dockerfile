@@ -1,7 +1,6 @@
 FROM voxxit/base:alpine
 
-RUN  apk update \
-  && apk add goaccess \
+RUN  apk add --update goaccess \
   && rm -rf /var/cache/apk/*
 
 ENTRYPOINT [ "goaccess" ]

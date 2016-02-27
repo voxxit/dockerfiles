@@ -1,7 +1,6 @@
 FROM voxxit/base:alpine
 
-RUN  apk update \
-  && apk add build-base git pcre-dev openssl-dev \
+RUN  apk add --update build-base git pcre-dev openssl-dev \
   && cd /usr/local/src \
   && git clone git://github.com/arut/nginx-rtmp-module.git \
   && wget -qO- http://nginx.org/download/nginx-1.8.0.tar.gz | tar -xz \
