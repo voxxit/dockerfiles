@@ -13,7 +13,7 @@ alias vault='docker exec -it vault-dev vault "$@"'
 vault write -address=http://127.0.0.1:8200 secret/hello value=world
 Success! Data written to: secret/hello
 
-vault read -address=http://127.0.0.1:8200 secret/hello value=world
+vault read -address=http://127.0.0.1:8200 secret/hello
 Key            	Value
 lease_id       	secret/hello/ced98ef0-18d4-a5b0-8d49-3eee5aa0dfae
 lease_duration 	2592000
