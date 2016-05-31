@@ -2,7 +2,7 @@ FROM voxxit/base:alpine
 
 ENV CONSUL_VERSION 0.6.3
 
-RUN  apk add --update ca-certificates \
+RUN  apk add --update ca-certificates openssl \
   && wget https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip \
   && unzip consul_${CONSUL_VERSION}_linux_amd64.zip \
   && mv consul /bin/ \
