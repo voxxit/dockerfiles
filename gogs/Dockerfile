@@ -9,8 +9,7 @@ ENV GOGS_TAGS "sqlite redis memcache cert"
 WORKDIR $HOME
 
 # install gogs dependencies & go
-RUN  apk update \
-  && apk add libc-dev gcc curl go git openssh \
+RUN  apk add --update libc-dev gcc curl go git openssh \
   # gogs v0.5.11
   && curl -fsSL -o /usr/local/gogs.zip http://git.io/mAWxew \
   && unzip -o /usr/local/gogs.zip \

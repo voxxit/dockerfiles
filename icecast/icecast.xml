@@ -3,12 +3,14 @@
     <admin>icecast@tribal.fm</admin>
 
     <limits>
-        <clients>256</clients>
-        <sources>8</sources>
+        <clients>100</clients>
+        <sources>4</sources>
         <queue-size>524288</queue-size>
         <client-timeout>30</client-timeout>
         <header-timeout>15</header-timeout>
         <source-timeout>10</source-timeout>
+ 
+        <burst-on-connect>0</burst-on-connect>
 
         <!-- same as burst-on-connect, but this allows for being more
              specific on how much to burst. Most people won't need to
@@ -46,33 +48,6 @@
     <mount type="default">
       <public>0</public>
       <max-listener-duration>3600</max-listener-duration>
-      <http-headers>
-        <header name="Access-Control-Allow-Origin" value="http://webplayer.example.org" />
-      </http-headers>
-    </mount>
-
-    <mount type="normal">
-      <mount-name>/live.opus</mount-name>
-      <fallback-mount>/stream.opus</fallback-mount>
-      <fallback-override>1</fallback-override>
-      <hidden>1</hidden>
-      <public>0</public>
-    </mount>
-
-    <mount type="normal">
-      <mount-name>/live.ogg</mount-name>
-      <fallback-mount>/stream.ogg</fallback-mount>
-      <fallback-override>1</fallback-override>
-      <hidden>1</hidden>
-      <public>0</public>
-    </mount>
-
-    <mount type="normal">
-      <mount-name>/live.mp3</mount-name>
-      <fallback-mount>/stream.mp3</fallback-mount>
-      <fallback-override>1</fallback-override>
-      <hidden>1</hidden>
-      <public>0</public>
     </mount>
 
     <mount type="normal">
