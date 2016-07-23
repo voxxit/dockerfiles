@@ -1,8 +1,8 @@
-FROM voxxit/base:alpine
+FROM alpine:edge
 
-ENV CONSUL_VERSION 0.6.3
+ENV CONSUL_VERSION 0.6.4
 
-RUN  apk add --update ca-certificates \
+RUN  apk add --no-cache wget ca-certificates \
   && wget https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip \
   && unzip consul_${CONSUL_VERSION}_linux_amd64.zip \
   && mv consul /bin/ \
@@ -12,7 +12,7 @@ RUN  apk add --update ca-certificates \
   && unzip ui.zip \
   && mkdir -p /ui \
   && mv * /ui \
-  && rm -rf /tmp/* /var/cache/apk/*
+  && rm -rf /tmp/*
 
 EXPOSE 8300 8301 8301/udp 8302 8302/udp 8400 8500 8600 8600/udp
 
