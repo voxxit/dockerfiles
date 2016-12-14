@@ -8,7 +8,11 @@ RUN  apk add --no-cache build-base git pcre-dev openssl-dev \
   && git clone git://github.com/arut/nginx-rtmp-module.git \
   && wget -qO- http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz | tar -xz \
   && cd nginx-${NGINX_VERSION} \
-  && ./configure --prefix=/usr/local/nginx --add-module=/usr/local/src/nginx-rtmp-module \
+  && ./configure \
+       --prefix=/usr/local/nginx \
+       --with-http_ssl_module \
+       --with-debug \
+       --add-module=/usr/local/src/nginx-rtmp-module \
   && make \
   && make install \
   && cp /usr/local/src/nginx-rtmp-module/stat.xsl /usr/local/nginx/html/ \
