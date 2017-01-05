@@ -1,12 +1,10 @@
-FROM voxxit/base:alpine
+FROM alpine:edge
 
-RUN apk add --update icecast pwgen \
-  && rm -rf /var/cache/apk/*
+RUN apk add --no-cache icecast pwgen
 
-COPY mime.types /etc/mime.types
-COPY icecast.xml /etc/icecast.xml
-COPY start-icecast.sh /usr/bin/start-icecast.sh
+COPY etc/* /etc/
+COPY start-icecast.sh /start-icecast.sh
 
 EXPOSE 80/tcp
 
-CMD [ "/usr/bin/start-icecast.sh" ]
+CMD [ "/start-icecast.sh" ]
