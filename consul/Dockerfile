@@ -12,7 +12,7 @@ RUN  apk add --no-cache wget ca-certificates \
   && unzip ui.zip \
   && mkdir -p /ui \
   && mv * /ui \
-  && rm -rf /tmp/*
+  && rm -rf /ui/ui.zip /tmp/*
 
 EXPOSE 8300 8301 8301/udp 8302 8302/udp 8400 8500 8600 8600/udp
 
