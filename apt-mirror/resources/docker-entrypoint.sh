@@ -2,7 +2,7 @@
 
 list="/etc/apt/mirror.list"
 
-export DEFAULTARCH=${DEFAULTARCH:-`dpkg --print-architecture`}
+export DEFAULTARCH=${DEFAULTARCH:-amd64}
 
 envsubst < ${list}.template > ${list}
 

@@ -1,13 +1,12 @@
-FROM ubuntu
+FROM alpine
 
-RUN  apt-get update \
-  && apt-get install -y gettext-base rsync perl perl-modules wget unzip \
+RUN  apk add --no-cache bash perl gettext wget ca-certificates unzip \
+  && mkdir -p /usr/src \
   && cd /usr/src \
   && wget https://github.com/apt-mirror/apt-mirror/archive/master.zip \
   && unzip master.zip \
-  && cd /usr/src/apt-mirror-*/ \
-  && install -m 755 -D apt-mirror /usr/local/bin/apt-mirror \
-  && rm -rf /usr/src/apt-mirror* /usr/src/master.zip /var/lib/apt/lists/* 
+  && install -m 755 -D apt-mirror-master/apt-mirror /usr/local/bin/apt-mirror \
+  && rm -rf apt-mirror* master.zip 
 
 ENV BASE_PATH		/var/spool/apt-mirror
 ENV MIRROR_PATH		${BASE_PATH}/mirror
