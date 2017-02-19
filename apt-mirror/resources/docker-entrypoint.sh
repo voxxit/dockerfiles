@@ -33,4 +33,6 @@ done
 
 while true; do
   exec /usr/local/bin/apt-mirror
+  echo "Sleeping for ${SLEEP_SECS}..."
+  sleep ${SLEEP_SECS}
 done

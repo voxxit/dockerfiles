@@ -36,7 +36,8 @@ ENV MIRROR_COMPONENTS	"main restricted universe multiverse"
 
 ENV MIRROR_LIMIT_RATE	10m
 
-ENV NGINX_LOGDIR	${BASE_PATH}/logs
+# How long to sleep for until the next mirror
+ENV SLEEP_SECS		3600
 
 VOLUME ["${BASE_PATH}"]
 
