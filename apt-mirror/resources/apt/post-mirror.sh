@@ -15,3 +15,4 @@
 #  --delete \
 #  --delete-after \
 #  rsync://...
+exec /var/spool/apt-mirror/var/clean.sh
