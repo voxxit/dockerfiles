@@ -1,0 +1,46 @@
+FROM ubuntu
+
+RUN  apt-get update \
+  && apt-get install -y gettext-base rsync perl perl-modules wget unzip \
+  && cd /usr/src \
+  && wget https://github.com/apt-mirror/apt-mirror/archive/master.zip \
+  && unzip master.zip \
+  && cd /usr/src/apt-mirror-*/ \
+  && install -m 755 -D apt-mirror /usr/local/bin/apt-mirror \
+  && rm -rf /usr/src/apt-mirror* /usr/src/master.zip /var/lib/apt/lists/* 
+
+ENV BASE_PATH		/var/spool/apt-mirror
+ENV MIRROR_PATH		${BASE_PATH}/mirror
+ENV SKEL_PATH		${BASE_PATH}/skel
+ENV VAR_PATH		${BASE_PATH}/var
+ENV POSTMIRROR_SCRIPT	${VAR_PATH}/post-mirror.sh
+ENV RUN_POSTMIRROR	1
+ENV NTHREADS		20
+ENV TILDE		0
+ENV UNLINK		1
+ENV USE_PROXY		off
+ENV HTTP_PROXY		127.0.0.1:3126
+ENV PROXY_USER		user
+ENV PROXY_PASSWORD	password
+
+# Can be http or ftp
+ENV MIRROR_PROTO 	http
+
+# Choose a local mirror containing _both_ distros (see below)
+ENV MIRROR_HOST		archive.ubuntu.com
+
+# Space-separated list of...
+ENV MIRROR_DISTROS	"ubuntu"
+ENV MIRROR_FLAVORS	"trusty"
+ENV MIRROR_BRANCHES	"security updates proposed backports"
+ENV MIRROR_COMPONENTS	"main restricted universe multiverse"
+
+ENV MIRROR_LIMIT_RATE	10m
+
+VOLUME ["${BASE_PATH}"]
+
+COPY resources/apt/mirror.list.template /etc/apt/
+COPY resources/apt/post-mirror.sh ${VAR_PATH}/
+COPY resources/docker-entrypoint.sh /docker-entrypoint.sh
+
+ENTRYPOINT ["/docker-entrypoint.sh"]

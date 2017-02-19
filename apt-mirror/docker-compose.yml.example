@@ -1,0 +1,23 @@
+version: '3'
+services:
+  mirror:
+    build: .
+    env_file: .env
+    volumes:
+      - ~/mirror:/var/spool/apt-mirror
+    restart: always
+
+  web:
+    image: nginx:stable
+    command: /bin/bash -c "envsubst < /etc/nginx/conf.d/apt-mirror.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+    volumes:
+      - ~/mirror:/var/spool/apt-mirror
+      - ./resources/nginx/sites-enabled/apt-mirror.conf:/etc/nginx/conf.d/apt-mirror.template
+    ports:
+      - "8080:80"
+    links:
+      - mirror
+    depends_on:
+      - mirror
+    restart: always
+    env_file: .env
