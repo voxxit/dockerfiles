@@ -1,0 +1,19 @@
+limit_req_zone $$binary_remote_addr zone=one:10m rate=1r/s;
+
+server {
+  listen 80;
+
+  autoindex on;
+  gzip on;
+
+  access_log ${NGINX_LOGDIR}/access.log;
+  error_log  ${NGINX_LOGDIR}/error.log;
+
+  server_name_in_redirect off;
+
+  root ${MIRROR_PATH}/${MIRROR_HOST}/;
+
+  location /ubuntu/ {
+    limit_req zone=one burst=5 nodelay;
+  }
+}

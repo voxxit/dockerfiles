@@ -6,7 +6,7 @@ RUN  apk add --no-cache bash perl gettext wget ca-certificates unzip \
   && wget https://github.com/apt-mirror/apt-mirror/archive/master.zip \
   && unzip master.zip \
   && install -m 755 -D apt-mirror-master/apt-mirror /usr/local/bin/apt-mirror \
-  && rm -rf apt-mirror* master.zip 
+  && rm -rf apt-mirror* master.zip
 
 ENV BASE_PATH		/var/spool/apt-mirror
 ENV MIRROR_PATH		${BASE_PATH}/mirror
@@ -35,6 +35,8 @@ ENV MIRROR_BRANCHES	"security updates proposed backports"
 ENV MIRROR_COMPONENTS	"main restricted universe multiverse"
 
 ENV MIRROR_LIMIT_RATE	10m
+
+ENV NGINX_LOGDIR	${BASE_PATH}/logs
 
 VOLUME ["${BASE_PATH}"]
 
