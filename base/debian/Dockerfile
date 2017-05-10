@@ -2,7 +2,7 @@ FROM debian:latest
 
 ENV MIRROR="mirrors.ocf.berkeley.edu"
 
-RUN sed -i "s|archive.ubuntu.com|$MIRROR|g" /etc/apt/sources.list \
+RUN sed -i "s|deb.debian.org|$MIRROR|g" /etc/apt/sources.list \
   && apt-get update \
   && apt-get -y upgrade \
   && apt-get -y install wget \
