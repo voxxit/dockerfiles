@@ -1,5 +1,7 @@
 FROM ubuntu:latest
 
+ENV MIRROR="mirrors.ocf.berkeley.edu"
+
 RUN sed -i "s|archive.ubuntu.com|$MIRROR|g" /etc/apt/sources.list \
   && apt-get update \
   && apt-get -y upgrade \
