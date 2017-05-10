@@ -1,9 +1,6 @@
-FROM ubuntu
+FROM voxxit/base:ubuntu
 
-ENV MIRROR mirrors.digitalocean.com
-
-RUN  sed -i "s/archive.ubuntu.com/$MIRROR/g" /etc/apt/sources.list \
-  && apt-get update \
+RUN  apt-get update \
   && apt-get -y install wget \
   && cd /usr/local/bin \
   && wget -O- https://download-cdn.getsyncapp.com/stable/linux-x64/BitTorrent-Sync_x64.tar.gz | tar -xz \

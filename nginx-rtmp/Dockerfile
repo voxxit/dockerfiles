@@ -1,10 +1,8 @@
-FROM ubuntu
+FROM voxxit/base:ubuntu
 
 ARG NGINX_VERSION="1.12.0"
-ENV MIRROR="mirrors.ocf.berkeley.edu"
 
-RUN  sed -i "s|archive.ubuntu.com|$MIRROR|g" /etc/apt/sources.list \
-  && apt-get update \
+RUN  apt-get update \
   && apt-get -y install --no-install-recommends wget build-essential libpcre3 libpcre3-dev libssl-dev git-core ca-certificates \
   && mkdir -p /usr/local/src \
   && cd /usr/local/src \

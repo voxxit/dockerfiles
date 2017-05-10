@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM voxxit/base:ubuntu
 
 COPY . /
 

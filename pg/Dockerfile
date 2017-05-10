@@ -1,4 +1,4 @@
-FROM debian:stable
+FROM voxxit/base:debian
 
 MAINTAINER @voxxit
 
