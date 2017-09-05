@@ -1,15 +1,15 @@
-FROM voxxit/base:alpine
+FROM alpine
 
-MAINTAINER Joshua Delsman <j at srv.im>
+MAINTAINER Josh Delsman <j@srv.im>
 
-RUN  apk add --update nginx \
-  && mkdir /tmp/nginx \
-  && rm -rf /var/cache/apk/*
-
-ADD nginx.conf /etc/nginx/nginx.conf
+RUN  apk add --no-cache nginx \
+  && mkdir -p /tmp/nginx
 
 VOLUME [ "/etc/nginx" ]
 
-EXPOSE 80 443
+EXPOSE 80/tcp 443/tcp
 
-CMD [ "nginx", "-c", "/etc/nginx/nginx.conf" ]
+ADD nginx.conf /etc/nginx/nginx.conf
+
+ENTRYPOINT ["nginx"]
+CMD ["-c", "/etc/nginx/nginx.conf"]
