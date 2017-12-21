@@ -6,3 +6,7 @@ dockerfiles
 Collection of my Dockerfiles. Please [open an issue](https://github.com/voxxit/dockerfiles/issues/new) if you find any problems with them!
 
 [![](https://badge.imagelayers.io/voxxit/base:alpine.svg)](https://imagelayers.io/?images=voxxit/base:alpine 'Get your own badge on imagelayers.io')
+
+## Stargazers over time
+
+[![Stargazers over time](https://starcharts.herokuapp.com/voxxit/dockerfiles.svg)](https://starcharts.herokuapp.com/voxxit/dockerfiles)
