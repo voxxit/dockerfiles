@@ -1,8 +1,5 @@
-dockerfiles
-===========
+Collection of my `Dockerfile` for many open-source projects. Please don't hesitate to [open an issue](https://github.com/voxxit/dockerfiles/issues/new) if you find any problems with them! Similarly, please feel free to offer contributions in form of improvements or suggestions via a [pull request](https://github.com/voxxit/dockerfiles/pull/new/master)!
 
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/voxxit/dockerfiles?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+## Stargazers
 
-Collection of my Dockerfiles. Please [open an issue](https://github.com/voxxit/dockerfiles/issues/new) if you find any problems with them!
-
-[![](https://badge.imagelayers.io/voxxit/base:alpine.svg)](https://imagelayers.io/?images=voxxit/base:alpine 'Get your own badge on imagelayers.io')
+[![Stargazers over time](https://starcharts.herokuapp.com/voxxit/dockerfiles.svg)](https://starcharts.herokuapp.com/voxxit/dockerfiles)
