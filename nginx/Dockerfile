@@ -1,6 +1,6 @@
 FROM alpine
 
-MAINTAINER Josh Delsman <j@srv.im>
+LABEL org.opencontainers.image.authors="j@srv.im"
 
 RUN  apk add --no-cache nginx \
   && mkdir -p /tmp/nginx

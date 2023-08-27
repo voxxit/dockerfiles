@@ -1,6 +1,6 @@
 FROM voxxit/base:alpine
 
-MAINTAINER Joshua Delsman <j (at) srv.im>
+LABEL org.opencontainers.image.authors="j@srv.im"
 
 ENV GEM_HOME /gems
 ENV PATH $GEM_HOME/bin:$PATH

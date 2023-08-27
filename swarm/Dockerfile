@@ -1,6 +1,6 @@
 FROM scratch
 
-MAINTAINER Joshua Delsman <j@srv.im>
+LABEL org.opencontainers.image.authors="j@srv.im"
 
 ADD swarm_linux_amd64 /bin/swarm
 ADD ca-certificates.crt /etc/ssl/certs/ca-certificates.crt

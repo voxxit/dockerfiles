@@ -1,6 +1,6 @@
 FROM voxxit/base:alpine
 
-MAINTAINER Joshua Delsman <j@srv.im>
+LABEL org.opencontainers.image.authors="j@srv.im"
 
 EXPOSE 80 443
 

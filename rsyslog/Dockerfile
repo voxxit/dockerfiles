@@ -1,6 +1,6 @@
 FROM voxxit/base:alpine
 
-MAINTAINER Joshua Delsman <j (at) srv.im>
+LABEL org.opencontainers.image.authors="j@srv.im"
 
 RUN  apk add --update rsyslog \
   && rm -rf /var/cache/apk/*

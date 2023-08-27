@@ -1,6 +1,6 @@
 FROM voxxit/base:debian
 
-MAINTAINER @voxxit
+LABEL org.opencontainers.image.authors="j@srv.im"
 
 ENV PGDATA /var/lib/postgresql/9.3/main
 

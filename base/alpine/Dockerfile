@@ -1,6 +1,6 @@
 FROM alpine:edge
 
-MAINTAINER Joshua Delsman <j@srv.im>
+LABEL org.opencontainers.image.authors="j@srv.im"
 
 RUN  apk add --update git curl bash \
   && curl -o /usr/bin/gosu -L https://github.com/tianon/gosu/releases/download/1.7/gosu-amd64 \

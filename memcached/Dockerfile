@@ -1,6 +1,6 @@
 FROM phusion/baseimage:latest
 
-MAINTAINER @voxxit
+LABEL org.opencontainers.image.authors="j@srv.im"
 
 ENV HOME /root
 
