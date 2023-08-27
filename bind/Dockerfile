@@ -1,6 +1,6 @@
-FROM voxxit/base:alpine
+FROM alpine:3.18.3
 
-RUN apk add --update bind bind-doc bind-tools && rm -rf /var/cache/apk/*
+RUN apk add --no-cache bind bind-doc bind-tools
 
 COPY etc/bind/ /etc/bind/
 COPY entrypoint.sh /sbin/entrypoint.sh
