@@ -1,1 +1,0 @@
-# quay.io/voxxit/ruby

@@ -1,9 +1,8 @@
-FROM voxxit/base:alpine
+FROM alpine:3.18.3
 
 LABEL org.opencontainers.image.authors="j@srv.im"
 
-RUN  apk add --update rsyslog \
-  && rm -rf /var/cache/apk/*
+RUN  apk add --no-cache rsyslog
 
 EXPOSE 514 514/udp
 

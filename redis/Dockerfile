@@ -1,8 +1,7 @@
-FROM voxxit/base:alpine
+FROM alpine:3.18.3
 
-RUN  apk add --update redis \
-  && rm -rf /var/cache/apk/*
+RUN  apk add --no-cache redis
 
-EXPOSE 6379
+EXPOSE 6379/tcp
 
 ENTRYPOINT [ "redis-server" ]
