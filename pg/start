@@ -1,5 +1,6 @@
 #!/bin/bash
 
+PG_VERSION=${PG_VERSION:-"9.3"}
 PWFILE=${PGDATA}/../pwfile
 
 if [ ! -f PWFILE ]; then
@@ -14,7 +15,7 @@ if [ ! -f PWFILE ]; then
   echo "${PASSWORD:-`pwgen -s 20 1`}" > ${PWFILE}
 
   # build initial db cluster
-  su -c "/usr/lib/postgresql/9.3/bin/initdb \
+  su -c "/usr/lib/postgresql/${PG_VERSION}/bin/initdb \
     --pwfile=${PWFILE} \
     --username=postgres \
     --encoding=unicode \
@@ -35,5 +36,6 @@ if [ ! -f PWFILE ]; then
   echo "PGPASSWORD=`cat ${PWFILE}`"
 fi
 
-echo "Starting `/usr/lib/postgresql/9.3/bin/postgres -V`..."
-exec su -c "/usr/lib/postgresql/9.3/bin/postgres -D $PGDATA -c config_file=$PGDATA/postgresql.conf" postgres
+echo "Starting `/usr/lib/postgresql/${PG_VERSION}/bin/postgres -V`..."
+
+exec su -c "/usr/lib/postgresql/${PG_VERSION}/bin/postgres -D $PGDATA -c config_file=$PGDATA/postgresql.conf" postgres

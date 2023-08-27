@@ -1,9 +1,9 @@
-FROM voxxit/base:ubuntu
+FROM ubuntu:22.04
 
-ARG NGINX_VERSION="1.12.0"
+ARG NGINX_VERSION="1.15.12"
 
 RUN  apt-get update \
-  && apt-get -y install --no-install-recommends wget build-essential libpcre3 libpcre3-dev libssl-dev git-core ca-certificates \
+  && apt-get -y install --no-install-recommends wget build-essential libpcre3 libpcre3-dev libssl-dev git-core ca-certificates zlib1g-dev \
   && mkdir -p /usr/local/src \
   && cd /usr/local/src \
   && git clone https://github.com/sergey-dryabzhinsky/nginx-rtmp-module.git \
@@ -13,7 +13,7 @@ RUN  apt-get update \
        --with-http_ssl_module \
        --with-debug \
        --add-module=/usr/local/src/nginx-rtmp-module \
-  && make -j`nproc` \
+  && make -j$(getconf _NPROCESSORS_ONLN) \
   && make install \
   && cp /usr/local/src/nginx-rtmp-module/stat.xsl /usr/local/nginx/html/ \
   && apt-get -y remove --purge build-essential git-core wget \

@@ -1,4 +1,4 @@
-FROM voxxit/base:ubuntu
+FROM ubuntu:22.04
 
 RUN  apt-get update \
   && apt-get -y install --no-install-recommends pdns-server pdns-backend-mysql dnsutils \
