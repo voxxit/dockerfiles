@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # Find all directories containing a `Dockerfile*`, and return the
 # directory name (excluding the ones with multiple layers):
 dockerfile_dirs=$(find . -name "Dockerfile" -depth 2 -exec dirname {} \; | sort -u)
@@ -32,15 +34,22 @@ for context in $dockerfile_dirs; do
     echo "Building: $image ..."
 
     # Build the image:
-    docker buildx build \
+    if ! docker buildx build \
         --load \
         --pull \
         --tag "$image" \
         --cache-to type=local,dest="$cachedir" \
         --cache-from type=local,src="$cachedir" \
-        "$context" && \
+        "$context"; then
+        echo "🚨 $image failed to build!"
+        exit 1
+    fi
+
     # Run a quick test to make sure the image is secure:
-    docker scout quickview "$image"
+    if ! docker scout quickview "$image"; then
+        echo "🚨 $image failed security audit!"
+        exit 1
+    fi
 
     echo "✅ $image"
 done
