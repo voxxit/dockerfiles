@@ -1,7 +1,6 @@
 FROM voxxit/base:alpine
 
-RUN  apk add --update nodejs nodejs-dev git \
-  && rm -rf /var/cache/apk/* \
+RUN  apk add --no-cache nodejs nodejs-dev npm git \
   && npm install -g npm@latest \
   && npm install -g grunt-cli bower
 
