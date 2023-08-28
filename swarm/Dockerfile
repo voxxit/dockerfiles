@@ -2,8 +2,8 @@ FROM scratch
 
 LABEL org.opencontainers.image.authors="j@srv.im"
 
-ADD swarm_linux_amd64 /bin/swarm
-ADD ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+COPY --from=src swarm_linux_amd64 /bin/swarm
+COPY --from=src ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 
 EXPOSE 2375
 

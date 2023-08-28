@@ -1,6 +1,6 @@
 FROM ubuntu:jammy
 
-COPY . /
+COPY --from=src . /
 
 RUN  export DEBIAN_FRONTEND=noninteractive \
   && apt-get update \
@@ -23,7 +23,6 @@ RUN  export DEBIAN_FRONTEND=noninteractive \
 RUN  echo "\ndaemon off;" >> /usr/local/nginx/conf/nginx.conf
 
 WORKDIR /usr/local/nginx
+EXPOSE 80/tcp 443/tcp
 
 CMD [ "/usr/local/nginx/sbin/nginx" ]
-
-EXPOSE 80 443

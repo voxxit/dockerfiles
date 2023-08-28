@@ -2,10 +2,10 @@ FROM alpine:3.18
 
 RUN apk add --no-cache bind bind-doc bind-tools
 
-COPY etc/bind/ /etc/bind/
-COPY entrypoint.sh /sbin/entrypoint.sh
+COPY --from=src etc/bind/ /etc/bind/
+COPY --from=src entrypoint.sh /sbin/entrypoint.sh
 
-EXPOSE 53 53/udp
+EXPOSE 53/tcp 53/udp
 
 VOLUME ["/data"]
 

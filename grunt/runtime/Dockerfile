@@ -2,10 +2,10 @@ FROM voxxit/grunt:latest
 
 WORKDIR /app
 
-ONBUILD ADD package.json /app/
+ONBUILD COPY package.json /app/
 ONBUILD RUN npm install
-ONBUILD ADD bower.json /app/
+ONBUILD COPY bower.json /app/
 ONBUILD RUN bower install --allow-root
-ONBUILD ADD . /app
+ONBUILD COPY . /app
 
 CMD [ "grunt" ]

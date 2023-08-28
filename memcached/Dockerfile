@@ -4,7 +4,7 @@ LABEL org.opencontainers.image.authors="j@srv.im"
 
 ENV HOME /root
 
-ADD start /start
+COPY --from=src start /start
 
 RUN apt-get update && \
     apt-get install -y memcached sasl2-bin pwgen && \

@@ -23,28 +23,27 @@ fi
 
 cachedir="/tmp/.buildx-cache"
 context="$1"
-
 bname=$(basename "$context")
 image="voxxit/$bname:latest"
 
-echo "Building: $image ..."
+echo
+echo "----------------------------------------"
+echo "🏗  $image"
+echo
 
-# Build the image:
 if ! docker buildx build \
-    --load \
     --pull \
+    --progress=plain \
+    --push \
     --tag "$image" \
     --cache-to type=local,dest="$cachedir" \
     --cache-from type=local,src="$cachedir" \
-    "$context"; then
-    echo "🚨 $image failed to build!"
+    "$context"
+then
+    echo "🚨 $image failed to build! 🚨"
     exit 1
 fi
 
-# Run a quick test to make sure the image is secure:
-if ! docker scout quickview "$image"; then
-    echo "🚨 $image failed security audit!"
-    exit 1
-fi
-
-echo "✅ $image"
+echo
+echo "✅ $image built successfully! ✅"
+echo

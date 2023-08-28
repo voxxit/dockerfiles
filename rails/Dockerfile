@@ -1,7 +1,7 @@
 FROM alpine:3.18
 
 RUN apk add --no-cache \
-    make nodejs gcc libc-dev git ruby libxml2-dev libxslt-dev \
+    bash make nodejs gcc libc-dev git ruby libxml2-dev libxslt-dev \
     libffi-dev yaml-dev openssl-dev zlib-dev readline-dev \
   && mkdir -p /usr/src/app \
   && git clone https://github.com/postmodern/ruby-install /usr/src/ruby-install \

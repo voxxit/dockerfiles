@@ -2,10 +2,10 @@ FROM ubuntu:jammy
 
 LABEL org.opencontainers.image.authors="j@srv.im"
 
-ARG NGINX_VERSION="1.15.12"
+ARG NGINX_VERSION="1.24.0"
 
 RUN  apt-get update \
-  && apt-get -y install --no-install-recommends wget build-essential libpcre3 libpcre3-dev libssl-dev git-core ca-certificates zlib1g-dev \
+  && apt-get -y install --no-install-recommends build-essential libpcre3 libpcre3-dev zlib1g zlib1g-dev libssl-dev libgd-dev libxml2 libxml2-dev uuid-dev wget ca-certificates git \
   && mkdir -p /usr/local/src \
   && cd /usr/local/src \
   && git clone https://github.com/sergey-dryabzhinsky/nginx-rtmp-module.git \
@@ -26,7 +26,7 @@ RUN  apt-get update \
 RUN  ln -sf /dev/stdout /usr/local/nginx/logs/access.log \
   && ln -sf /dev/stderr /usr/local/nginx/logs/error.log
 
-COPY conf/nginx.conf /usr/local/nginx/conf/
+COPY --from=src conf/nginx.conf /usr/local/nginx/conf/
 
 EXPOSE 80/tcp 1935/tcp
 

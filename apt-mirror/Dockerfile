@@ -1,6 +1,6 @@
 FROM alpine:3.18
 
-RUN  apk add --no-cache bash perl gettext wget ca-certificates unzip \
+RUN apk add --no-cache bash perl gettext wget ca-certificates unzip \
   && mkdir -p /usr/src \
   && cd /usr/src \
   && wget https://github.com/apt-mirror/apt-mirror/archive/master.zip \
@@ -41,8 +41,8 @@ ENV SLEEP_SECS		3600
 
 VOLUME ["${BASE_PATH}"]
 
-COPY resources/apt/mirror.list.template /etc/apt/
-COPY resources/apt/post-mirror.sh ${VAR_PATH}/
-COPY resources/docker-entrypoint.sh /docker-entrypoint.sh
+COPY --from=src ./resources/apt/mirror.list.template /etc/apt/
+COPY --from=src ./resources/apt/post-mirror.sh ${VAR_PATH}/
+COPY --from=src ./resources/docker-entrypoint.sh /docker-entrypoint.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
