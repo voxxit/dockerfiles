@@ -1,4 +1,6 @@
-FROM ubuntu:22.04
+FROM ubuntu:jammy
+
+LABEL org.opencontainers.image.authors="j@srv.im"
 
 RUN  apt-get update \
   && apt-get -y install --no-install-recommends pdns-server pdns-backend-mysql dnsutils \

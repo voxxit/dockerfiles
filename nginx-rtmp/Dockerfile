@@ -1,4 +1,6 @@
-FROM ubuntu:22.04
+FROM ubuntu:jammy
+
+LABEL org.opencontainers.image.authors="j@srv.im"
 
 ARG NGINX_VERSION="1.15.12"
 

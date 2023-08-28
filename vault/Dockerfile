@@ -1,4 +1,6 @@
-FROM alpine:3.18.3
+FROM alpine:3.18
+
+LABEL org.opencontainers.image.authors="j@srv.im"
 
 ARG VAULT_VERSION=0.6.1
 ENV VAULT_VERSION ${VAULT_VERSION}

@@ -1,6 +1,5 @@
-FROM voxxit/base:alpine
+FROM alpine:3.18
 
-RUN  apk add --update goaccess \
-  && rm -rf /var/cache/apk/*
+RUN apk add --no-cache goaccess
 
 ENTRYPOINT [ "goaccess" ]

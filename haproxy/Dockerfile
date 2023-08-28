@@ -1,12 +1,12 @@
-FROM voxxit/base:alpine
+FROM alpine:3.18
 
-RUN apk add --update haproxy \
-  && rm -rf /var/cache/apk/*
+LABEL org.opencontainers.image.authors="j@srv.im"
 
-EXPOSE 80 443
+RUN apk add --no-cache haproxy
+
+EXPOSE 80/tcp 443/tcp
 
 VOLUME [ "/etc/haproxy", "/var/lib/haproxy" ]
 
 ENTRYPOINT [ "haproxy" ]
-
 CMD [ "-f", "/etc/haproxy/haproxy.cfg" ]

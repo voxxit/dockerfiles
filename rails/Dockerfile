@@ -1,6 +1,6 @@
-FROM voxxit/base:alpine
+FROM alpine:3.18
 
-RUN  apk add --update \
+RUN apk add --no-cache \
     make nodejs gcc libc-dev git ruby libxml2-dev libxslt-dev \
     libffi-dev yaml-dev openssl-dev zlib-dev readline-dev \
   && mkdir -p /usr/src/app \
@@ -11,7 +11,7 @@ RUN  apk add --update \
   && gem install bundler --no-ri --no-rdoc \
   && bundle config --global build.nokogiri --use-system-libraries \
   && apk del ruby \
-  && rm -rf /usr/src/* /var/cache/apk/*
+  && rm -rf /usr/src/*
 
 WORKDIR /usr/src/app
 
