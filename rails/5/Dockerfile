@@ -1,14 +1,14 @@
 FROM alpine:3.21
 
 RUN apk add --no-cache \
-    bash make nodejs gcc libc-dev git ruby libxml2-dev libxslt-dev \
-    libffi-dev yaml-dev openssl-dev zlib-dev readline-dev \
+  bash make nodejs gcc libc-dev git ruby libxml2-dev libxslt-dev \
+  libffi-dev yaml-dev openssl-dev zlib-dev readline-dev \
   && mkdir -p /usr/src/app \
   && git clone https://github.com/postmodern/ruby-install /usr/src/ruby-install \
   && cd /usr/src/ruby-install \
   && make install \
-  && ruby-install --system ruby 2.2.0-rc1 -- --disable-install-rdoc \
-  && gem install bundler --no-ri --no-rdoc \
+  && ruby-install --system ruby 2.5.9 -- --disable-install-rdoc \
+  && gem install bundler rails -v 5.2.8.1 \
   && bundle config --global build.nokogiri --use-system-libraries \
   && apk del ruby \
   && rm -rf /usr/src/*
@@ -24,5 +24,4 @@ ONBUILD COPY . /usr/src/app
 
 EXPOSE 3000/tcp
 
-# replace in your Dockerfile with another ruby server, etc.
-CMD bundle exec rails server
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"] 
