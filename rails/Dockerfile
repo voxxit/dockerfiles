@@ -1,4 +1,4 @@
-FROM alpine:3.18
+FROM alpine:3.21
 
 RUN apk add --no-cache \
     bash make nodejs gcc libc-dev git ruby libxml2-dev libxslt-dev \

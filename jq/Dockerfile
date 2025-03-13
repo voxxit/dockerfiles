@@ -1,4 +1,4 @@
-FROM alpine:3.18
+FROM alpine:3.21
 
 RUN  apk add --no-cache build-base git automake autoconf flex bison libtool oniguruma-dev \
   && git clone https://github.com/stedolan/jq.git /usr/local/src/jq \
