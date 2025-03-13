@@ -22,7 +22,7 @@ RUN  apk add --no-cache openssl-dev pcre-dev zlib-dev build-base \
   && apk del build-base \
   && rm -rf /nginx-*
 
-COPY --from=src nginx.conf /usr/local/nginx/conf/nginx.conf
+COPY nginx.conf /usr/local/nginx/conf/nginx.conf
 
 VOLUME [ "/usr/local/nginx/logs", "/usr/local/nginx/html", "/usr/local/nginx/conf" ]
 
