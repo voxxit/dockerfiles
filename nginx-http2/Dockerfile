@@ -6,7 +6,7 @@ EXPOSE 80/tcp 443/tcp
 
 ENV NGINX_VERSION 1.26.3
 
-RUN  apk add --no-cache openssl-dev~=3.0 pcre-dev zlib-dev build-base \
+RUN  apk add --no-cache openssl-dev~=3.3 pcre-dev zlib-dev build-base \
   && wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz \
   && tar -xzvf nginx-${NGINX_VERSION}.tar.gz \
   && cd nginx-${NGINX_VERSION} \
