@@ -10,6 +10,6 @@ VOLUME [ "/var/log", "/etc/rsyslog.d" ]
 
 # for some reason, the apk comes built with a v5
 # config file. using this one for v8:
-COPY --from=src ./etc/rsyslog.conf /etc/rsyslog.conf
+COPY ./etc/rsyslog.conf /etc/rsyslog.conf
 
 ENTRYPOINT [ "rsyslogd", "-n" ]

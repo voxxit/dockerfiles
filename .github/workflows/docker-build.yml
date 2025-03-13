@@ -118,7 +118,6 @@ jobs:
       matrix:
         image:
           - grunt
-          - rails
           - jq
           - goaccess
     steps:

@@ -19,6 +19,6 @@ RUN apt-get update && \
 
 VOLUME ["/var/lib/postgresql"]
 
-COPY --from=src start /start
+COPY start /start
 
 CMD ["/start"]

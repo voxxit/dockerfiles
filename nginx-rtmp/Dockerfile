@@ -26,7 +26,7 @@ RUN  apt-get update \
 RUN  ln -sf /dev/stdout /usr/local/nginx/logs/access.log \
   && ln -sf /dev/stderr /usr/local/nginx/logs/error.log
 
-COPY --from=src conf/nginx.conf /usr/local/nginx/conf/
+COPY conf/nginx.conf /usr/local/nginx/conf/
 
 EXPOSE 80/tcp 1935/tcp
 
