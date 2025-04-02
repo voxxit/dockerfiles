@@ -1,14 +1,14 @@
-FROM alpine:3.16
+FROM alpine:3.21
 
+# Install required packages including OpenSSL
 RUN apk add --no-cache \
   bash make nodejs gcc g++ libc-dev git ruby libxml2-dev libxslt-dev \
-  libffi-dev yaml-dev openssl-dev zlib-dev readline-dev linux-headers \
+  libffi-dev yaml-dev openssl openssl-dev zlib-dev readline-dev linux-headers \
   && mkdir -p /usr/src/app \
   && git clone https://github.com/postmodern/ruby-install /usr/src/ruby-install \
   && cd /usr/src/ruby-install \
   && make install \
-  && ruby-install --system ruby 3.0.6 -- --disable-install-rdoc \
-  --with-openssl-dir=/usr \
+  && ruby-install --system ruby 3.0.6 -- --disable-install-rdoc --with-openssl-dir=/usr \
   && gem install 'bundler:2.2.33' 'rails:6.1.7.10' \
   && bundle config --global build.nokogiri --use-system-libraries \
   && apk del ruby \
@@ -25,4 +25,4 @@ ONBUILD COPY . /usr/src/app
 
 EXPOSE 3000/tcp
 
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"] 
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
