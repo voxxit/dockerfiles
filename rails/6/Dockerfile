@@ -8,7 +8,7 @@ RUN apk add --no-cache \
   && git clone https://github.com/postmodern/ruby-install /usr/src/ruby-install \
   && cd /usr/src/ruby-install \
   && make install \
-  && ruby-install --system ruby 3.0.6 -- --disable-install-rdoc --with-openssl-dir=/usr \
+  && ruby-install --system ruby 3.1.2 -- --disable-install-rdoc --with-openssl-dir=/usr \
   && gem install 'bundler:2.2.33' 'rails:6.1.7.10' \
   && bundle config --global build.nokogiri --use-system-libraries \
   && apk del ruby \
