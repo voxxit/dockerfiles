@@ -19,11 +19,11 @@ RUN  addgroup -g 1000 icecast \
   && install -d -o icecast -g icecast /etc/icecast \
   && chown -R icecast:icecast /usr/share/icecast
 
-COPY --from=src etc/mime.types /etc/
+COPY etc/mime.types /etc/
 
 USER icecast:icecast
 
-COPY --from=src etc/icecast.xml /etc/icecast/
-COPY --from=src docker-entrypoint.sh /
+COPY etc/icecast.xml /etc/icecast/
+COPY docker-entrypoint.sh /
 
 CMD [ "/docker-entrypoint.sh" ]

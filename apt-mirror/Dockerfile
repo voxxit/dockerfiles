@@ -41,8 +41,8 @@ ENV SLEEP_SECS		3600
 
 VOLUME ["${BASE_PATH}"]
 
-COPY --from=src ./resources/apt/mirror.list.template /etc/apt/
-COPY --from=src ./resources/apt/post-mirror.sh ${VAR_PATH}/
-COPY --from=src ./resources/docker-entrypoint.sh /docker-entrypoint.sh
+COPY ./resources/apt/mirror.list.template /etc/apt/
+COPY ./resources/apt/post-mirror.sh ${VAR_PATH}/
+COPY ./resources/docker-entrypoint.sh /docker-entrypoint.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]

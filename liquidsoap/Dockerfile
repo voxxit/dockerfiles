@@ -4,7 +4,7 @@ LABEL org.opencontainers.image.authors="j@srv.im"
 
 ENV LIQUIDSOAP_VERSION="2.2.0"
 
-COPY --from=src install.sh /tmp/install.sh
+COPY install.sh /tmp/install.sh
 
 RUN chmod +x /tmp/install.sh \
   && /tmp/install.sh "${LIQUIDSOAP_VERSION}" \
@@ -28,7 +28,7 @@ VOLUME [ "/media", "/var/log/liquidsoap" ]
 
 EXPOSE 10000/tcp
 
-COPY --chown=1001:1001 --from=src start-liquidsoap.sh /usr/bin/start-liquidsoap.sh
+COPY --chown=1001:1001 start-liquidsoap.sh /usr/bin/start-liquidsoap.sh
 USER 1001:1001
 
 ENTRYPOINT [ "/usr/bin/start-liquidsoap.sh" ]

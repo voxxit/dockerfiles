@@ -1,6 +1,6 @@
 FROM ubuntu:jammy
 
-COPY --from=src . /
+COPY . /
 
 RUN  export DEBIAN_FRONTEND=noninteractive \
   && apt-get update \
