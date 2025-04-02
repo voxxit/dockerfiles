@@ -19,11 +19,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        rails-version: ['5', '6', '7', '8']
         include:
-          - rails-version: '8'
+          - rails-version: '6'  # Rails 6
+            is-latest: false
+          - rails-version: '7'  # Rails 7
+            is-latest: false
+          - rails-version: '8'  # Rails 8
             is-latest: true
-
     steps:
       - uses: actions/checkout@v4
 
