@@ -1,4 +1,4 @@
-FROM alpine:3.21
+FROM alpine:3.24
 
 ENV ICECAST_VERSION 2.5-beta3
 
