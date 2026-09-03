@@ -1,4 +1,4 @@
-FROM alpine:3.21
+FROM alpine:3.24
 
 # Install required packages including OpenSSL
 RUN apk add --no-cache \
